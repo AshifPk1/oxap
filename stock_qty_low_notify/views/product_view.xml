@@ -1,0 +1,77 @@
+<?xml version="1.0"?>
+<odoo>
+    <data>
+        <!--        <record id="view_product_template_tree" model="ir.ui.view">-->
+        <!--            <field name="name">product.template.tree.inherit</field>-->
+        <!--            <field name="model">product.template</field>-->
+        <!--            <field name="inherit_id" ref="product.product_template_tree_view"/>-->
+        <!--            <field name="arch" type="xml">-->
+
+        <!--                <tree position="attributes">-->
+        <!--                    <attribute name="decoration-danger">qty_available&lt;minimum_qty</attribute>-->
+
+        <!--                </tree>-->
+        <!--                <field name="type" position="after">-->
+        <!--                    <field name="qty_available"/>-->
+        <!--                    <field name="minimum_qty"/>-->
+        <!--                </field>-->
+        <!--            </field>-->
+        <!--        </record>-->
+
+
+
+        <record id="product_template_new_tree_view" model="ir.ui.view">
+            <field name="name">product.template.product.tree</field>
+            <field name="model">product.template</field>
+            <field name="arch" type="xml">
+                <tree string="Product" decoration-danger="qty_available&lt;minimum_qty">
+                    <field name="sequence" widget="handle"/>
+                    <field name="default_code"/>
+                    <field name="name"/>
+                    <field name="list_price"/>
+                    <field name="standard_price"/>
+                    <field name="categ_id"/>
+                    <field name="type"/>
+                    <field name="qty_available"/>
+                    <field name="minimum_qty"/>
+                    <field name="is_stock_low" invisible="1"/>
+
+                    <field name="uom_id" options="{'no_open': True, 'no_create': True}" groups="product.group_uom"/>
+                    <field name="active" invisible="1"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="product_template_search_view_min_qy" model="ir.ui.view">
+            <field name="name">product.template.search.min.qty</field>
+            <field name="model">product.template</field>
+            <field name="inherit_id" ref="product.product_template_search_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//filter[@name='consumable']" position="after">
+                    <separator/>
+                    <filter string="Low Quantity Products" name="low_qty_products"
+                             domain="[('is_stock_low','=',1)]"/>
+<!--                            domain="[('qty_available','&lt;','minimum_qty')]"/>-->
+
+                </xpath>
+            </field>
+        </record>
+
+        <record id="product_template_action_extended" model="ir.actions.act_window">
+            <field name="name">Products</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">product.template</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_type">form</field>
+            <field name="view_id" ref="stock_qty_low_notify.product_template_new_tree_view"/>
+            <field name="context">{"search_default_filter_to_sell":1}</field>
+<!--            <field name="search_view_id" ref="product.product_template_search_view"/>-->
+        </record>
+
+        <menuitem id="main_menu_product_template_tree" name="Low Stock Products"
+                  action="product_template_action_extended"
+                  parent="stock.menu_stock_inventory_control" sequence="50"/>
+<!--stock.menu_stock_warehouse_mgmt-->
+
+    </data>
+</odoo>

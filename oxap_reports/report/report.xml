@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+                <report
+                 id="pharmacy_revenue_report"
+                 model="medical.opthalmology"
+                 string="Department Wise Revenue"
+                 name="oxap_reports.pharmacy_revenue_report_template"
+                 file="oxap_reports.pharmacy_revenue_report_template"
+                 report_type="qweb-html"
+                 menu="False"
+                />
+                <report
+                 id="inventory_valaution_report"
+                 model="medical.opthalmology"
+                 string="Inventory Valuation Report"
+                 name="oxap_reports.inventory_valuation_report"
+                 file="oxap_reports.inventory_valuation_report"
+                 report_type="qweb-html"
+                 menu="False"
+                />
+         <report
+            id="inventory_valuation_report_xlsx"
+            model="inventory.report.wiz"
+            string="Inventory Valuation Report"
+            report_type="xlsx"
+            name="inventory_valuation.report.report.xlsx"
+            file="Inventory Valuation"
+            attachment_use="False"
+            menu="True"
+        />
+        <report
+            id="patient_list_xlsx"
+            model="doc.analysis.wiz"
+            string="Doctor Wise Patient List"
+            report_type="xlsx"
+            name="patient_list.report.report.xlsx"
+            file="Patient List"
+            attachment_use="False"
+            menu="True"
+        />
+    </data>
+</odoo>

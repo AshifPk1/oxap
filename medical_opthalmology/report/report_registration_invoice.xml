@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="report_registration_invoice_document">
+        <t t-set="data_report_dpi" t-value="300"/>
+        <t t-call="medical_opthalmology.external_layout_custom">
+            <t class="page">
+                <center>
+                    <h4>
+                        <strong>
+                            <span>REGISTRATION DETAILS</span>
+                        </strong>
+                    </h4>
+                </center>
+                <br/>
+                <h5>
+                    <strong>PATIENT INFORMATION</strong>
+                </h5>
+                <hr style='display:inline-block; width:100%;  border-top:2px solid #9d9d9d; margin: 0'/>
+                <table width="100%" class="tb0">
+                    <tr>
+                        <td width="10%" style="text-align:left;font-size:13px;">
+                            <t>
+                                <strong>Token:</strong>
+                            </t>
+                            <br/>
+                            <t>
+                                <strong>Name :</strong>
+                            </t>
+                        </td>
+                        <td width="20%" style="color:#0077b3;text-align:left;font-size:13px;">
+                            <t t-if="o.name">
+                                <span t-esc="o.name"/>
+                            </t>
+                            <br/>
+                            <t t-if="o.patient_id">
+                                <span t-esc="o.patient_id.partner_id.name"/>
+                            </t>
+                        </td>
+                        <td width="11%" style="text-align: left;font-size:13px;">
+                            <t>
+                                <strong>Gender :</strong>
+                            </t>
+                            <br/>
+                            <t>
+                                <strong>Age : &#160;</strong>
+                            </t>
+                        </td>
+                        <td width="20%" style="color:#0077b3;text-align: left;font-size:13px;">
+                            <t t-if="o.patient_id.gender">
+                                <span t-esc="o.patient_id.gender"/>
+                            </t>
+                            <br/>
+                            <t t-if="o.patient_id.age">
+                                <span t-esc="o.age"/>
+                            </t>
+                        </td>
+                        <td width="11%" style="text-align: right;font-size:13px;">
+                            <t>
+                                <strong>Date : &#160;</strong>
+                            </t>
+                            <br/>
+                            <t>
+                                <strong>Phone :</strong>
+                            </t>
+                        </td>
+                        <td width="18%" style="color:#0077b3;text-align: left;font-size:13px;">
+                            <t t-if="o.date">
+                                <span t-esc="datetime.datetime.strptime(o.date, '%Y-%m-%d %H:%M:%S').strftime('%d-%m-%y %H:%M')"/>
+                            </t>
+                            <br/>
+                            <t t-if="o.patient_id.phone">
+                                <span t-esc="o.patient_id.phone"/>
+                            </t>
+                        </td>
+                    </tr>
+                </table>
+                <br/>
+                <h5>
+                    <strong>HOSPITAL INFORMATION</strong>
+                </h5>
+                <hr style='display:inline-block; width:100%;  border-top:2px solid #9d9d9d; margin: 0'/>
+                <table width="100%" class="tb0">
+                    <tr>
+                        <td width="10%" style="text-align:left;font-size:13px;">
+                            <t t-if="o.doctor_id">
+                                <strong>Doctor :</strong>
+                            </t>
+                        </td>
+                        <td width="20%" style="color:#0077b3;text-align:left;font-size:13px;">
+                            <t t-if="o.doctor_id">
+                                <span t-esc="o.doctor_id.partner_id.name"/>
+                            </t>
+                        </td>
+                        <td width="11%" style="text-align: left;font-size:13px;">
+                            <t t-if="o.patient_id.identification_code">
+                                <strong>File No :</strong>
+                            </t>
+                            <br/>
+
+                        </td>
+                        <td width="20%" style="color:#0077b3;text-align: left;font-size:13px;">
+                            <t t-if="o.patient_id.identification_code">
+                                <span t-esc="o.patient_id.identification_code"/>
+                            </t>
+                            <br/>
+
+                        </td>
+                        <td width="14%" style="text-align: right;font-size:13px;">
+                            <t>
+                                <strong>Referred By :</strong>
+                            </t>
+
+                        </td>
+                        <td width="18%" style="color:#0077b3;text-align: left;font-size:13px;">
+                            <t t-if="o.referred_by_id">
+                                <span t-esc="o.referred_by_id.name"/>
+                            </t>
+                        </td>
+                    </tr>
+                </table>
+                <br/>
+                <hr/>
+                <div class="row">
+                    <div class="col-xs-7">
+                    </div>
+                    <div class="col-xs-3">
+                        <t t-if="o.registration_amount">
+                            <strong>Registration Fee:</strong>
+                            <br/>
+                        </t>
+                    </div>
+                    <div class="col-xs-2">
+                        <t t-if="o.registration_amount"><t t-esc="o.registration_amount"/>&#160;₹
+                            <br/>
+                        </t>
+                    </div>
+                </div>
+                <br/>
+                <div class="row">
+                    <div class="col-xs-7">
+                        <t>
+                            <strong>Important Note:
+                                <br/>
+                            </strong>
+                            1) No Return once sold.No Cash Refund.
+                            <br/>
+                            2) No risk for breaking at the time of repairing.
+                            <br/>
+                        </t>
+                    </div>
+                    <div class="col-xs-5">
+                        <center>
+                            <strong>Visiting Time</strong>
+                            <br/>
+                            9.30 AM to 02.30 PM
+                        </center>
+                    </div>
+                </div>
+                <br/>
+                <br/>
+                <center>
+                    <span style="color:#0077b3;">WISH YOU A SPEEDY RECOVERY</span>
+                </center>
+            </t>
+        </t>
+    </template>
+    <template id="report_registration_invoice">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="medical_opthalmology.report_registration_invoice_document"
+                   t-lang="o.patient_id.partner_id.lang"/>
+            </t>
+        </t>
+    </template>
+</odoo>

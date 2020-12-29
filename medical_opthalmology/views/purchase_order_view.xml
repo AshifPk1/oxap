@@ -1,0 +1,33 @@
+<odoo>
+    <record model="ir.ui.view" id="purchase_order_search">
+        <field name="name">purchase.order.filter.customaize</field>
+        <field name="model">purchase.order</field>
+        <field name="inherit_id" ref="purchase.view_purchase_order_filter"/>
+        <field name="arch" type="xml">
+            <xpath expr="//filter[@name='draft']" position="before">
+                <field name="date_today"/>
+                <filter string="Today" name="date_today"
+                        domain="[('date_today', '=', context_today().strftime('%Y-%m-%d'))]"/>
+            </xpath>
+        </field>
+    </record>
+    <record model="ir.ui.view" id="purchase_order_form_inherit">
+        <field name="name">purchase.order.form.inherit</field>
+        <field name="model">purchase.order</field>
+        <field name="inherit_id" ref="purchase.purchase_order_form"/>
+        <field name="arch" type="xml">
+            <field name="partner_ref" position="after">
+                <field name="is_frame_purchase" invisible="1"/>
+                <field name="is_lense_purchase" invisible="1"/>
+            </field>
+        </field>
+    </record>
+    <menuitem name="Purchases"
+              id="purchase.menu_purchase_root"
+              groups="purchase.group_purchase_manager,purchase.group_purchase_user,group_counsellor_access"
+              web_icon="purchase,static/description/icon.png"
+              sequence="25"/>
+    <menuitem name="Inventory" id="stock.menu_stock_root" sequence="30"
+              groups="stock.group_stock_manager,stock.group_stock_user,group_counsellor_access"
+              web_icon="stock,static/description/icon.png"/>
+</odoo>

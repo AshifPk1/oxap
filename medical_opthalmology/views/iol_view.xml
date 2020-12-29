@@ -1,0 +1,280 @@
+<odoo>
+    <record id="view_iol_confirming_form" model="ir.ui.view">
+        <field name="name">iol.form</field>
+        <field name="model">medical.opthalmology</field>
+        <field name="arch" type="xml">
+            <form string="IOL" class="o_sale_order">
+                <header>
+                    <field name="state" widget="statusbar" statusbar_visible="iol,counselling,done"/>
+                    <button name="confirm_iol" string="Confirm IOL" type='object' class="btn-primary"
+                            attrs="{'invisible':[('state','not in','iol')]}"/>
+                    <button name="print_iol_details" string="Print Iol Details" type='object' class="btn-primary"/>
+                </header>
+                <group col="10">
+                    <div>
+                        <group style="width:5%">
+                            <field name="name" nolabel='1' readonly="1" style="width:30%"/>
+                        </group>
+                        <group style="width:15%">
+                            <div class="oe_title" name="title">
+                                <h3>
+                                    <field name="patient_id" placeholder="Patient Name"
+                                           nolabel="1" attrs="{'readonly': [('state', 'not in', 'registration')]}"
+                                           style="width:70%"/>
+                                </h3>
+                            </div>
+                        </group>
+                        <group style="width:7%">
+                            <field name="identification_code" nolabel="1"
+                                   attrs="{'readonly': [('state', 'not in', 'registration')]}"/>
+                        </group>
+                        <group style="width:7%">
+                            <field name="age" nolabel="1" attrs="{'readonly': [('state', 'not in', 'registration')]}"/>
+                        </group>
+                        <group style="width:13%">
+                            <field name="doctor_id" nolabel="1"
+                                   attrs="{'readonly': [('state', 'not in', 'registration')]}"/>
+                        </group>
+                        <group style="width:8%">
+                            <field name="date" nolabel="1" attrs="{'readonly': [('state', 'not in', 'registration')]}"/>
+                        </group>
+                        <group style="width:7%">
+
+                            <field name="gender" nolabel="1"
+                                   attrs="{'readonly': [('state', 'not in', 'registration')]}"/>
+                        </group>
+                        <group style="width:8%">
+                            <field name="referred_by_id" nolabel="1"
+                                   attrs="{'readonly': [('state', 'not in', 'registration')]}"/>
+                        </group>
+                        <group style="width:5%">
+                            <div>
+                                <label for="referred_to_surgery" string="Counselling"/>
+                                <field name="referred_to_surgery" nolabel="1"
+                                       attrs="{'readonly': [('state', 'not in', 'counselling')]}"/>
+                            </div>
+                        </group>
+                        <group style="width:20%">
+                            <div>
+                                <label for="counselling_text" string="Counselling Text"
+                                       attrs="{'invisible':[('referred_to_surgery','=',False)]}"/>
+                                <field name="counselling_text" nolabel="1"
+                                       attrs="{'invisible':[('referred_to_surgery','=',False)],'readonly': [('state', 'not in', 'counselling')]}"/>
+                            </div>
+                        </group>
+                    </div>
+                </group>
+                <group col="5">
+                    <group style="width:20%">
+                    </group>
+                    <group style="width:28.5%">
+                        <div>
+                            <div style="height:5%">
+                            </div>
+                            <label for="visual_acuitity_ids" string=" " style="width: 42%"/>
+                            <label style="color:#B10707;text-align:left;font-size:14px;width: 40%;font-weight: bold"
+                                   for="keratometer_ids" string="RE"/>
+                            <field name="keratometer_ids" style="width: 90%">
+                                <tree string="Dilated" editable="bottom" nolabel='1' delete="false" create="false">
+                                    <field name="keratometer" readonly="1" style="width: 30%"/>
+                                    <field name="k1"/>
+                                    <field name="k2"/>
+                                </tree>
+                            </field>
+                            <div style="height:30px">
+                            </div>
+                            <field name="duct_le" nolabel="1" style="width: 90%"/>
+                            <div style="height:10px">
+                            </div>
+                            <field name="axl_le_ids" style="width: 90%">
+                                <tree string="Axl LE" editable="bottom" nolabel='1' delete="false" create="false">
+                                    <field name="contact"/>
+                                    <field name="immersion"/>
+                                    <field name="corrected"/>
+                                    <field name="axl" readonly="1"/>
+                                </tree>
+                            </field>
+                        </div>
+                    </group>
+                    <group style="width:4%">
+                        <div>
+                            <div style="height:58px">
+                            </div>
+                            <label for="keratometer_ids" string="KM"
+                                   style="color:#B10707;text-align:left;font-size:12px;width:40%;font-weight: bold;"/>
+                            <div style="height:46px">
+                            </div>
+                            <label for="keratometer_ids" string="IOL"
+                                   style="color:#B10707;text-align:left;font-size:14px;width:40%;font-weight: bold;"/>
+                            <div style="height:21px">
+                            </div>
+                            <label for="duct_le" string="DUCT"
+                                   style="color:#B10707;text-align:left;font-size:12px;width:90%;font-weight: bold;"/>
+                            <div style="height:28px">
+                            </div>
+                            <label for="axl_re_ids" string="AXL"
+                                   style="color:#B10707;text-align:left;font-size:12px;width:40%;font-weight: bold;"/>
+                        </div>
+                    </group>
+                    <group style="width:27%">
+                        <div>
+                            <label for="visual_acuitity_ids" string=" " style="width: 42%"/>
+                            <label style="color:#B10707;text-align:left;font-size:14px;width: 40%;font-weight: bold"
+                                   for="keratometer_re_ids" string="LE"/>
+
+                            <field name="keratometer_re_ids" mode='tree' style="width: 90%">
+                                <tree string="Dilated AR" editable="bottom" nolabel='1' delete="false" create="false">
+                                    <field name="k1"/>
+                                    <field name="k2"/>
+                                    <field name="keratometer" readonly="1" style="width: 30%"/>
+                                </tree>
+                            </field>
+                            <div style="height:30px">
+                            </div>
+                            <field name="duct_re" nolabel="1" style="width: 90%"/>
+                            <div style="height:10px">
+                            </div>
+                            <field name="axl_re_ids" style="width: 90%">
+                                <tree string="Axl RE" editable="bottom" nolabel='1' delete="false" create="false">
+                                    <field name="axl" readonly="1"/>
+                                    <field name="contact"/>
+                                    <field name="immersion"/>
+                                    <field name="corrected"/>
+                                </tree>
+                            </field>
+                        </div>
+                    </group>
+                    <group style="width:25%">
+                    </group>
+                </group>
+                <group col="4">
+                    <group style="width:14.5%">
+                    </group>
+                    <group style="width:35%">
+                        <div>
+                            <field name="iol_le_ids" style="width: 90%">
+                                <tree string="Iol LE" editable="bottom" nolabel='1' delete="false" create="false">
+                                    <field name="constant"/>
+                                    <field name="power_2"/>
+                                    <field name="ref_err_2"/>
+                                    <field name="power"/>
+                                    <field name="ref_err_1"/>
+                                    <field name="iol" readonly="1"/>
+                                </tree>
+                            </field>
+                        </div>
+                    </group>
+                    <group style="width:2.5%">
+                    </group>
+                    <group style="width:35%">
+                        <div>
+                            <field name="iol_re_ids" style="width: 90%">
+                                <tree string="Iol RE" editable="bottom" nolabel='1' delete="false" create="false">
+                                    <field name="iol" readonly="1"/>
+                                    <field name="constant"/>
+                                    <field name="power_2"/>
+                                    <field name="ref_err_2"/>
+                                    <field name="power"/>
+                                    <field name="ref_err_1"/>
+                                </tree>
+                            </field>
+                        </div>
+                    </group>
+                    <group style="width:12%">
+
+                    </group>
+                </group>
+                <group col="4">
+                    <group style="width:26%">
+                        <div>
+                            <label for="calculated_power_re" string="Values (BE) linked with surgery Appointment-->"
+                                   style="color:#B10707;text-align:left;font-size:11px;font-weight: bold;"/>
+                        </div>
+                    </group>
+                    <group style="width:18%">
+                        <div>
+                            <field name="calculated_power_le" style="width: 90%"/>
+                            <div style="height:5%">
+                            </div>
+                            <field name="acd_le" style="width: 60%"/>
+                            <label for="acd_le" string="Um"
+                                   style="color:#B10707;text-align:left;font-size:10px;width:20%;font-weight: bold;"/>
+                        </div>
+                    </group>
+                    <group style="width:10%">
+                        <div>
+                            <div style="height:7px">
+                            </div>
+                            <label for="calculated_power_le" string="Calculated Power"
+                                   style="color:#B10707;text-align:left;font-size:12px;font-weight: bold;"/>
+                            <div style="height:11px">
+                            </div>
+                            <label for="acd_le" string="ACD"
+                                   style="color:#B10707;text-align:left;font-size:12px;font-weight: bold;"/>
+                        </div>
+                    </group>
+                    <group style="width:18%">
+                        <div>
+                            <field name="calculated_power_re" style="width: 90%"/>
+                            <div style="height:5%">
+                            </div>
+                            <field name="acd_re" style="width: 60%"/>
+                            <label for="acd_re" string="Um"
+                                   style="color:#B10707;text-align:left;font-size:10px;width:20%;font-weight: bold;"/>
+                        </div>
+                    </group>
+                    <group style="width:25%">
+                    </group>
+                </group>
+                <group col="3">
+                    <group style="width:34%">
+                    </group>
+                    <group>
+                        <div>
+                            <field name="iol_text" nolabel='1' style="width: 90%"/>
+                        </div>
+                    </group>
+                    <group>
+                    </group>
+                </group>
+            </form>
+        </field>
+    </record>
+    <record id="iol_confirming_tree" model="ir.ui.view">
+        <field name="name">iol_tree</field>
+        <field name="model">medical.opthalmology</field>
+        <field name="arch" type="xml">
+            <tree string="Doctor Checkup">
+                <field name="name"/>
+                <field name="patient_id"/>
+                <field name="identification_code"/>
+                <field name="doctor_id"/>
+                <field name="date"/>
+                <field name="state"/>
+            </tree>
+        </field>
+    </record>
+    <record id="action_iol_confirm" model="ir.actions.act_window">
+        <field name="name">ASCAN (IOL)</field>
+        <field name="res_model">medical.opthalmology</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="context">{'form_view_initial_mode': 'edit','create': False}</field>
+        <field name="domain">[('state', 'in', ('iol','counselling'))]</field>
+    </record>
+    <record id="action_iol_confirm_tree1_view1" model="ir.actions.act_window.view">
+        <field eval="1" name="sequence"/>
+        <field name="view_mode">tree</field>
+        <field name="view_id" ref="iol_confirming_tree"/>
+        <field name="act_window_id" ref="action_iol_confirm"/>
+    </record>
+    <record id="action_iol_confirm_tree1_view2" model="ir.actions.act_window.view">
+        <field eval="2" name="sequence"/>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="view_iol_confirming_form"/>
+        <field name="act_window_id" ref="action_iol_confirm"/>
+    </record>
+    <menuitem id="iol_stage" groups="medical_opthalmology.group_refraction_access" action="action_iol_confirm"
+              parent="medical_opthalmology.patient_visit_main" sequence="5"/>
+</odoo>
+

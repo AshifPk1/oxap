@@ -1,0 +1,78 @@
+<odoo>
+    <record id="automatic_eye_va_value_re1" model="eye.value_va">
+        <field name="name">6/6</field>
+    </record>
+    <record id="automatic_eye_va_value_re2" model="eye.value_va">
+        <field name="name">6/9</field>
+    </record>
+    <record id="automatic_eye_va_value_re3" model="eye.value_va">
+        <field name="name">6/12</field>
+    </record>
+    <record id="automatic_eye_va_value_re4" model="eye.value_va">
+        <field name="name">6/18</field>
+    </record>
+    <record id="automatic_eye_va_value_re5" model="eye.value_va_me">
+        <field name="name">6/24</field>
+    </record>
+    <record id="automatic_eye_va_value_re6" model="eye.value_va_me">
+        <field name="name">6/36</field>
+    </record>
+    <record id="automatic_eye_va_value_re7" model="eye.value_va_me">
+        <field name="name">6/60</field>
+    </record>
+    <record id="automatic_eye_va_value_re8" model="eye.value_va_me">
+        <field name="name">5/60</field>
+    </record>
+    <record id="automatic_eye_va_value_re9" model="eye.value_va_re">
+        <field name="name">4/60</field>
+    </record>
+    <record id="automatic_eye_va_value_re10" model="eye.value_va_re">
+        <field name="name">3/60</field>
+    </record>
+    <record id="automatic_eye_va_value_re11" model="eye.value_va_re">
+        <field name="name">2/60</field>
+    </record>
+
+    <record id="automatic_eye_va_value_re12" model="eye.value_va_re">
+        <field name="name">1/60</field>
+    </record>
+
+    <record id="automatic_eye_va_value_re13" model="eye.value_re_va_2">
+        <field name="name">CF CF</field>
+    </record>
+    <record id="automatic_eye_va_value_re14" model="eye.value_re_va_2">
+        <field name="name">HM</field>
+    </record>
+    <record id="automatic_eye_va_value_re15" model="eye.value_re_va_2">
+        <field name="name">PL+PR+</field>
+    </record>
+    <record id="automatic_eye_va_value_re16" model="eye.value_re_va_2">
+        <field name="name">PL+PR-</field>
+    </record>
+
+
+    <record id="automatic_eye_va_value_nv1" model="eye.value_va_nv_re">
+        <field name="name">N6</field>
+    </record>
+
+    <record id="automatic_eye_va_value_nv2" model="eye.value_va_nv_re">
+        <field name="name">N8</field>
+    </record>
+
+    <record id="automatic_eye_va_value_nv3" model="eye.value_va_nv_re">
+        <field name="name">N10</field>
+    </record>
+    <record id="automatic_eye_va_value_nv4" model="eye.value_nv_re_va_2">
+        <field name="name">N12</field>
+    </record>
+    <record id="automatic_eye_va_value_nv5" model="eye.value_nv_re_va_2">
+        <field name="name">N18</field>
+    </record>
+    <record id="automatic_eye_va_value_nv6" model="eye.value_nv_re_va_2">
+        <field name="name">N24</field>
+    </record>
+    <record id="automatic_eye_va_value_nv7" model="eye.value_nv_re_va_2">
+        <field name="name">N36</field>
+    </record>
+
+</odoo>

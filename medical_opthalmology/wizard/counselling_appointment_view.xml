@@ -1,0 +1,27 @@
+<odoo>
+    <record id="counselling_wizard_view" model="ir.ui.view">
+        <field name="name">counselling.appointment.form</field>
+        <field name="model">counselling.appointment</field>
+        <field name="arch" type="xml">
+            <form string="Counselling warning">
+                <h4 style="color:#B10707;text-align:center;font-weight: bold;">Create Appointment Here</h4>
+                <group col="1">
+                    <group style="width:50%" string="Review">
+                        <field name="one_week"/>
+                        <field name="two_week"/>
+                        <field name="one_month"/>
+                        <field name="other"/>
+                        <field name="review_text"
+                               attrs="{'invisible':[('other','=',False)],'required':[('other','=',True)]}"/>
+                        <field name="note"/>
+                    </group>
+                </group>
+                <footer>
+                    <button name="confirm_values" string="Confirm" type='object' class="btn-primary"/>
+                    OR
+                    <button string="Cancel" class="btn-default" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+</odoo>

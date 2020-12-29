@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="pharmacy_revenue_report_wiz_form" model="ir.ui.view">
+                <field name="name">pharmacy.revenue.report.wiz.form</field>
+                <field name="model">pharmacy.revenue.report.wiz</field>
+                <field name="arch" type="xml">
+                    <form string="Pharmavy Revenue">
+                        <group>
+                            <group>
+                                <label for="date_from" string="Date"/>
+                                <div class="o_row">
+                                    <field name="date_from" />To
+                                    <field name="date_to"/>
+                                </div>
+                            </group>
+                            <group>
+                                <field name="doctor_id" options="{'no_create_edit': True}"/>
+                            </group>
+                        </group>
+                        <footer>
+                            <button name="print_pharmacy_revenue_report" string="Print Report" type="object" class="oe_highlight"/>
+                            <button special="cancel" string="Cancel" class="btn-default"/>
+                        </footer>
+                    </form>
+                </field>
+         </record>
+        <record model="ir.actions.act_window" id="pharmacy_revenue_report_wiz_action">
+            <field name="name">Revenue Report</field>
+            <field name="res_model">pharmacy.revenue.report.wiz</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+        </record>
+        <menuitem id="menu_revenue_pharmacy" name="Department wise Revenue" parent="menu_revenue_report_main"
+                  action="pharmacy_revenue_report_wiz_action" groups="medical_opthalmology.group_reception_access,medical_opthalmology.group_opticals_access,medical_opthalmology.group_pharmacy_access,medical_opthalmology.group_counsellor_access"/>
+    </data>
+</odoo>

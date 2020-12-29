@@ -1,0 +1,257 @@
+<odoo>
+    <data>
+        <record id="automatic_eye_value1" model="eye.value">
+            <field name="name">-0.25</field>
+        </record>
+        <record id="automatic_eye_value2" model="eye.value">
+            <field name="name">-0.5</field>
+        </record>
+        <record id="automatic_eye_value3" model="eye.value">
+            <field name="name">-0.75</field>
+        </record>
+        <record id="automatic_eye_value4" model="eye.value">
+            <field name="name">-1</field>
+        </record>
+        <record id="automatic_eye_value5" model="eye.value">
+            <field name="name">-1.25</field>
+        </record>
+        <record id="automatic_eye_value6" model="eye.value">
+            <field name="name">-1.5</field>
+        </record>
+        <record id="automatic_eye_value7" model="eye.value">
+            <field name="name">-1.75</field>
+        </record>
+        <record id="automatic_eye_value8" model="eye.value">
+            <field name="name">-2</field>
+        </record>
+        <record id="automatic_eye_value9" model="eye.value">
+            <field name="name">-2.25</field>
+        </record>
+        <record id="automatic_eye_value10" model="eye.value">
+            <field name="name">-2.5</field>
+        </record>
+        <record id="automatic_eye_value11" model="eye.value">
+            <field name="name">-2.75</field>
+        </record>
+
+        <record id="automatic_eye_value12" model="eye.value">
+            <field name="name">-3</field>
+        </record>
+        <record id="automatic_eye_value13" model="eye.value">
+            <field name="name">-3.25</field>
+        </record>
+        <record id="automatic_eye_value14" model="eye.value">
+            <field name="name">-3.5</field>
+        </record>
+        <record id="automatic_eye_value15" model="eye.value">
+            <field name="name">-3.75</field>
+        </record>
+        <record id="automatic_eye_value16" model="eye.value">
+            <field name="name">-4</field>
+        </record>
+        <record id="automatic_eye_value17" model="eye.value">
+            <field name="name">-4.25</field>
+        </record>
+        <record id="automatic_eye_value18" model="eye.value">
+            <field name="name">-4.5</field>
+        </record>
+        <record id="automatic_eye_value19" model="eye.value">
+            <field name="name">-4.75</field>
+        </record>
+        <record id="automatic_eye_value20" model="eye.value">
+            <field name="name">-5</field>
+        </record>
+
+
+        <record id="automatic_eye_value_me1" model="eye.value_me">
+            <field name="name">-5.25</field>
+        </record>
+        <record id="automatic_eye_value_me2" model="eye.value_me">
+            <field name="name">-5.5</field>
+        </record>
+        <record id="automatic_eye_value_me3" model="eye.value_me">
+            <field name="name">-5.75</field>
+        </record>
+        <record id="automatic_eye_value_me4" model="eye.value_me">
+            <field name="name">-6</field>
+        </record>
+        <record id="automatic_eye_value_me5" model="eye.value_me">
+            <field name="name">-6.25</field>
+        </record>
+        <record id="automatic_eye_value_me6" model="eye.value_me">
+            <field name="name">-6.5</field>
+        </record>
+        <record id="automatic_eye_value_me7" model="eye.value_me">
+            <field name="name">-6.75</field>
+        </record>
+        <record id="automatic_eye_value_me8" model="eye.value_me">
+            <field name="name">-7</field>
+        </record>
+        <record id="automatic_eye_value_me9" model="eye.value_me">
+            <field name="name">-7.25</field>
+        </record>
+        <record id="automatic_eye_value_me10" model="eye.value_me">
+            <field name="name">-7.5</field>
+        </record>
+        <record id="automatic_eye_value_me11" model="eye.value_me">
+            <field name="name">-7.75</field>
+        </record>
+        <record id="automatic_eye_value_me12" model="eye.value_me">
+            <field name="name">-8</field>
+        </record>
+        <record id="automatic_eye_value_me13" model="eye.value_me">
+            <field name="name">-8.25</field>
+        </record>
+        <record id="automatic_eye_value_me14" model="eye.value_me">
+            <field name="name">-8.5</field>
+        </record>
+        <record id="automatic_eye_value_me15" model="eye.value_me">
+            <field name="name">-8.75</field>
+        </record>
+        <record id="automatic_eye_value_me16" model="eye.value_me">
+            <field name="name">-9</field>
+        </record>
+        <record id="automatic_eye_value_me17" model="eye.value_me">
+            <field name="name">-9.25</field>
+        </record>
+        <record id="automatic_eye_value_me18" model="eye.value_me">
+            <field name="name">-9.5</field>
+        </record>
+        <record id="automatic_eye_value_me19" model="eye.value_me">
+            <field name="name">-9.75</field>
+        </record>
+        <record id="automatic_eye_value_me20" model="eye.value_me">
+            <field name="name">-10</field>
+        </record>
+
+
+        <record id="automatic_eye_value_re21" model="eye.value_re">
+            <field name="name">+0.25</field>
+        </record>
+        <record id="automatic_eye_value_re22" model="eye.value_re">
+            <field name="name">+0.5</field>
+        </record>
+        <record id="automatic_eye_value_re23" model="eye.value_re">
+            <field name="name">+0.75</field>
+        </record>
+        <record id="automatic_eye_value_re24" model="eye.value_re">
+            <field name="name">+1</field>
+        </record>
+        <record id="automatic_eye_value_re25" model="eye.value_re">
+            <field name="name">+1.25</field>
+        </record>
+        <record id="automatic_eye_value_re26" model="eye.value_re">
+            <field name="name">+1.5</field>
+        </record>
+        <record id="automatic_eye_value_re27" model="eye.value_re">
+            <field name="name">+1.25</field>
+        </record>
+        <record id="automatic_eye_value_re28" model="eye.value_re">
+            <field name="name">+1.5</field>
+        </record>
+        <record id="automatic_eye_value_re29" model="eye.value_re">
+            <field name="name">+1.75</field>
+        </record>
+        <record id="automatic_eye_value_re30" model="eye.value_re">
+            <field name="name">+2</field>
+        </record>
+        <record id="automatic_eye_value_re31" model="eye.value_re">
+            <field name="name">+2.25</field>
+        </record>
+
+        <record id="automatic_eye_value_re32" model="eye.value_re">
+            <field name="name">+2.5</field>
+        </record>
+        <record id="automatic_eye_value_re33" model="eye.value_re">
+            <field name="name">+2.75</field>
+        </record>
+        <record id="automatic_eye_value_re34" model="eye.value_re">
+            <field name="name">+3</field>
+        </record>
+        <record id="automatic_eye_value_re35" model="eye.value_re">
+            <field name="name">+3.75</field>
+        </record>
+        <record id="automatic_eye_value_re36" model="eye.value_re">
+            <field name="name">+4</field>
+        </record>
+        <record id="automatic_eye_value_re37" model="eye.value_re">
+            <field name="name">+4.25</field>
+        </record>
+        <record id="automatic_eye_value_re38" model="eye.value_re">
+            <field name="name">+4.5</field>
+        </record>
+        <record id="automatic_eye_value_re39" model="eye.value_re">
+            <field name="name">+4.75</field>
+        </record>
+        <record id="automatic_eye_value_re40" model="eye.value_re">
+            <field name="name">+5</field>
+        </record>
+
+
+        <record id="automatic_eye_value_re41" model="eye.value_re_2">
+            <field name="name">+5.25</field>
+        </record>
+        <record id="automatic_eye_value_re42" model="eye.value_re_2">
+            <field name="name">+5.5</field>
+        </record>
+        <record id="automatic_eye_value_re43" model="eye.value_re_2">
+            <field name="name">+5.75</field>
+        </record>
+        <record id="automatic_eye_value_re44" model="eye.value_re_2">
+            <field name="name">+6</field>
+        </record>
+        <record id="automatic_eye_value_re45" model="eye.value_re_2">
+            <field name="name">+6.25</field>
+        </record>
+        <record id="automatic_eye_value_re46" model="eye.value_re_2">
+            <field name="name">+6.5</field>
+        </record>
+        <record id="automatic_eye_value_re47" model="eye.value_re_2">
+            <field name="name">+6.75</field>
+        </record>
+        <record id="automatic_eye_value_re48" model="eye.value_re_2">
+            <field name="name">+7</field>
+        </record>
+        <record id="automatic_eye_value_re49" model="eye.value_re_2">
+            <field name="name">+7.25</field>
+        </record>
+        <record id="automatic_eye_value_re50" model="eye.value_re_2">
+            <field name="name">+7.5</field>
+        </record>
+        <record id="automatic_eye_value_re51" model="eye.value_re_2">
+            <field name="name">+7.75</field>
+        </record>
+
+        <record id="automatic_eye_value_re52" model="eye.value_re_2">
+            <field name="name">+8</field>
+        </record>
+
+        <record id="automatic_eye_value_re53" model="eye.value_re_2">
+            <field name="name">+8.25</field>
+        </record>
+        <record id="automatic_eye_value_re54" model="eye.value_re_2">
+            <field name="name">+8.5</field>
+        </record>
+        <record id="automatic_eye_value_re55" model="eye.value_re_2">
+            <field name="name">+8.75</field>
+        </record>
+        <record id="automatic_eye_value_re56" model="eye.value_re_2">
+            <field name="name">+9</field>
+        </record>
+        <record id="automatic_eye_value_re57" model="eye.value_re_2">
+            <field name="name">+9.25</field>
+        </record>
+        <record id="automatic_eye_value_re58" model="eye.value_re_2">
+            <field name="name">+9.5</field>
+        </record>
+        <record id="automatic_eye_value_re59" model="eye.value_re_2">
+            <field name="name">+9.75</field>
+        </record>
+        <record id="automatic_eye_value_re60" model="eye.value_re_2">
+            <field name="name">+10</field>
+        </record>
+        <record id="automatic_eye_alue_re61" model="eye.value_re_2">
+            <field name="name">0</field>
+        </record>
+    </data>
+</odoo>

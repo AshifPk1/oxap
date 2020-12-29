@@ -1,0 +1,1504 @@
+<odoo>
+    <record id="view_patient_registration_form" model="ir.ui.view">
+        <field name="name">patient.registration.form</field>
+        <field name="model">medical.opthalmology</field>
+        <field name="arch" type="xml">
+            <form string="Patient Registration" class="o_sale_order">
+                <header>
+                    <button name="confirm_registration_warning" string="Confirm" type='object' class="btn-primary"
+                            attrs="{'invisible':[('state','not in','registration')]}"/>
+                    <field name="state" widget="statusbar" statusbar_visible="registration,waiting,refraction,done"/>
+                </header>
+                <sheet>
+                    <h1>
+                        <field name="name" readonly="1"/>
+                        <div class="col-xs-4 pull-right" style="color:#0077b3;text-align:left;font-size:13px;">
+                            <group>
+                                <field name="referred_by_id"
+                                       attrs="{'readonly': [('state', 'not in', 'registration')]}"/>
+                                <field name="pricelist_id" readonly='False' invisible="1"/>
+                                <field name="reference_type_id"
+                                       attrs="{'readonly': [('state', 'not in', 'registration')]}"/>
+                            </group>
+                        </div>
+                    </h1>
+                    <group string="Patient Information" col="3">
+                        <group style="width:35%">
+                            <field name="new_patient_is"/>
+                            <field name="is_refund" invisible="1"/>
+                            <h2>
+                                <field name="patient_id" style="width:130%;" options="{'no_create_edit': True}"
+                                       placeholder="Patient Name"
+                                       attrs="{'readonly': [('state', 'not in', 'registration')],'invisible':[('new_patient_is','=',True),('state','=','registration')],'required':[('new_patient_is','=',False)]}"/>
+                                <field name="patient_new" style="width:130%;" placeholder="New Patient"
+                                       attrs="{'readonly': [('state', 'not in', 'registration')],'invisible':['|',('new_patient_is','=',False),('state','!=','registration')],'required':[('new_patient_is','=',True)]}"/>
+                            </h2>
+                            <field name="street"
+                                   placeholder="Address..."
+                                   class="o_address_street"
+                                   attrs="{'readonly': [('state', 'not in', 'registration')]}"
+                            />
+                            <field name="street2"
+                                   placeholder="Street 2..."
+                                   class="o_address_street" invisible="1"
+                                   attrs="{'readonly': [('state', 'not in', 'registration')]}"
+                            />
+                            <field name="city"
+                                   placeholder="Place"
+                                   class="o_address_city"
+                                   attrs="{'readonly': [('state', 'not in', 'registration')]}"
+                            />
+                            <field name="state_id"
+                                   class="o_address_state"
+                                   placeholder="State"
+                                   options='{"no_open": True,"no_create_edit": True,"no_quick_create":True}'
+                                   context="{'country_id': country_id, 'zip': zip}" invisible="1"
+                                   attrs="{'readonly': [('state', 'not in', 'registration')]}"
+                            />
+                            <field name="zip"
+                                   placeholder="ZIP"
+                                   class="o_address_zip" invisible="1"
+                                   attrs="{'readonly': [('state', 'not in', 'registration')]}"
+                            />
+                            <field name="country_id"
+                                   placeholder="Country"
+                                   class="o_address_country" invisible="1"
+                                   options='{"no_open": True, "no_create": True}'
+                                   attrs="{'readonly': [('state', 'not in', 'registration')]}"
+                            />
+                            <field name="phone" attrs="{'readonly': [('state', 'not in', 'registration')]}"
+                                   placeholder="Contact Number"/>
+                        </group>
+                        <group style="width:32.5%">
+                            <div style="height:92px">
+                            </div>
+                            <field name="date" attrs="{'readonly': [('state', 'not in', 'registration')]}"
+                                   placeholder="Admission Date"/>
+                            <field name="age" attrs="{'readonly': [('state', 'not in', 'registration')]}"
+                                   placeholder="Age"/>
+                            <field name="age_in_float" invisible="0"/>
+                            <field name="gender" attrs="{'readonly': [('state', 'not in', 'registration')]}"
+                                   placeholder="Gender"/>
+                        </group>
+                        <group style="width:32.5%">
+                            <field name="search_file_number" style="background:lightgrey;color: Red;"
+                                   placeholder="Search File Number" nolabel="1"
+                                   attrs="{'invisible':['|',('new_patient_is','=',True),('state','!=','registration')]}"/>
+                            <div style="height:90px">
+                            </div>
+                            <field name="identification_code" readonly="1"
+                                   placeholder="File Number" store="1" force_save="1"/>
+                            <field name="doctor_id" options='{"no_create_edit": True,"no_open": True}'
+                                   placeholder="Doctor"/>
+                            <field name="tag_ids" widget="many2many_tags"
+                                   attrs="{'readonly': [('state', 'not in', 'registration')]}"
+                                   options="{'color_field': 'color'}"
+                                   placeholder="Tags"/>
+                        </group>
+                    </group>
+                    <group string="Payment Information">
+                        <group>
+                            <label for="registration_amount"/>
+                            <div class="o_row">
+                                <field name="registration_amount" placeholder="Registration Fee" widget="monetary"
+                                       attrs="{'readonly': [('state', 'not in', 'registration')]}"/>
+                            </div>
+                        </group>
+                        <group>
+                            <field name="journal_id" placeholder="Payment Method"
+                                   options='{"no_open": True, "no_create": True}'
+                                   attrs="{'required':[('registration_amount','>',0)],'readonly': [('state', 'not in', 'registration')]}"/>
+                        </group>
+                        <group>
+                            <field name="last_payment_date" invisible="0"
+                                   attrs="{'invisible': [('last_payment_days', '=', False)]}"/>
+                            <field name="last_payment_days" attrs="{'invisible': [('last_payment_days', '=', False)]}"/>
+                        </group>
+                    </group>
+                    <button name="print_slip" type="object" class="btn-primary" string="Print Slip"
+                            attrs="{'invisible':[('state','in','registration')]}"/>
+                    <button name="print_invoice" type="object" class="btn-primary" string="Print Details"
+                            attrs="{'invisible':[('state','in','registration')]}"/>
+                    <button name="action_invoice_cancel" type="object"
+                            string="Cancel Registration Invoice"
+                            attrs="{'invisible':['|',('state','in','registration'),('is_refund','=',True)]}" confirm="Are you sure to create credit note?"/>
+                    <notebook>
+                        <page string="History">
+                            <field name="pre_regstr_history_ids" readonly="1" force_save="1">
+                                <form string="Counselling" class="o_sale_order">
+                                    <h5>
+                                        <field name="state" invisible="1"/>
+                                        <div class="col-xs-7     pull-left"
+                                             style="color:#0077b3;text-align:left;font-size:12px;box-shadow: 5px 5px #888888;">
+                                            <group col="2">
+                                                <group style="width:45%">
+                                                    <div>
+                                                        <label for="counselling_status" string="Counselling Status"
+                                                               style="width:40%"/>
+                                                        <field name="counselling_status" nolabel="1" widget="radio"
+                                                               options="{'horizontal': true}"/>
+                                                    </div>
+                                                </group>
+                                                <group style="width:45%">
+                                                    <div>
+                                                        <field name="counselling_details" nolabel="1"
+                                                               placeholder="Note"/>
+                                                    </div>
+                                                </group>
+                                            </group>
+                                        </div>
+                                        <div class="col-xs-4 pull-right">
+                                            <label for="attachment_ids" string="Fitness Attachments"
+                                                   style="color:#B10707;text-align:center;font-size:13px;width:40%;font-weight: bold"/>
+                                            <field name="attachment_ids" widget="many2many_tags" style="width:40%"/>
+                                            <label for="surgery_date" string="Surgery Date"
+                                                   style="color:#B10707;text-align:center;font-size:13px;width:40%;font-weight: bold"/>
+                                            <field name="surgery_date" style="width:40%"/>
+                                        </div>
+                                    </h5>
+                                    <group col="10">
+                                        <div>
+                                            <group style="width:5%">
+                                                <field name="name" nolabel='1' readonly="1" style="width:30%"/>
+                                            </group>
+                                            <group style="width:15%">
+                                                <div class="oe_title" name="title">
+                                                    <h3>
+                                                        <field name="patient_id" placeholder="Patient Name"
+                                                               nolabel="1"
+                                                               attrs="{'readonly': [('state', 'not in', 'registration')]}"
+                                                               style="width:70%"/>
+                                                    </h3>
+                                                </div>
+                                            </group>
+                                            <group style="width:7%">
+                                                <field name="identification_code" nolabel="1"
+                                                       attrs="{'readonly': [('state', 'not in', 'registration')]}"/>
+                                            </group>
+                                            <group style="width:7%">
+                                                <field name="age" nolabel="1"
+                                                       attrs="{'readonly': [('state', 'not in', 'registration')]}"/>
+                                            </group>
+                                            <group style="width:13%">
+                                                <field name="doctor_id" nolabel="1"
+                                                       attrs="{'readonly': [('state', 'not in', 'registration')]}"/>
+                                            </group>
+                                            <group style="width:8%">
+                                                <field name="date" nolabel="1"
+                                                       attrs="{'readonly': [('state', 'not in', 'registration')]}"/>
+                                            </group>
+                                            <group style="width:7%">
+                                                <field name="gender" nolabel="1"
+                                                       attrs="{'readonly': [('state', 'not in', 'registration')]}"/>
+                                            </group>
+                                            <group style="width:8%">
+                                                <field name="referred_by_id" nolabel="1"
+                                                       attrs="{'readonly': [('state', 'not in', 'registration')]}"/>
+                                            </group>
+                                            <group style="width:25%">
+                                                <div>
+                                                    <field name="referred_to_surgery" nolabel="1"/>
+                                                    <label for="referred_to_surgery" string="Counselling"
+                                                           style="text-align:center;width:3%"/>
+                                                    <field name="counselling_text" nolabel="1"
+                                                           attrs="{'invisible':[('referred_to_surgery','=',False)]}"/>
+                                                </div>
+                                            </group>
+                                        </div>
+                                    </group>
+                                    <notebook>
+                                        <page string="Counselling">
+                                            <group col="2">
+                                                <group style="width:50%">
+                                                    <div>
+                                                        <field name="iol_status" invisible="1"/>
+                                                        <field name="fitness_status" invisible="1"/>
+                                                        <field name="schedule_status" invisible="1"/>
+                                                        <field name="counselling_invoice_id" invisible="1"/>
+                                                        <field name="invoiced_investigation" invisible="1"/>
+                                                        <field name="surgery_invoice_id" invisible="1"/>
+                                                        <field name="invoiced_surgery" invisible="1"/>
+                                                        <div style="height:2px">
+                                                        </div>
+                                                        <div style="box-shadow: 2px 2px #888888;width:90%">
+                                                            <label for="prescription" string="Treatments"
+                                                                   style="color:#B10707;text-align:center;font-size:12px;font-weight: bold"/>
+                                                            <field name="prescription" nolabel="1" style="width:95%"/>
+                                                        </div>
+                                                        <div style="height:20px">
+                                                        </div>
+                                                        <div style="box-shadow: 2px 2px #888888;width:90%">
+                                                            <label for="investigation_details_ids"
+                                                                   string="Investigation Details"
+                                                                   style="color:#B10707;text-align:center;font-size:12px;font-weight: bold"/>
+                                                            <field name="investigation_details_ids" mode='tree'
+                                                                   style="width:95%">
+                                                                <tree string="Investigation details" editable="bottom">
+                                                                    <field name="investigation"
+                                                                           options='{"no_open": True, "no_create": True}'
+                                                                           domain="[('is_investigations', '=', True)]"/>
+                                                                    <field name="eye"/>
+                                                                    <field name="qty" invisible="1"/>
+                                                                    <field name="amount"/>
+                                                                    <field name="tax_ids" widget="many2many_tags"/>
+                                                                    <field name="price_tax" invisible="1"/>
+                                                                    <field name="discount" invisible="1"/>
+                                                                    <field name="price_total"/>
+                                                                </tree>
+                                                            </field>
+                                                        </div>
+                                                        <div style="height:7px">
+                                                        </div>
+                                                    </div>
+                                                </group>
+                                                <group>
+                                                    <div>
+                                                        <div style="box-shadow: 2px 2px #888888;width:97%">
+                                                            <div style="height:2px">
+                                                            </div>
+                                                            <label for="lens_details_ids" string="Lens Details"
+                                                                   style="color:#B10707;text-align:center;font-size:12px;font-weight: bold"/>
+                                                            <field name="lens_details_ids" nolabel="1"
+                                                                   style="width:95%">
+                                                                <tree string="Lens details" editable="bottom">
+                                                                    <field name="model" required="1"
+                                                                           options='{"no_open": True, "no_create": True}'/>
+                                                                    <field name="power"/>
+                                                                    <field name="qty"/>
+                                                                    <field name="item"/>
+                                                                </tree>
+                                                            </field>
+                                                        </div>
+                                                        <div style="height:20px">
+                                                        </div>
+                                                        <div style="box-shadow: 2px 2px #888888;width:97%">
+                                                            <label for="surgery_Package_ids" string="Surgery Packages"
+                                                                   style="color:#B10707;text-align:center;font-size:12px;font-weight: bold"/>
+                                                            <field name="surgery_Package_ids" nolabel="1"
+                                                                   style="width:95%">
+                                                                <tree string="Surgery Package details"
+                                                                      editable="bottom">
+                                                                    <field name="surgery"
+                                                                           options='{"no_open": True, "no_create": True}'
+                                                                           domain="[('is_surgery_package', '=', True)]"/>
+                                                                    <field name="description"/>
+                                                                    <field name="qty"/>
+                                                                    <field name="amount"/>
+                                                                    <field name="tax_ids" widget="many2many_tags"/>
+                                                                    <field name="price_tax" invisible="1"/>
+                                                                    <field name="discount" invisible="1"/>
+                                                                    <field name="price_total"/>
+                                                                    <field name="space"/>
+                                                                </tree>
+                                                            </field>
+                                                        </div>
+                                                    </div>
+                                                </group>
+                                            </group>
+                                            <group col="2">
+                                                <group style="width:30%" attrs="{'invisible':[('final_total','!=',0)]}">
+                                                </group>
+                                                <group string='Investigation Order' style="width:30%"
+                                                       attrs="{'invisible':[('final_total','=',0)],'readonly':[('invoiced_investigation','=',1)]}">
+                                                    <label for="total_amount"/>
+                                                    <div class="o_row">
+                                                        <field name="total_amount" style="width:50%" widget='monetary'/>
+                                                        <span>&#160;₹</span>
+                                                    </div>
+                                                    <field name="discount_type" widget='radio'
+                                                           options="{'horizontal': true}"/>
+                                                    <field name="discount" force_save="1" widget='monetary'
+                                                           options="{'currency_field': 'currency_id'}"
+                                                           attrs="{'invisible':[('discount_type','=',False)],'readonly':[('invoiced_investigation','=',True)]}"/>
+                                                    <label for="tax_amount"/>
+                                                    <div class="o_row">
+                                                        <field name="tax_amount"/>
+                                                        <span>&#160;₹</span>
+                                                    </div>
+                                                    <label for="final_total"/>
+                                                    <div class="o_row">
+                                                        <field name="final_total" widget='monetary'
+                                                               options="{'currency_field': 'currency_id'}"
+                                                               readonly="1"/>
+                                                        <span>&#160;₹</span>
+                                                    </div>
+                                                    <div attrs="{'invisible':[('final_total','=',0)]}">
+                                                        <button name="create_order" type="object" class="btn-primary"
+                                                                string="Create Order"
+                                                                attrs="{'invisible':[('invoiced_investigation','=',True)]}"/>
+                                                        <button name="print_order" type="object" class="btn-primary"
+                                                                string="Print Invoice"
+                                                                attrs="{'invisible':[('counselling_invoice_id','=',False)]}"/>
+                                                    </div>
+                                                </group>
+                                                <group style="width:40%">
+                                                </group>
+                                                <group string='Surgery Order' style="width:30%"
+                                                       attrs="{'invisible':[('final_total_surgery','=',0)],'readonly':[('invoiced_surgery','=',1)]}">
+                                                    <label for="total_amount_surgery"/>
+                                                    <div class="o_row">
+                                                        <field name="total_amount_surgery" style="width:50%"
+                                                               widget='monetary'/>
+                                                        <span>&#160;₹</span>
+                                                    </div>
+                                                    <field name="discount_type_surgery" widget='radio'
+                                                           options="{'horizontal': true}"/>
+                                                    <field name="discount_surgery" force_save="1" widget='monetary'
+                                                           attrs="{'invisible':[('discount_type_surgery','=',False)],'readonly':[('invoiced_surgery','=',True)]}"/>
+                                                    <label for="tax_amount_surgery"/>
+                                                    <div class="o_row">
+                                                        <field name="tax_amount_surgery"/>
+                                                        <span>&#160;₹</span>
+                                                    </div>
+                                                    <label for="final_total_surgery"/>
+                                                    <div class="o_row">
+                                                        <field name="final_total_surgery" widget='monetary'
+                                                               readonly="1"/>
+                                                        <span>&#160;₹</span>
+                                                    </div>
+                                                    <div attrs="{'invisible':[('final_total_surgery','=',0)]}">
+                                                        <button name="create_order_surgery" type="object"
+                                                                class="btn-primary" string="Create Order"
+                                                                attrs="{'invisible':[('invoiced_surgery','=',True)]}"/>
+                                                        <button name="print_order_surgery" type="object"
+                                                                class="btn-primary" string="Print Invoice"
+                                                                attrs="{'invisible':[('surgery_invoice_id','=',False)]}"/>
+                                                    </div>
+                                                </group>
+                                            </group>
+                                        </page>
+                                        <page string="Doctor Findings">
+                                            <group col="6">
+                                                <group style="width:24%">
+                                                    <div>
+                                                        <label for="visual_acuitity_ids" string="Findings(RE)"
+                                                               style="color:#B10707;text-align:right;font-size:14px;width:40%;font-weight: bold"/>
+                                                    </div>
+                                                    <br/>
+                                                    <div style="height:3px">
+                                                    </div>
+                                                    <br/>
+                                                    <div style="box-shadow:2px 2px 2px 2px #888888;width:190%">
+                                                        <label for="visual_acuitity_ids" string=" " style="width:30%"/>
+                                                        <label for="visual_acuitity_ids" string="Ant Segment."
+                                                               style="color:#B10707;text-align:center;font-size:13px;width:41%;font-weight: bold"/>
+                                                        <div style="height:5px">
+                                                        </div>
+                                                        <label for="cornea_le" string="Cornea"
+                                                               style="color:#B10707;text-align:left;font-size:12px;font-weight: bold"/>
+                                                        <div style="height:2px">
+                                                        </div>
+                                                        <field name="cornea_le" nolabel="1" style="width: 97%"/>
+                                                        <div style="height:10px">
+                                                        </div>
+                                                        <label for="lens_le" string="Lens"
+                                                               style="color:#B10707;text-align:left;font-size:12px;font-weight: bold"/>
+                                                        <div style="height:2px">
+                                                        </div>
+                                                        <field name="lens_le" nolabel="1" style="width: 97%"/>
+                                                        <div style="height:10px">
+                                                        </div>
+                                                        <label for="conjunctiva" string="Conjunctiva"
+                                                               style="color:#B10707;text-align:left;font-size:12px;font-weight: bold"/>
+                                                        <div style="height:2px">
+                                                        </div>
+                                                        <field name="conjunctiva" nolabel="1" style="width: 97%"/>
+                                                        <div style="height:10px">
+                                                        </div>
+                                                        <label for="ac" string="AC"
+                                                               style="color:#B10707;text-align:left;font-size:12px;font-weight: bold"/>
+                                                        <div style="height:2px">
+                                                        </div>
+                                                        <field name="ac" nolabel="1" style="width: 97%"/>
+                                                        <div style="height:10px">
+                                                        </div>
+                                                        <label for="pupil" string="Pupil"
+                                                               style="color:#B10707;text-align:left;font-size:12px;font-weight: bold"/>
+                                                        <div style="height:2px">
+                                                        </div>
+                                                        <field name="pupil" nolabel="1" style="width: 97%"/>
+                                                        <div style="height:10px">
+                                                        </div>
+                                                        <label for="other" string="Other"
+                                                               style="color:#B10707;text-align:left;font-size:12px;font-weight: bold"/>
+                                                        <div style="height:2px">
+                                                        </div>
+                                                        <field name="other" nolabel="1" style="width: 97%"/>
+                                                        <div style="height:10px">
+                                                        </div>
+                                                    </div>
+                                                    <br/>
+                                                    <div style="height:20px">
+                                                    </div>
+                                                    <br/>
+                                                    <div style="box-shadow:3px 3px 3px 3px #888888;width:190%">
+                                                        <label for="fundus_macula_le_is" string="Fundus"
+                                                               style="color:#B10707;text-align:center;font-size:13px;width:41%;font-weight: bold"/>
+                                                        <div style="height:2px">
+                                                        </div>
+                                                        <field name="fundus_macula_le" nolabel="1" style="width: 97%"/>
+                                                        <div style="height:10px">
+                                                        </div>
+                                                    </div>
+                                                </group>
+                                                <group style="width:23.7%">
+                                                    <div>
+                                                        <label for="visual_acuitity_ids" string=" " style="width: 41%"/>
+                                                        <label for="visual_acuitity_ids" string="RE"
+                                                               style="color:#B10707;text-align:left;font-size:14px;font-weight: bold;width: 40%"/>
+                                                        <div style="height:5px">
+                                                        </div>
+                                                        <div style="border-top:1px; border-left:1px; border-right:1px solid-black;">
+                                                            <br/>
+                                                            <table style="font-size: 13px; border-top: 1px solid black; border-bottom: 1px solid black;  border-left: 1px solid black; border-right: 1px solid black; border-color:#DFDFDF;width:90%;">
+                                                                <thead>
+                                                                    <th width='35%'>  </th>
+                                                                    <th width='16%'>UC</th>
+                                                                    <th width='16%'>PH</th>
+                                                                    <th width='16%'>PG</th>
+                                                                    <th width='2%'> </th>
+                                                                </thead>
+                                                                <tbody>
+                                                                    <tr style="font-size: 13px; padding: 0px; background-color:#F5F6F9; border-top: 1px solid black; border-bottom: 1px solid black; border-color:#DFDFDF;">
+                                                                        <td>
+                                                                            <field name="ucdv_l_selection"
+                                                                                   style="background-color:#F5F6F9;"/>
+                                                                        </td>
+                                                                        <td>
+                                                                            <field name="ucdv_l_le"
+                                                                                   style="background-color:#F5F6F9;"/>
+                                                                        </td>
+                                                                        <td>
+                                                                            <field name="ucdv_l_pinhole"
+                                                                                   style="background-color:#F5F6F9;"/>
+                                                                        </td>
+                                                                        <td>
+                                                                            <field name="ucdv_l_re"
+                                                                                   style="background-color:#F5F6F9;"/>
+                                                                        </td>
+                                                                        <td width="2%">
+                                                                            <field name="ucdv_l_va"
+                                                                                   style="background-color:#F5F6F9;"/>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr style="font-size: 13px padding: 0px; border-top: 1px solid black; border-bottom: 1px solid black; border-color:#DFDFDF;">
+                                                                        <td>
+                                                                            <field name="ucnv_l_selection"/>
+                                                                        </td>
+                                                                        <td>
+                                                                            <field name="ucnv_l_le"/>
+                                                                        </td>
+                                                                        <td>
+                                                                            <field name="ucnv_l_pinhole"/>
+                                                                        </td>
+                                                                        <td>
+                                                                            <field name="ucnv_l_re"/>
+                                                                        </td>
+                                                                        <td width="2%">
+                                                                            <field name="ucnv_l_va"/>
+                                                                        </td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                        <field invisible="1" name="visual_acuitity_ids" mode='tree'
+                                                               style="width: 95%"
+                                                               attrs='{"invisible": [("new_details", "=",True )]}'>
+                                                            <tree string="Visual Acuity Lines" editable="bottom"
+                                                                  nolabel='1' delete="false" create="false">
+                                                                <field name="selection"
+                                                                       style="width: 40%;font-size:10px;"/>
+                                                                <field name="le" style="width: 20%;text-align:center;"/>
+                                                                <field name="pinhole"
+                                                                       style="width: 20%;text-align:center;"/>
+                                                                <field name="re" style="width: 20%;text-align:center;"/>
+                                                                <field name="va" readonly="True"
+                                                                       style="width:5%;font-weight: bold"/>
+                                                            </tree>
+                                                        </field>
+                                                        <field invisible="1" name="visual_acuitity_l_ids" mode='tree'
+                                                               style="width: 95%"
+                                                               attrs='{"invisible": [("new_details", "=",False)]}'>
+                                                            <tree string="Visual Acuity Lines" editable="bottom"
+                                                                  nolabel='1' delete="false" create="false">
+                                                                <field name="selection"
+                                                                       style="width: 40%;font-size:10px;"/>
+                                                                <field name="le" style="width: 20%;text-align:center;"/>
+                                                                <field name="pinhole"
+                                                                       style="width: 20%;text-align:center;"/>
+                                                                <field name="re" style="width: 20%;text-align:center;"/>
+                                                                <field name="va" readonly="True"
+                                                                       style="width:5%;font-weight: bold"/>
+                                                            </tree>
+                                                        </field>
+                                                        <div style="height:15px">
+                                                        </div>
+                                                        <div style="border-top:1px; border-left:1px; border-right:1px solid-black;">
+                                                            <br/>
+                                                            <table style="font-size: 13px; border-top: 1px solid black; border-bottom: 1px solid black;  border-left: 1px solid black; border-right: 1px solid black; border-color:#DFDFDF;width:90%;">
+                                                                <thead>
+                                                                    <th width='19%'>Sph</th>
+                                                                    <th width='19%'>Cyl</th>
+                                                                    <th width='19%'>Axis</th>
+                                                                    <th width='19%'>V/A</th>
+                                                                    <th width='19%'> </th>
+                                                                </thead>
+                                                                <tbody>
+                                                                    <tr style="font-size: 13px; padding: 0px; background-color:#F5F6F9; border-top: 1px solid black; border-bottom: 1px solid black; border-color:#DFDFDF;">
+                                                                        <td>
+                                                                            <field name="sphere_le_ar"
+                                                                                   style="background-color:#F5F6F9;"/>
+                                                                        </td>
+                                                                        <td>
+                                                                            <field name="cyl_le_ar"
+                                                                                   style="background-color:#F5F6F9;"/>
+                                                                        </td>
+                                                                        <td>
+                                                                            <field name="axis_le_ar"
+                                                                                   style="background-color:#F5F6F9;"/>
+                                                                        </td>
+                                                                        <td>
+                                                                            <field name="va_le_ar"
+                                                                                   style="background-color:#F5F6F9;"/>
+                                                                        </td>
+                                                                        <td class="text-center">
+                                                                            <field name="dilated_ar_le_ar"
+                                                                                   style="background-color:#F5F6F9;"
+                                                                                   readonly="1"/>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr style="font-size: 13px padding: 0px; border-top: 1px solid black; border-bottom: 1px solid black; border-color:#DFDFDF;">
+                                                                        <td>
+                                                                            <field name="sphere_le_dv"/>
+                                                                        </td>
+                                                                        <td>
+                                                                            <field name="cyl_le_dv"/>
+                                                                        </td>
+                                                                        <td>
+                                                                            <field name="axis_le_dv"/>
+                                                                        </td>
+                                                                        <td>
+                                                                            <field name="va_le_dv"/>
+                                                                        </td>
+                                                                        <td class="text-center">
+                                                                            <field name="dilated_ar_le_dv"
+                                                                                   readonly="1"/>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr style="font-size: 13px; padding: 0px; background-color:#F5F6F9; border-top: 1px solid black; border-bottom: 1px solid black; border-color:#DFDFDF;">
+                                                                        <td>
+                                                                            <field name="sphere_le_nv"
+                                                                                   style="background-color:#F5F6F9;"/>
+                                                                        </td>
+                                                                        <td>
+                                                                            <field name="cyl_le_nv"
+                                                                                   style="background-color:#F5F6F9;"/>
+                                                                        </td>
+                                                                        <td>
+                                                                            <field name="axis_le_nv"
+                                                                                   style="background-color:#F5F6F9;"/>
+                                                                        </td>
+                                                                        <td>
+                                                                            <field name="va_le_nv"
+                                                                                   style="background-color:#F5F6F9;"/>
+                                                                        </td>
+                                                                        <td class="text-center">
+                                                                            <field name="dilated_ar_le_nv"
+                                                                                   style="background-color:#F5F6F9;"
+                                                                                   readonly="1"/>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr style="font-size: 13px padding: 0px; border-top: 1px solid black; border-bottom: 1px solid black; border-color:#DFDFDF;">
+                                                                        <td>
+                                                                            <field name="sphere_le_rs"/>
+                                                                        </td>
+                                                                        <td>
+                                                                            <field name="cyl_le_rs"/>
+                                                                        </td>
+                                                                        <td>
+                                                                            <field name="axis_le_rs"/>
+                                                                        </td>
+                                                                        <td>
+                                                                            <field name="va_le_rs"/>
+                                                                        </td>
+                                                                        <td class="text-center">
+                                                                            <field name="dilated_ar_le_rs"
+                                                                                   readonly="1"/>
+                                                                        </td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                        <field invisible="1" name="dilated_ar_ids" mode='tree'
+                                                               style="width: 95%"
+                                                               attrs='{"invisible": [("new_details", "=",True )]}'>
+                                                            <tree string="Dilated AR" editable="bottom" nolabel='1'
+                                                                  delete="false" create="false"
+                                                                  decoration-bf="color_status==True"
+                                                                  decoration-danger="color_status==True">
+                                                                <field name="color_status" invisible="1"/>
+                                                                <field name="sphere"/>
+                                                                <field name="cyl"/>
+                                                                <field name="axis"/>
+                                                                <field name="va"/>
+                                                                <field name="dilated_ar" readonly="True"
+                                                                       style="width:8%;font-weight: bold;"/>
+                                                            </tree>
+                                                        </field>
+                                                        <field invisible="1" name="dilated_ar_l_ids" mode='tree'
+                                                               style="width: 95%"
+                                                               attrs='{"invisible": [("new_details", "=",False )]}'>
+                                                            <tree string="Dilated AR" editable="bottom" nolabel='1'
+                                                                  delete="false" create="false"
+                                                                  decoration-bf="color_status==True"
+                                                                  decoration-danger="color_status==True">
+                                                                <field name="color_status" invisible="1"/>
+                                                                <field name="sphere"/>
+                                                                <field name="cyl"/>
+                                                                <field name="axis"/>
+                                                                <field name="va"/>
+                                                                <field name="dilated_ar" readonly="True"
+                                                                       style="width:8%;font-weight: bold;"/>
+                                                            </tree>
+                                                        </field>
+                                                        <div style="height:15px">
+                                                        </div>
+                                                        <field name="keratometer_ids" style="width: 90%">
+                                                            <tree string="Dilated" editable="bottom" nolabel='1'
+                                                                  delete="false" create="false">
+                                                                <field name="keratometer" readonly="1"
+                                                                       style="width: 25%;font-weight: bold;text-align:center;"/>
+                                                                <field name="k1"/>
+                                                                <field name="k2"/>
+                                                            </tree>
+                                                        </field>
+                                                        <div style="height:10px">
+                                                        </div>
+                                                        <div class="col-xs-8 pull-left">
+                                                        </div>
+                                                        <div class="col-xs-7 pull-right" style="height:45px">
+                                                            <field name="colour_le" nolabel="1" style="width: 90%"/>
+                                                        </div>
+                                                        <div style="height:15px">
+                                                        </div>
+                                                        <field name="prism_le_1" nolabel="1" style="width:45%"/>
+                                                        <field name="prism_le_2" nolabel="1" style="width:45%"/>
+                                                        <div style="height:20px">
+                                                        </div>
+                                                        <div>
+                                                            <label for="iop_nct_le" string="IOP-NCT"
+                                                                   style="color:#B10707;text-align:left;font-size:12px;width:30%;font-weight: bold;"/>
+                                                            <label for="iop_at_le" string="IOP-AT"
+                                                                   style="color:#B10707;text-align:left;font-size:12px;width:30%;font-weight: bold;"/>
+                                                            <label for="iop_st_le" string="IOP-ST"
+                                                                   style="color:#B10707;text-align:left;font-size:12px;width:30%;font-weight: bold;"/>
+                                                            <field name="iop_nct_le" nolabel="1" style="width:30%"/>
+                                                            <field name="iop_at_le" nolabel="1" style="width:30%"/>
+                                                            <field name="iop_st_le" nolabel="1" style="width:30%"/>
+                                                        </div>
+                                                        <div style="height:20px">
+                                                        </div>
+                                                        <div style="box-shadow:1px 1px 1px 1px #888888;width:97%">
+                                                            <div style="height:2px">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </group>
+                                                <group style="width:1%">
+                                                    <div>
+                                                        <div style="height:60px">
+                                                        </div>
+                                                        <label for="visual_acuitity_ids" string="UcDV"
+                                                               style="color:#B10707;text-align:center;font-size:12px;width: 40%;font-weight: bold;width:40%"/>
+                                                        <div style="height:15px"/>
+                                                        <label string="UcNV"
+                                                               style="color:#B10707;text-align:center;font-size:12px;width: 40%;font-weight: bold;width:40%"/>
+                                                        <div style="height:260px">
+                                                        </div>
+                                                        <label for="keratometer_ids" string="KM"
+                                                               style="color:#B10707;text-align:left;font-size:12px;font-weight: bold;"/>
+                                                        <div style="height:55px">
+                                                        </div>
+                                                        <label for="colour_le" string="CV"
+                                                               style="color:#B10707;text-align:left;font-size:12px;font-weight: bold;"/>
+                                                        <div style="height:29px">
+                                                        </div>
+                                                        <label for="prism_le_1" string="Prism"
+                                                               style="color:#B10707;text-align:left;font-size:12px;font-weight: bold;"/>
+                                                    </div>
+                                                </group>
+                                                <group style="width:23.7%">
+                                                    <div>
+                                                        <label for="visual_acuitity_ids" string=" " style="width: 41%"/>
+                                                        <label for="visual_acuitity_ids" string="LE"
+                                                               style="color:#B10707;text-align:left;font-size:14px;width:40%;font-weight: bold;"/>
+                                                        <div style="height:5px">
+                                                        </div>
+                                                        <div style="border-top:1px; border-left:1px; border-right:1px solid-black;">
+                                                            <br/>
+                                                            <table style="font-size: 13px; border-top: 1px solid black; border-bottom: 1px solid black;  border-left: 1px solid black; border-right: 1px solid black; border-color:#DFDFDF;width:90%;">
+                                                                <thead>
+                                                                    <th width='2%'> </th>
+                                                                    <th width='35%'>  </th>
+                                                                    <th width='16%'>UC</th>
+                                                                    <th width='16%'>PH</th>
+                                                                    <th width='16%'>PG</th>
+                                                                </thead>
+                                                                <tbody>
+                                                                    <tr style="font-size: 13px; padding: 0px; background-color:#F5F6F9; border-top: 1px solid black; border-bottom: 1px solid black; border-color:#DFDFDF;">
+                                                                        <td>
+                                                                            <field name="ucdv_r_va"
+                                                                                   style="background-color:#F5F6F9;"/>
+                                                                        </td>
+                                                                        <td>
+                                                                            <field name="ucdv_r_selection"
+                                                                                   style="background-color:#F5F6F9;"/>
+                                                                        </td>
+                                                                        <td>
+                                                                            <field name="ucdv_r_le"
+                                                                                   style="background-color:#F5F6F9;"/>
+                                                                        </td>
+                                                                        <td>
+                                                                            <field name="ucdv_r_pinhole"
+                                                                                   style="background-color:#F5F6F9;"/>
+                                                                        </td>
+                                                                        <td>
+                                                                            <field name="ucdv_r_re"
+                                                                                   style="background-color:#F5F6F9;"/>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr style="font-size: 13px padding: 0px; border-top: 1px solid black; border-bottom: 1px solid black; border-color:#DFDFDF;">
+                                                                        <td>
+                                                                            <field name="ucnv_r_va"/>
+                                                                        </td>
+                                                                        <td>
+                                                                            <field name="ucnv_r_selection"/>
+                                                                        </td>
+                                                                        <td>
+                                                                            <field name="ucnv_r_le"/>
+                                                                        </td>
+                                                                        <td>
+                                                                            <field name="ucnv_r_pinhole"/>
+                                                                        </td>
+                                                                        <td>
+                                                                            <field name="ucnv_r_re"/>
+                                                                        </td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                        <field invisible="1" name="visual_acuitity_ids_re" mode='tree'
+                                                               style="width: 90%"
+                                                               attrs='{"invisible": [("new_details", "=",True )]}'>
+                                                            <tree string="Visual Acuity Lines" editable="bottom"
+                                                                  nolabel='1' delete="false" create="false">
+                                                                <field name="va" readonly="True"
+                                                                       style="width:3%;font-weight: bold"/>
+                                                                <field name="le" style="width: 15%;text-align:center;"/>
+                                                                <field name="pinhole"
+                                                                       style="width: 15%;text-align:center;"/>
+                                                                <field name="re" style="width: 15%;text-align:center;"/>
+                                                                <field name="selection"
+                                                                       style="width:40%;font-size:10px;"/>
+                                                            </tree>
+                                                        </field>
+                                                        <field invisible="1" name="visual_acuitity_r_ids_re" mode='tree'
+                                                               style="width: 90%"
+                                                               attrs='{"invisible": [("new_details", "=",False )]}'>
+                                                            <tree string="Visual Acuity Lines" editable="bottom"
+                                                                  nolabel='1' delete="false" create="false">
+                                                                <field name="va" readonly="True"
+                                                                       style="width:3%;font-weight: bold"/>
+                                                                <field name="le" style="width: 15%;text-align:center;"/>
+                                                                <field name="pinhole"
+                                                                       style="width: 15%;text-align:center;"/>
+                                                                <field name="re" style="width: 15%;text-align:center;"/>
+                                                                <field name="selection"
+                                                                       style="width:40%;font-size:10px;"/>
+                                                            </tree>
+                                                        </field>
+                                                        <div style="height:15px">
+                                                        </div>
+                                                        <div style="border-top:1px; border-left:1px; border-right:1px solid-black;">
+                                                            <br/>
+                                                            <table style="font-size: 13px; border-top: 1px solid black; border-bottom: 1px solid black;  border-left: 1px solid black; border-right: 1px solid black; border-color:#DFDFDF;width:90%;">
+                                                                <thead>
+                                                                    <th width='19%'>Sph</th>
+                                                                    <th width='19%'>Cyl</th>
+                                                                    <th width='19%'>Axis</th>
+                                                                    <th width='19%'>V/A</th>
+                                                                    <th width='19%'> </th>
+                                                                </thead>
+                                                                <tbody>
+                                                                    <tr style="font-size: 13px; padding: 0px; background-color:#F5F6F9; border-top: 1px solid black; border-bottom: 1px solid black; border-color:#DFDFDF;">
+                                                                        <td>
+                                                                            <field name="sphere_re_ar"
+                                                                                   style="background-color:#F5F6F9;"/>
+                                                                        </td>
+                                                                        <td>
+                                                                            <field name="cyl_re_ar"
+                                                                                   style="background-color:#F5F6F9;"/>
+                                                                        </td>
+                                                                        <td>
+                                                                            <field name="axis_re_ar"
+                                                                                   style="background-color:#F5F6F9;"/>
+                                                                        </td>
+                                                                        <td>
+                                                                            <field name="va_re_ar"
+                                                                                   style="background-color:#F5F6F9;"/>
+                                                                        </td>
+                                                                        <td class="text-center">
+                                                                            <field name="dilated_ar_re_ar"
+                                                                                   style="background-color:#F5F6F9;"
+                                                                                   readonly="1"/>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr style="font-size: 13px padding: 0px; border-top: 1px solid black; border-bottom: 1px solid black; border-color:#DFDFDF;">
+                                                                        <td>
+                                                                            <field name="sphere_re_dv"/>
+                                                                        </td>
+                                                                        <td>
+                                                                            <field name="cyl_re_dv"/>
+                                                                        </td>
+                                                                        <td>
+                                                                            <field name="axis_re_dv"/>
+                                                                        </td>
+                                                                        <td>
+                                                                            <field name="va_re_dv"/>
+                                                                        </td>
+                                                                        <td class="text-center">
+                                                                            <field name="dilated_ar_re_dv"
+                                                                                   readonly="1"/>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr style="font-size: 13px; padding: 0px; background-color:#F5F6F9; border-top: 1px solid black; border-bottom: 1px solid black; border-color:#DFDFDF;">
+                                                                        <td>
+                                                                            <field name="sphere_re_nv"
+                                                                                   style="background-color:#F5F6F9;"/>
+                                                                        </td>
+                                                                        <td>
+                                                                            <field name="cyl_re_nv"
+                                                                                   style="background-color:#F5F6F9;"/>
+                                                                        </td>
+                                                                        <td>
+                                                                            <field name="axis_re_nv"
+                                                                                   style="background-color:#F5F6F9;"/>
+                                                                        </td>
+                                                                        <td>
+                                                                            <field name="va_re_nv"
+                                                                                   style="background-color:#F5F6F9;"/>
+                                                                        </td>
+                                                                        <td class="text-center">
+                                                                            <field name="dilated_ar_re_nv"
+                                                                                   style="background-color:#F5F6F9;"
+                                                                                   readonly="1"/>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr style="font-size: 13px padding: 0px; border-top: 1px solid black; border-bottom: 1px solid black; border-color:#DFDFDF;">
+                                                                        <td>
+                                                                            <field name="sphere_re_rs"/>
+                                                                        </td>
+                                                                        <td>
+                                                                            <field name="cyl_re_rs"/>
+                                                                        </td>
+                                                                        <td>
+                                                                            <field name="axis_re_rs"/>
+                                                                        </td>
+                                                                        <td>
+                                                                            <field name="va_re_rs"/>
+                                                                        </td>
+                                                                        <td class="text-center">
+                                                                            <field name="dilated_ar_re_rs"
+                                                                                   readonly="1"/>
+                                                                        </td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                        <field invisible="1" name="dilated_ar_re_ids" mode='tree'
+                                                               style="width: 90%"
+                                                               attrs='{"invisible": [("new_details", "=",True )]}'>
+                                                            <tree string="Dilated AR" editable="bottom" nolabel='1'
+                                                                  delete="false" create="false"
+                                                                  decoration-bf="color_status==True"
+                                                                  decoration-danger="color_status==True">
+                                                                <field name="color_status" invisible="1"/>
+                                                                <field name="sphere"/>
+                                                                <field name="cyl"/>
+                                                                <field name="axis"/>
+                                                                <field name="va"/>
+                                                                <field name="dilated_ar" readonly="True"
+                                                                       style="width:8%;font-weight: bold;"/>
+                                                            </tree>
+                                                        </field>
+                                                        <field name="new_details" invisible="1"/>
+                                                        <field invisible="1" name="dilated_ar_re_r_ids" mode='tree'
+                                                               style="width: 90%"
+                                                               attrs='{"invisible": [("new_details", "=",False )]}'>
+                                                            <tree string="Dilated AR" editable="bottom" nolabel='1'
+                                                                  delete="false" create="false"
+                                                                  decoration-bf="color_status==True"
+                                                                  decoration-danger="color_status==True">
+                                                                <field name="color_status" invisible="1"/>
+                                                                <field name="sphere"/>
+                                                                <field name="cyl"/>
+                                                                <field name="axis"/>
+                                                                <field name="va"/>
+                                                                <field name="dilated_ar" readonly="True"
+                                                                       style="width:8%;font-weight: bold;"/>
+                                                            </tree>
+                                                        </field>
+                                                        <div style="height:15px">
+                                                        </div>
+                                                        <field name="keratometer_re_ids" mode='tree' style="width: 90%">
+                                                            <tree string="Dilated AR" editable="bottom" nolabel='1'
+                                                                  delete="false" create="false">
+                                                                <field name="k1"/>
+                                                                <field name="k2"/>
+                                                                <field name="keratometer" readonly="1"
+                                                                       style="width: 25%;font-weight: bold;text-align:center;"/>
+                                                            </tree>
+                                                        </field>
+                                                        <div style="height:10px">
+                                                        </div>
+                                                        <div>
+                                                            <field name="colour_re" nolabel="1" style="width: 45%"/>
+                                                        </div>
+                                                        <div style="height:20px">
+                                                        </div>
+                                                        <field name="prism_re_1" nolabel="1" style="width:45%"/>
+                                                        <field name="prism_re_2" nolabel="1" style="width:45%"/>
+                                                        <div style="height:20px">
+                                                        </div>
+                                                        <label for="iop_nct_re" string="IOP-NCT"
+                                                               style="color:#B10707;text-align:left;font-size:12px;width:30%;font-weight: bold;"/>
+                                                        <label for="iop_at_re" string="IOP-AT"
+                                                               style="color:#B10707;text-align:left;font-size:12px;width:30%;font-weight: bold;"/>
+                                                        <label for="iop_st_re" string="IOP-ST"
+                                                               style="color:#B10707;text-align:left;font-size:12px;width:30%;font-weight: bold;"/>
+                                                        <field name="iop_nct_re" nolabel="1" style="width:30%"/>
+                                                        <field name="iop_at_re" nolabel="1" style="width:30%"/>
+                                                        <field name="iop_st_re" nolabel="1" style="width:30%"/>
+                                                        <div style="height:20px">
+                                                        </div>
+                                                        <div style="box-shadow:3px 3px 3px 3px #888888;width:97%">
+                                                            <div style="height:2px">
+                                                            </div>
+                                                            <label for="prescription" string="Treatments"
+                                                                   style="color:#B10707;text-align:left;font-size:13px;font-weight: bold"/>
+                                                            <field name="prescription" nolabel="1" style="width:97%"/>
+
+                                                        </div>
+                                                    </div>
+                                                </group>
+                                                <group style="width:24%">
+                                                    <div>
+                                                        <label for="visual_acuitity_ids" string="Findings(LE)"
+                                                               style="color:#B10707;text-align:center;font-size:14px;width:40%;font-weight: bold"/>
+                                                    </div>
+                                                    <br/>
+                                                    <div style="height:1px">
+                                                    </div>
+                                                    <br/>
+                                                    <div style="box-shadow:2px 2px 2px 2px #888888;width:195%">
+                                                        <label for="visual_acuitity_ids" string=" " style="width:30%"/>
+                                                        <label for="visual_acuitity_ids" string="Ant Segment."
+                                                               style="color:#B10707;text-align:center;font-size:13px;width:41%;font-weight: bold"/>
+                                                        <div style="height:8px">
+                                                        </div>
+                                                        <label for="cornea_re" string="Cornea"
+                                                               style="color:#B10707;text-align:left;font-size:12px;font-weight: bold"/>
+                                                        <field name="cornea_re" nolabel="1" style="width: 97%"/>
+                                                        <div style="height:10px">
+                                                        </div>
+                                                        <label for="lens_re" string="Lens"
+                                                               style="color:#B10707;text-align:left;font-size:12px;font-weight: bold"/>
+                                                        <field name="lens_re" nolabel="1" style="width: 97%"/>
+                                                        <div style="height:10px">
+                                                        </div>
+                                                        <label for="conjunctiva_re" string="Conjunctiva"
+                                                               style="color:#B10707;text-align:left;font-size:12px;font-weight: bold"/>
+                                                        <field name="conjunctiva_re" nolabel="1" style="width: 97%"/>
+                                                        <div style="height:10px">
+                                                        </div>
+                                                        <label for="ac_re" string="AC"
+                                                               style="color:#B10707;text-align:left;font-size:12px;font-weight: bold"/>
+                                                        <field name="ac_re" nolabel="1" style="width: 97%"/>
+                                                        <div style="height:10px">
+                                                        </div>
+                                                        <label for="pupil_re" string="Pupil"
+                                                               style="color:#B10707;text-align:left;font-size:12px;font-weight: bold"/>
+                                                        <field name="pupil_re" nolabel="1" style="width: 97%"/>
+                                                        <div style="height:10px">
+                                                        </div>
+                                                        <label for="other_re" string="Other"
+                                                               style="color:#B10707;text-align:left;font-size:12px;font-weight: bold"/>
+                                                        <field name="other_re" nolabel="1" style="width: 97%"/>
+                                                        <div style="height:10px">
+                                                        </div>
+                                                    </div>
+                                                    <br/>
+                                                    <div style="height:20px">
+                                                    </div>
+                                                    <br/>
+                                                    <div style="box-shadow:3px 3px 3px 3px #888888;width:195%">
+                                                        <label for="fundus_macula_re" string="Fundus"
+                                                               style="color:#B10707;text-align:center;font-size:13px;width:41%;font-weight: bold"/>
+                                                        <field name="fundus_macula_re" nolabel="1" style="width: 97%"/>
+                                                        <div style="height:10px">
+                                                        </div>
+                                                    </div>
+                                                </group>
+                                                <label for="patient_diagnosis" string="Patient Diagnosis"
+                                                       style="color:#B10707;text-align:center;font-size:13px;font-weight: bold"/>
+                                                <field name="patient_diagnosis"/>
+                                                <br/>
+                                                <center>
+                                                    <label for="medicine_ids" string="Medications"
+                                                           style="color:#B10707;text-align:center;font-size:13px;font-weight: bold"/>
+                                                </center>
+                                                <field name="medicine_ids">
+                                                    <tree editable="bottom">
+                                                        <field name="product_id"/>
+                                                        <field name="eye"/>
+                                                        <field name="stock"/>
+                                                        <field name="frequency" invisible="1"/>
+                                                        <field name="frequency_id"/>
+                                                        <field name="days"/>
+                                                    </tree>
+                                                    <form>
+                                                        <group>
+                                                            <group>
+                                                                <field name="product_id"/>
+                                                                <field name="frequency" invisible="1"/>
+                                                                <field name="frequency_id"/>
+                                                            </group>
+                                                            <group>
+                                                                <field name="days"/>
+                                                                <field name="stock"/>
+                                                            </group>
+                                                        </group>
+                                                    </form>
+                                                </field>
+                                            </group>
+                                        </page>
+                                        <page string="PMT">
+                                            <group col="4">
+                                                <group style="width:26%">
+                                                    <div>
+                                                        <label for="visual_acuitity_ids" string=" " style="width: 42%"/>
+                                                        <label for="visual_acuitity_ids" string="RE"
+                                                               style="color:#B10707;text-align:left;font-size:14px;width: 40%;font-weight: bold"/>
+                                                        <div style="height:5px">
+                                                        </div>
+                                                        <field name="cyclo_ar_l_ids" style="width: 90%">
+                                                            <tree string="Cyclo Details LE" editable="bottom"
+                                                                  nolabel='1' delete="false" create="false">
+                                                                <field name="sphere"/>
+                                                                <field name="cyl"/>
+                                                                <field name="axis"/>
+                                                                <field name="va"/>
+                                                                <field name="head"/>
+                                                            </tree>
+                                                        </field>
+                                                        <div style="height:15px">
+                                                        </div>
+                                                        <field name="alternate_glass_l_ids" mode='tree'
+                                                               style="width: 90%">
+                                                            <tree string="Alternate Glass LE" editable="bottom"
+                                                                  nolabel='1' delete="false" create="false">
+                                                                <field name="sphere"/>
+                                                                <field name="cyl"/>
+                                                                <field name="axis"/>
+                                                                <field name="va"/>
+                                                                <field name="head"/>
+                                                            </tree>
+                                                        </field>
+                                                        <div style="height:15px">
+                                                        </div>
+                                                        <field name="text_box" style="width: 97%"/>
+                                                        <div style="height:27px">
+                                                        </div>
+                                                    </div>
+                                                </group>
+                                                <group style="width:7%">
+                                                    <div>
+                                                        <div style="height:51px">
+                                                        </div>
+                                                        <label for="cyclo_ar_le_ids" string="Dilated AR"
+                                                               style="color:#B10707;text-align:left;font-size:12px;font-weight: bold"/>
+                                                        <div style="height:12px">
+                                                        </div>
+                                                        <label for="cyclo_ar_le_ids" string="Dilated Retina"
+                                                               style="color:#B10707;text-align:left;font-size:12px;font-weight: bold"/>
+                                                        <div style="height:8px">
+                                                        </div>
+                                                        <label for="cyclo_ar_le_ids" string="Dilated Refraction"
+                                                               style="color:#B10707;text-align:left;font-size:12px;font-weight: bold"/>
+                                                        <div style="height:50px">
+                                                        </div>
+                                                        <label for="alternate_glass_re_ids"
+                                                               string="Alternate Glass Prescription."
+                                                               style="color:#B10707;text-align:left;font-size:12px;font-weight: bold;width: 90%"/>
+                                                    </div>
+                                                </group>
+                                                <group style="width: 25%">
+                                                    <div>
+                                                        <label for="visual_acuitity_ids" string=" " style="width: 42%"/>
+                                                        <label for="visual_acuitity_ids" string="LE"
+                                                               style="color:#B10707;text-align:left;font-size:14px;width: 40%;font-weight: bold"/>
+                                                        <div style="height:5px">
+                                                        </div>
+                                                        <field name="cyclo_ar_r_ids" style="width: 90%">
+                                                            <tree string="Cyclo Details RE" editable="bottom"
+                                                                  nolabel='1' delete="false" create="false">
+                                                                <field name="head"/>
+                                                                <field name="sphere"/>
+                                                                <field name="cyl"/>
+                                                                <field name="axis"/>
+                                                                <field name="va"/>
+                                                            </tree>
+                                                        </field>
+                                                        <div style="height:15px">
+                                                        </div>
+                                                        <field name="alternate_glass_r_ids" mode='tree'
+                                                               style="width: 90%">
+                                                            <tree string="Alternate Glass LE" editable="bottom"
+                                                                  nolabel='1' delete="false" create="false">
+                                                                <field name="head"/>
+                                                                <field name="sphere"/>
+                                                                <field name="cyl"/>
+                                                                <field name="axis"/>
+                                                                <field name="va"/>
+                                                            </tree>
+                                                        </field>
+                                                        <div style="height:15px">
+                                                        </div>
+                                                    </div>
+                                                </group>
+                                                <group style="width:41%">
+                                                    <div>
+                                                        <div style="height:15px">
+                                                        </div>
+                                                        <label for="convergence" string="Convergence"
+                                                               style="color:#B10707;text-align:left;font-size:12px;font-weight: bold;width:34%"/>
+                                                        <label for="npc" string="NPC"
+                                                               style="color:#B10707;text-align:left;font-size:12px;font-weight: bold;width:37.5%"/>
+                                                        <label for="dist" string="Dist"
+                                                               style="color:#B10707;text-align:left;font-size:12px;font-weight: bold;width:5%"/>
+                                                        <label for="dist" string=" " style="width:1%"/>
+                                                        <field name="dist" style="width: 17%"/>
+                                                        <field name="convergence" style="width:25%"/>
+                                                        <label for="dist" string=" " style="width:7%"/>
+                                                        <field name="npc" style="width: 15%"/>
+                                                        <label for="text_box" string=" " style="width:7%"/>
+                                                        <label for="text_box" string="CT/CUT"
+                                                               style="color:#B10707;text-align:left;font-size:14px;font-weight: bold;width:10%"/>
+                                                        <label for="dist" string=" " style="width:4.5%"/>
+                                                        <label for="near" string="Near"
+                                                               style="color:#B10707;text-align:left;font-size:12px;font-weight: bold;width:5.5%"/>
+                                                        <label for="dist" string=" " style="width:1%"/>
+                                                        <field name="near" style="width: 17%"/>
+                                                        <div style="height:25px">
+                                                        </div>
+                                                        <label for="mobility" string="Mobility"
+                                                               style="color:#B10707;text-align:left;font-size:12px;font-weight: bold;width:72%"/>
+                                                        <label for="bsv" string="BSV(After Ref)"
+                                                               style="color:#B10707;text-align:left;font-size:12px;font-weight: bold;width:25%"/>
+                                                        <field name="mobility" style="width: 25%"/>
+                                                        <label for="bsv" string=" " style="width:8%"/>
+                                                        <label for="mobility" string="Abnormal Head/Face Tilt"
+                                                               style="color:#B10707;text-align:center;font-size:13px;font-weight: bold;width:34%"/>
+                                                        <label for="bsv" string=" " style="width:3%"/>
+                                                        <field name="bsv" style="width: 25%"/>
+                                                        <div style="height:25px">
+                                                        </div>
+                                                        <label for="bsv" string=" " style="width:35%"/>
+                                                        <label for="bsv" string="Synoptophore"
+                                                               style="color:#B10707;text-align:left;font-size:14px;font-weight: bold;width:10%"/>
+                                                        <label for="bsv" string=" " style="width:30%"/>
+                                                        <div style="height:15px">
+                                                        </div>
+                                                        <label for="smp" string="SMP"
+                                                               style="color:#B10707;text-align:left;font-size:12px;font-weight: bold;width:90%"/>
+                                                        <field name="smp" style="width: 25%"/>
+                                                        <div style="height:15px">
+                                                        </div>
+                                                        <label for="bsv" string=" " style="width:30%"/>
+                                                        <label for="subjective" string="Subjective"
+                                                               style="color:#B10707;text-align:left;font-size:12px;font-weight: bold;width:12%"/>
+                                                        <label for="bsv" string=" " style="width:1%"/>
+                                                        <field name="subjective" style="width: 10%"/>
+                                                        <label for="bsv" string=" " style="width:0.2%"/>
+                                                        <field name="selection_refraction_3" style="width: 17%"/>
+                                                        <label for="bsv" string=" " style="width:1%"/>
+                                                        <label for="steriopsis" string="Steriopsis"
+                                                               style="color:#B10707;text-align:left;font-size:12px;font-weight: bold;width:10%"/>
+                                                        <label for="subjective" string=" " style="width:17%"/>
+                                                        <label for="subjective" string="Angle"
+                                                               style="color:#B10707;text-align:left;font-size:12px;font-weight: bold;width:6.5%"/>
+                                                        <label for="subjective" string=" " style="width:4.5%"/>
+                                                        <label for="objective" string="Objective"
+                                                               style="color:#B10707;text-align:left;font-size:12px;font-weight: bold;width:11%"/>
+                                                        <label for="objective" string=" " style="width:2%"/>
+                                                        <field name="objective" style="width: 10%"/>
+                                                        <label for="bsv" string=" " style="width:0.2%"/>
+                                                        <field name="selection_refraction_4" style="width: 17%"/>
+                                                        <label for="bsv" string=" " style="width:1%"/>
+                                                        <field name="steriopsis" style="width:15%"/>
+                                                        <div style="height:25px">
+                                                        </div>
+                                                        <label for="bsv" string=" " style="width:65%"/>
+                                                        <label for="bsv" string="Adduction"
+                                                               style="color:#B10707;text-align:left;font-size:12px;font-weight: bold;width:10%"/>
+                                                        <label for="bsv" string=" " style="width:5%"/>
+                                                        <label for="bsv" string="Abduction"
+                                                               style="color:#B10707;text-align:left;font-size:12px;font-weight: bold;width:10%"/>
+                                                        <label for="bsv" string="Fusion"
+                                                               style="color:#B10707;text-align:left;font-size:12px;font-weight: bold;width:10%"/>
+                                                        <label for="bsv" string=" " style="width:5%"/>
+                                                        <label for="bsv" string="Range"
+                                                               style="color:#B10707;text-align:left;font-size:12px;font-weight: bold;width:9%"/>
+                                                        <label for="bsv" string=" " style="width:0.2%"/>
+                                                        <field name="range" style="width:10%"/>
+                                                        <label for="bsv" string=" " style="width:6.5%"/>
+                                                        <label for="make_point" string="Make Point"
+                                                               style="color:#B10707;text-align:left;font-size:12px;font-weight: bold;width:17%"/>
+                                                        <label for="bsv" string=" " style="width:1.4%"/>
+                                                        <field name="make_point" style="width:10%"/>
+                                                        <label for="make_point_2" string=" " style="width:6%"/>
+                                                        <field name="make_point_2" style="width:10%"/>
+                                                        <label for="make_point_2" string=" " style="width:44.8%"/>
+                                                        <label for="break_point" string="Break Point"
+                                                               style="color:#B10707;text-align:left;font-size:12px;font-weight: bold;width:17%"/>
+                                                        <label for="bsv" string=" " style="width:1.6%"/>
+                                                        <field name="break_point" style="width:10%"/>
+                                                        <label for="make_point_2" string=" " style="width:6%"/>
+                                                        <field name="break_point_2" style="width:10%"/>
+                                                    </div>
+                                                </group>
+                                            </group>
+                                        </page>
+                                        <page string="IOL" attrs="{'invisible':[('iol_status','=',False)]}">
+                                            <group col="5">
+                                                <group style="width:20%">
+                                                </group>
+                                                <group style="width:28.5%">
+                                                    <div>
+                                                        <field name="duct_le" nolabel="1" style="width: 90%"/>
+                                                        <div style="height:10px">
+                                                        </div>
+                                                        <field name="axl_le_ids" style="width: 90%">
+                                                            <tree string="Axl LE" editable="bottom" nolabel='1'
+                                                                  delete="false" create="false">
+                                                                <field name="contact"/>
+                                                                <field name="immersion"/>
+                                                                <field name="corrected"/>
+                                                                <field name="axl" readonly="1"/>
+                                                            </tree>
+                                                        </field>
+                                                    </div>
+                                                </group>
+                                                <group style="width:4%">
+                                                    <div>
+                                                        <label for="duct_le" string="DUCT"
+                                                               style="color:#B10707;text-align:left;font-size:12px;width:90%;font-weight: bold;"/>
+                                                        <div style="height:28px">
+                                                        </div>
+                                                        <label for="axl_re_ids" string="AXL"
+                                                               style="color:#B10707;text-align:left;font-size:12px;width:40%;font-weight: bold;"/>
+                                                    </div>
+                                                </group>
+                                                <group style="width:27%">
+                                                    <div>
+                                                        <field name="duct_re" nolabel="1" style="width: 90%"/>
+                                                        <div style="height:10px">
+                                                        </div>
+                                                        <field name="axl_re_ids" style="width: 90%">
+                                                            <tree string="Axl RE" editable="bottom" nolabel='1'
+                                                                  delete="false" create="false">
+                                                                <field name="axl" readonly="1"/>
+                                                                <field name="contact"/>
+                                                                <field name="immersion"/>
+                                                                <field name="corrected"/>
+                                                            </tree>
+                                                        </field>
+                                                    </div>
+                                                </group>
+                                                <group style="width:25%">
+                                                </group>
+                                            </group>
+                                            <group col="4">
+                                                <group style="width:14.5%">
+                                                </group>
+                                                <group style="width:35%">
+                                                    <div>
+                                                        <field name="iol_le_ids" style="width: 90%">
+                                                            <tree string="Iol LE" editable="bottom" nolabel='1'
+                                                                  delete="false" create="false">
+                                                                <field name="constant"/>
+                                                                <field name="power_2"/>
+                                                                <field name="ref_err_2"/>
+                                                                <field name="power"/>
+                                                                <field name="ref_err_1"/>
+                                                                <field name="iol" readonly="1"/>
+                                                            </tree>
+                                                        </field>
+                                                    </div>
+                                                </group>
+                                                <group style="width:2.5%">
+                                                </group>
+                                                <group style="width:35%">
+                                                    <div>
+                                                        <field name="iol_re_ids" style="width: 90%">
+                                                            <tree string="Iol RE" editable="bottom" nolabel='1'
+                                                                  delete="false" create="false">
+                                                                <field name="iol" readonly="1"/>
+                                                                <field name="constant"/>
+                                                                <field name="power_2"/>
+                                                                <field name="ref_err_2"/>
+                                                                <field name="power"/>
+                                                                <field name="ref_err_1"/>
+                                                            </tree>
+                                                        </field>
+                                                    </div>
+                                                </group>
+                                                <group style="width:12%">
+                                                </group>
+                                            </group>
+                                            <group col="4">
+                                                <group style="width:26%">
+                                                    <div>
+                                                        <label for="calculated_power_re"
+                                                               string="Values (BE) linked with surgery Appointment-->"
+                                                               style="color:#B10707;text-align:left;font-size:11px;font-weight: bold;"/>
+                                                    </div>
+                                                </group>
+                                                <group style="width:18%">
+                                                    <div>
+                                                        <field name="calculated_power_le" style="width: 90%"/>
+                                                        <div style="height:5%">
+                                                        </div>
+                                                        <field name="acd_le" style="width: 60%"/>
+                                                        <label for="acd_le" string="Um"
+                                                               style="color:#B10707;text-align:left;font-size:10px;width:20%;font-weight: bold;"/>
+                                                    </div>
+                                                </group>
+                                                <group style="width:10%">
+                                                    <div>
+                                                        <div style="height:7px">
+                                                        </div>
+                                                        <label for="calculated_power_le" string="Calculated Power"
+                                                               style="color:#B10707;text-align:left;font-size:12px;font-weight: bold;"/>
+                                                        <div style="height:11px">
+                                                        </div>
+                                                        <label for="acd_le" string="ACD"
+                                                               style="color:#B10707;text-align:left;font-size:12px;font-weight: bold;"/>
+                                                    </div>
+                                                </group>
+                                                <group style="width:18%">
+                                                    <div>
+                                                        <field name="calculated_power_re" style="width: 90%"/>
+                                                        <div style="height:5%">
+                                                        </div>
+                                                        <field name="acd_re" style="width: 60%"/>
+                                                        <label for="acd_re" string="Um"
+                                                               style="color:#B10707;text-align:left;font-size:10px;width:20%;font-weight: bold;"/>
+                                                    </div>
+                                                </group>
+                                                <group style="width:25%">
+                                                </group>
+                                            </group>
+                                            <group col="3">
+                                                <group style="width:34%">
+                                                </group>
+                                                <group>
+                                                    <div>
+                                                        <field name="iol_text" nolabel='1' style="width: 90%"/>
+                                                    </div>
+                                                </group>
+                                                <group>
+                                                </group>
+                                            </group>
+                                        </page>
+                                    </notebook>
+                                </form>
+                                <tree editable="bottom" default_order='date'>
+                                    <field name="date"/>
+                                    <field name="name"/>
+                                    <field name="doctor_id"/>
+                                    <field name="registration_amount"/>
+                                    <field name="tag_ids" widget="many2many_tags"/>
+                                    <field name="reference_type_id"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="patient_registration_tree" model="ir.ui.view">
+        <field name="name">Patient Registration Tree</field>
+        <field name="model">medical.opthalmology</field>
+        <field name="arch" type="xml">
+            <tree string="Doctor Checkup" decoration-danger="history==False">
+                <field name="sequence" widget="handle"/>
+                <field name="name"/>
+                <field name="new_patient_is"/>
+                <field name="patient_id"/>
+                <field name="age"/>
+                <field name="identification_code"/>
+                <field name="doctor_id"/>
+                <field name="date"/>
+                <field name="tag_ids" widget="many2many_tags"/>
+                <field name="reference_type_id"/>
+                <field name="state"/>
+                <field name="history" invisible="1"/>
+                <field name="send_to_pharmacy"/>
+                <field name="send_to_optics"/>
+                <field name="waiting_time" attrs="{'invisible':[('state','not in',['registration','waiting'])]}"/>
+            </tree>
+        </field>
+    </record>
+    <record id="patient_reg_search_view" model="ir.ui.view">
+        <field name="name">patient.reg.search</field>
+        <field name="model">medical.opthalmology</field>
+        <field name="arch" type="xml">
+            <search string="Product">
+                <field name="identification_code" string="File Number"/>
+                <field name="date" string="Date"/>
+                <field name="patient_id" string="Patient"/>
+                <field name="phone" string="Phone Number"/>
+                <field name="doctor_id" string="Doctor"/>
+                <field name="state" string="State"/>
+                <field name="new_patient_is" string="New Patient"/>
+                <separator/>
+                <filter string="Today" name="date_today"
+                        domain="[('date_today', '=', context_today().strftime('%Y-%m-%d'))]"/>
+            </search>
+        </field>
+    </record>
+    <record id="action_patient_registration" model="ir.actions.act_window">
+        <field name="name">Patient Registration</field>
+        <field name="res_model">medical.opthalmology</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="context">{'search_default_date_today':'date_today'}</field>
+    </record>
+    <record id="action_patient_registration_tree1_view1" model="ir.actions.act_window.view">
+        <field eval="1" name="sequence"/>
+        <field name="view_mode">tree</field>
+        <field name="view_id" ref="patient_registration_tree"/>
+        <field name="act_window_id" ref="action_patient_registration"/>
+    </record>
+    <record id="action_patient_registration_tree1_view2" model="ir.actions.act_window.view">
+        <field eval="2" name="sequence"/>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="view_patient_registration_form"/>
+        <field name="act_window_id" ref="action_patient_registration"/>
+    </record>
+    <menuitem id="registration_process" groups="medical_opthalmology.group_reception_access"
+              action="action_patient_registration" parent="medical_opthalmology.patient_visit_main"
+              sequence="1"/>
+</odoo>

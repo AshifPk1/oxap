@@ -1,0 +1,15 @@
+<odoo>
+    <record id="medical_patient_view_form_inherit" model="ir.ui.view">
+        <field name="name">medical.patient.form.inherit</field>
+        <field name="model">medical.patient</field>
+        <field name="inherit_id" ref="medical.medical_abstract_entity_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//notebook" position="inside">
+                <page string="History">
+                    <field name="past_history_ids" nolabel="1" style="width:95%">
+                    </field>
+                </page>
+            </xpath>
+        </field>
+    </record>
+</odoo>

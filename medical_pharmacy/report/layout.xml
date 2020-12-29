@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <template id="external_layout_standard">
+        <div class="header">
+            <div style="text-align:left;font-size:25px;">
+                <center>
+                    <strong>
+                        <span style="text-align:center;font-size:35px;ont-family:SansSerif;">ITEES EYE
+                            HOSPITAL
+                        </span>
+                        <br/>
+                        <span style="text-align:center;font-size:25px;ont-family:SansSerif;">RAML Health Care Assosiates
+                            LLP
+                        </span>
+                        <br/>
+                        <span style="text-align:center;font-size:25px;ont-family:SansSerif;">
+                            Kizhakkethala,Downhill,Malappuram
+                        </span>
+                        <br/>
+                        <span style="font-family:SansSerif;font-size:25px;">DL.No : KL-MLP- 125176,KL-MLP-125177</span>
+                        <br/>
+                        <span style="font-family:SansSerif;font-size:25px;">GST IN :&#160;</span>
+                        <span style="font-family:SansSerif;font-size:25px;" t-esc="company.vat"></span>
+                        <br/>
+                        <span style="text-align:center;font-size:25px;ont-family:SansSerif;">Ph-0483 2738500,2738501
+                        </span>
+                    </strong>
+                </center>
+            </div>
+        </div>
+        <div class="article">
+            <t t-raw="0"/>
+        </div>
+    </template>
+    <template id="external_layout_custom">
+        <!-- Multicompany -->
+        <t t-if="not o and doc">
+            <t t-set="o" t-value="doc"/>
+        </t>
+
+        <t t-if="o and 'company_id' in o">
+            <t t-set="company" t-value="o.company_id.sudo()"/>
+        </t>
+        <t t-if="not o or not 'company_id' in o">
+            <t t-set="company" t-value="res_company"/>
+        </t>
+
+        <t t-call="medical_pharmacy.external_layout_standard">
+            <t t-raw="0"/>
+        </t>
+    </template>
+</odoo>

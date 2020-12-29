@@ -1,0 +1,29 @@
+<odoo>
+    <record id="forward_consultation_wizard_view" model="ir.ui.view">
+        <field name="name">forward.wizard.form</field>
+        <field name="model">forward.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Doctor forward">
+                <h4 style="color:#B10707;text-align:center;font-weight: bold;"
+                    attrs="{'invisible': [('forward_needed', '=', True)]}">The following will go to its Selected Doctor.
+                    you can change the Notes here.
+                </h4>
+
+                <h4 style="color:#B10707;text-align:center;font-weight: bold;"
+                    attrs="{'invisible': [('forward_needed', '=', False)]}">The following Forwarded from below Doctor.
+                </h4>
+                <group style="width:70%">
+                    <field name="from_doctor_id" attrs="{'invisible': [('forward_needed', '=', False)]}" readonly="1"/>
+                    <field name="doctor_id"/>
+                    <field name="forward_text"/>
+                    <field name="forward_needed" invisible="1"/>
+                </group>
+                <footer>
+                    <button name="confirm_values" string="Confirm" type='object' class="btn-primary"/>
+                    OR
+                    <button string="Cancel" class="btn-default" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+</odoo>

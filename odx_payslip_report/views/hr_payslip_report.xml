@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<odoo>
+    <data>
+        <template id="odx_payslip_report.hr_payslip_report">
+            <t t-call="odx_payslip_report.external_layout_custom">
+                <div class="page">
+                    <link rel='stylesheet' href='/odx_payslip_report/static/src/css/report.css'/>
+                    <div class="row">
+                        <center>
+                            <h1 class="p3 ft0">Payroll Report</h1>
+                            <hr style="height:5px; border:none; color:#333; background-color:#333"/>
+                            <h4>From
+                                <span t-esc="date_from"/>
+                                To
+                                <span t-esc="date_to"/>
+                            </h4>
+                            <br/>
+                            <table width="100%" class="tb0">
+                                <t t-set="res" t-value="get_data"/>
+                                <thead>
+                                    <tr>
+                                        <t t-foreach="res['column_headings']" t-as="h">
+                                            <th class="text-center td5">
+                                                <span t-esc="h"/>
+                                            </th>
+                                        </t>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <t t-foreach="res['data']" t-as="d">
+                                        <tr>
+                                            <t t-foreach="d" t-as="t">
+                                                <td class="text-center td2">
+                                                    <span t-esc="t"/>
+                                                </td>
+                                            </t>
+                                        </tr>
+                                    </t>
+                                    <tr>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <t t-foreach="res['total']" t-as="s">
+                                            <td class="text-center td3">
+                                                <strong>
+                                                    <span t-esc="s"/>
+                                                </strong>
+                                            </td>
+                                        </t>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </center>
+                    </div>
+                    <br/>
+                </div>
+            </t>
+        </template>
+    </data>
+</odoo>

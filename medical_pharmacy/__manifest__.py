@@ -1,0 +1,33 @@
+{
+    'name': 'Medical-Pharmacy',
+    'version': '11.0.1.0.0',
+    'author': 'Odox SoftHub',
+    'maintainer': 'ACSONE SA/NV, Odoo Community Association (OCA)',
+    'website': 'http://www.odoxsofthub.com',
+    'license': 'GPL-3',
+    'category': 'Medical',
+    'depends': ['base',
+                'medical', 'medical_practitioner', 'medical_opthalmology', 'sale_stock', 'account',
+                'sale_discount_total', 'stock_mts_mto_rule',
+                'product_expiry',
+                ],
+    'summary': 'Introduce medication pharmacy notion into the medical addons',
+    'data': [
+        'data/ir_sequence.xml',
+        'security/ir.model.access.csv',
+        'views/work_order.xml',
+        'views/pharmacy_view.xml',
+        'views/lot_number_view.xml',
+        'views/stock_move_views.xml',
+        'views/sale_order_view.xml',
+        'views/pharmacy_purchase.xml',
+        'report/report.xml',
+        'report/pharmacy_print_template.xml',
+        'report/layout.xml',
+        'report/print_prescription_report_template.xml',
+
+
+    ],
+    'installable': True,
+    'auto_install': False,
+}

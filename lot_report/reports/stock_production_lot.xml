@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="update_qty_view" model="ir.ui.view">
+        <field name="name">stock.production.lot.update.form</field>
+        <field name="model">stock.production.lot.update</field>
+        <field name="arch" type="xml">
+            <form string="Update Qty">
+                <p class="oe_grey">
+                    Update Qty
+                </p>
+                <footer>
+                    <button string="Update Qty" name="update_qty" type="object" default_focus="1" class="btn-primary"/>
+                    <button string="Cancel" class="btn-default" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+    <act_window id="action_account_qty_update"
+                multi="True"
+                key2="client_action_multi" name="update Qty"
+                res_model="stock.production.lot.update" src_model="stock.production.lot"
+                view_mode="form" target="new" view_type="form"/>
+    <record model="ir.ui.view" id="view_produ2ctiofn_lot_form_send_mail">
+        <field name="name">stock.production2.loftorder.line.form2</field>
+        <field name="model">stock.production.lot</field>
+        <field name="inherit_id" ref="stock.view_production_lot_form"/>
+        <field name="arch" type="xml">
+            <field name="ref" position="before">
+                <field name="product_qty_c" readonly="0"/>
+            </field>
+        </field>
+    </record>
+    <record model="ir.ui.view" id="view_production_lot_treeee_send_mail">
+        <field name="name">stock.production.tree.lineee.form2</field>
+        <field name="model">stock.production.lot</field>
+        <field name="inherit_id" ref="stock.view_production_lot_tree"/>
+        <field name="arch" type="xml">
+            <field name="ref" position="before">
+                <field name="product_qty_c" invisible="0"/>
+            </field>
+        </field>
+    </record>
+    <record id="stock.action_production_lot_form" model="ir.actions.act_window">
+        <field name="name">Lots/Serial Numbers</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">stock.production.lot</field>
+        <field name="view_ids"
+               eval="[(5, 0, 0),
+                          (0, 0, {'view_mode': 'tree', 'view_id': ref('stock.view_production_lot_tree')}),
+                          (0, 0, {'view_mode': 'form', 'view_id': ref('stock.view_production_lot_form')}),"/>
+        <field name="search_view_id" ref="stock.search_product_lot_filter"/>
+        <field name="context">{'search_default_group_by_product': 1}</field>
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">
+                Click to add a lot/serial number.
+            </p>
+            <p>
+                This is the list of all the production lots you recorded. When
+                you select a lot, you can get the traceability of the products contained in lot.
+            </p>
+        </field>
+    </record>
+    <record model="ir.ui.view" id="search_product_lot_filter_lsret_price">
+        <field name="name">stock.production.lotorderre.filter.tree</field>
+        <field name="model">stock.production.lot</field>
+        <field name="inherit_id" ref="stock.search_product_lot_filter"/>
+        <field name="arch" type="xml">
+            <filter name="group_by_product" position="after">
+                <filter name="group_by_Related_vendor" string="Related Vendor" domain="[]"
+                        context="{'group_by':'related_vendor_id'}"/>
+                <filter name="group_by_vendor" string="Vendor" domain="[]" context="{'group_by':'partner_id'}"/>
+            </filter>
+        </field>
+    </record>
+    <record id="action_production_lot_form_report" model="ir.actions.act_window">
+        <field name="name">Vendor Report</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">stock.production.lot</field>
+        <field name="view_ids"
+               eval="[(5, 0, 0),
+                          (0, 0, {'view_mode': 'tree', 'view_id': ref('stock.view_production_lot_tree')}),"/>
+        <field name="search_view_id" ref="stock.search_product_lot_filter"/>
+        <field name="context">{}</field>
+        <field name="view_mode">tree</field>
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">
+                Click to add a lot/serial number.
+            </p>
+            <p>
+                This is the list of all the production lots you recorded. When
+                you select a lot, you can get the traceability of the products contained in lot.
+            </p>
+        </field>
+    </record>
+    <menuitem id="action_production_lot_form_report_m"
+              action="action_production_lot_form_report"
+              parent="stock.menu_warehouse_report" sequence="100"/>
+</odoo>

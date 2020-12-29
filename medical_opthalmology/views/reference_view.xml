@@ -1,0 +1,38 @@
+<odoo>
+    <record id="view_reference_from_tree" model="ir.ui.view">
+        <field name="name">Reference_From_Tree</field>
+        <field name="model">reference.from</field>
+        <field name="arch" type="xml">
+            <tree string="Reference From" editable="bottom">
+                <field name="name"/>
+                <field name="type_id"/>
+            </tree>
+        </field>
+    </record>
+    <record id="view_reference_type_tree" model="ir.ui.view">
+        <field name="name">Reference type Tree</field>
+        <field name="model">reference.type</field>
+        <field name="arch" type="xml">
+            <tree string="Reference Type" editable="bottom">
+                <field name="name"/>
+            </tree>
+        </field>
+    </record>
+    <record id="reference_from_action" model="ir.actions.act_window">
+        <field name="name">Reference From</field>
+        <field name="res_model">reference.from</field>
+        <field name="view_mode">tree</field>
+        <field name="view_id" ref="view_reference_from_tree"/>
+    </record>
+    <record id="reference_type_action" model="ir.actions.act_window">
+        <field name="name">Reference Type</field>
+        <field name="res_model">reference.type</field>
+        <field name="view_mode">tree</field>
+        <field name="view_id" ref="view_reference_type_tree"/>
+    </record>
+    <menuitem id="reference_from" parent="medical_opthalmology.configuration" action="reference_from_action"
+              sequence="2"/>
+    <menuitem id="reference_type" parent="medical_opthalmology.configuration" action="reference_type_action"
+              sequence="3"/>
+</odoo>
+

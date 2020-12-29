@@ -1,0 +1,40 @@
+ table{
+
+            width: 100%;
+            margin: 20px 0;
+            border: 2px solid black;
+            #border-collapse: collapse;
+
+        }
+
+        table, th, td{
+
+            border: 1px solid #cdcdcd;
+
+        }
+
+        table th, table td{
+
+            padding: 5px;
+
+            text-align: left;
+
+        }
+
+      .shadowbox {
+
+             width: 50em;
+             border: 5px solid #333;
+             box-shadow: 8px 8px 5px #444;
+             padding: 10px 12px;
+             background-color:orange;
+                     }
+
+      .shadowbox1 {
+
+             width: 50em;
+             border: 5px solid #333;
+             box-shadow: 8px 8px 5px #444;
+             padding: 10px 12px;
+             background-color:yellow;
+        }

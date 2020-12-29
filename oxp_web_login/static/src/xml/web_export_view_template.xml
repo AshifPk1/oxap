@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<templates id="template" xml:space="preserve">
+
+
+    <t t-extend="mail.chat.Sidebar">
+        <t t-jquery=".o_mail_chat_sidebar" t-operation="append">
+
+             <div class="o_sub_menu_content">
+<!--				  <img src="/odoo_web_login/static/src/img/oxap_logo.png"  style="padding: 18px; margin: 0px; height: auto; width: 165px;"/><br/>-->
+			  </div>
+
+        </t>
+    </t>
+</templates>

@@ -1,0 +1,37 @@
+<odoo>
+    <record id="registration_warning_wizard_view" model="ir.ui.view">
+        <field name="name">registration.warning.wizard.form</field>
+        <field name="model">registration.warning.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Registration warning">
+                <h4 style="color:#B10707;text-align:center;font-weight: bold;">The following will be Registered with
+                    below values. you can change the values here.
+                </h4>
+                <group col="3">
+                    <group style="width:50%" string="Patient Details">
+                        <field name="patient_id"/>
+                        <field name="phone"/>
+                    </group>
+                    <group style="width:50%" string="Internal details">
+                        <field name="identification_code"/>
+                        <field name="doctor_id"/>
+                    </group>
+                    <group style="width:50%" string="Payment">
+                        <field name="registration_amount"/>
+                        <field name="journal_id"/>
+                        <field name="last_payment_date" style="color:red;"
+                               attrs="{'invisible': [('last_payment_date', '=', False)]}"/>
+                    </group>
+                    <group style="width:50%" string="Department">
+                        <field name="state" string="Send to"/>
+                    </group>
+                </group>
+                <footer>
+                    <button name="confirm_values" string="Confirm" type='object' class="btn-primary"/>
+                    OR
+                    <button string="Cancel" class="btn-default" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+</odoo>

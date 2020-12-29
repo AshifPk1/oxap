@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="supplier_invoice_form_stock" model="ir.ui.view">
+        <field name="name">account.invoice.form.stock</field>
+        <field name="model">account.invoice</field>
+        <field name="inherit_id" ref="account.invoice_supplier_form"/>
+        <field name="arch" type="xml">
+            <data>
+                <xpath expr="//sheet/div" position="before">
+                    <field name="picking_ids" invisible="1"/>
+                    <div class="oe_right">
+                    <button type="object"
+                        name="action_view_delivery"
+                        class="oe_stat_button"
+                        icon="fa-truck"
+                        attrs="{'invisible': [('type','!=','in_refund')]}" groups="base.group_user">
+                        <field name="delivery_count" widget="statinfo" string="Delivery"/>
+                    </button>
+                    </div>
+                </xpath>
+                <xpath expr="//field[@name='payment_term_id']" position="after">
+                    <field name="picking_type_id" />
+                    <field name="auto_validate_delivey" attrs="{'invisible': [('type','!=','in_refund')]}"/>
+
+                </xpath>
+                <xpath expr="//field[@name='invoice_line_ids']/tree/field[@name='product_id']" position="before">
+                        <!--<field name ="barcode"/>-->
+                    <field name="lot_id"/>
+               </xpath>
+            </data>
+        </field>
+    </record>
+
+
+    <record id="invoice_form_stock" model="ir.ui.view">
+        <field name="name">account.invoice.form.stock</field>
+        <field name="model">account.invoice</field>
+        <field name="inherit_id" ref="account.invoice_form"/>
+        <field name="arch" type="xml">
+            <data>
+                <xpath expr="//sheet/div" position="before">
+                    <field name="picking_ids" invisible="1"/>
+                    <div class="oe_right">
+                    <button type="object"
+                        name="action_view_delivery"
+                        class="oe_stat_button"
+                        icon="fa-truck"
+                        attrs="{'invisible': [('type','!=','out_refund')]}" groups="base.group_user">
+                        <field name="delivery_count" widget="statinfo" string="Receipts"/>
+                    </button>
+                    </div>
+                </xpath>
+                <xpath expr="//field[@name='cash_rounding_id']" position="after">
+                    <field name="picking_type_id" />
+                    <field name="auto_validate_delivey" attrs="{'invisible': [('type','!=','out_refund')]}"/>
+                </xpath>
+                <xpath expr="//field[@name='invoice_line_ids']/tree/field[@name='product_id']" position="before">
+                        <!--<field name ="barcode"/>-->
+                    <field name="lot_id"/>
+               </xpath>
+            </data>
+        </field>
+    </record>
+
+
+
+</odoo>

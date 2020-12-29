@@ -1,0 +1,116 @@
+<odoo>
+    <record id="automatic_eye_axis_value_re1" model="eye.value_axis">
+        <field name="name">0</field>
+    </record>
+    <record id="automatic_eye_axis_value_re2" model="eye.value_axis">
+        <field name="name">5</field>
+    </record>
+    <record id="automatic_eye_axis_value_re3" model="eye.value_axis">
+        <field name="name">10</field>
+    </record>
+    <record id="automatic_eye_axis_value_re4" model="eye.value_axis">
+        <field name="name">15</field>
+    </record>
+    <record id="automatic_eye_axis_value_re5" model="eye.value_axis">
+        <field name="name">20</field>
+    </record>
+    <record id="automatic_eye_axis_value_re6" model="eye.value_axis">
+        <field name="name">25</field>
+    </record>
+    <record id="automatic_eye_axis_value_re7" model="eye.value_axis">
+        <field name="name">30</field>
+    </record>
+    <record id="automatic_eye_axis_value_re8" model="eye.value_axis">
+        <field name="name">35</field>
+    </record>
+    <record id="automatic_eye_axis_value_re9" model="eye.value_axis">
+        <field name="name">40</field>
+    </record>
+    <record id="automatic_eye_axis_value_re10" model="eye.value_axis">
+        <field name="name">45</field>
+    </record>
+    <record id="automatic_eye_axis_value_re11" model="eye.value_axis_me">
+        <field name="name">50</field>
+    </record>
+
+    <record id="automatic_eye_axis_value_re12" model="eye.value_axis_me">
+        <field name="name">55</field>
+    </record>
+
+    <record id="automatic_eye_axis_value_re13" model="eye.value_axis_me">
+        <field name="name">60</field>
+    </record>
+    <record id="automatic_eye_axis_value_re14" model="eye.value_axis_me">
+        <field name="name">65</field>
+    </record>
+    <record id="automatic_eye_axis_value_re15" model="eye.value_axis_me">
+        <field name="name">70</field>
+    </record>
+    <record id="automatic_eye_axis_value_re16" model="eye.value_axis_me">
+        <field name="name">75</field>
+    </record>
+    <record id="automatic_eye_axis_value_re17" model="eye.value_axis_me">
+        <field name="name">80</field>
+    </record>
+    <record id="automatic_eye_axis_value_re18" model="eye.value_axis_me">
+        <field name="name">85</field>
+    </record>
+    <record id="automatic_eye_axis_value_re19" model="eye.value_axis_me">
+        <field name="name">90</field>
+    </record>
+    <record id="automatic_eye_axis_value_re20" model="eye.value_axis_me">
+        <field name="name">95</field>
+    </record>
+
+    <record id="automatic_eye_axis_value_re21" model="eye.value_axis_re">
+        <field name="name">100</field>
+    </record>
+    <record id="automatic_eye_axis_value_re22" model="eye.value_axis_re">
+        <field name="name">105</field>
+    </record>
+    <record id="automatic_eye_axis_value_re23" model="eye.value_axis_re">
+        <field name="name">110</field>
+    </record>
+    <record id="automatic_eye_axis_value_re24" model="eye.value_axis_re">
+        <field name="name">115</field>
+    </record>
+    <record id="automatic_eye_axis_value_re25" model="eye.value_axis_re">
+        <field name="name">120</field>
+    </record>
+    <record id="automatic_eye_axis_value_re26" model="eye.value_axis_re">
+        <field name="name">125</field>
+    </record>
+    <record id="automatic_eye_axis_value_re27" model="eye.value_axis_re">
+        <field name="name">130</field>
+    </record>
+    <record id="automatic_eye_axis_value_re28" model="eye.value_axis_re">
+        <field name="name">135</field>
+    </record>
+    <record id="automatic_eye_axis_value_re29" model="eye.value_axis_re">
+        <field name="name">140</field>
+    </record>
+    <record id="automatic_eye_axis_value_re30" model="eye.value_axis_re">
+        <field name="name">145</field>
+    </record>
+    <record id="automatic_eye_axis_value_re31" model="eye.value_re_axis_2">
+        <field name="name">150</field>
+    </record>
+    <record id="automatic_eye_vaxis_value_re32" model="eye.value_re_axis_2">
+        <field name="name">155</field>
+    </record>
+    <record id="automatic_eye_axis_value_re33" model="eye.value_re_axis_2">
+        <field name="name">160</field>
+    </record>
+    <record id="automatic_eye_axis_value_re34" model="eye.value_re_axis_2">
+        <field name="name">165</field>
+    </record>
+    <record id="automatic_eye_axis_value_re35" model="eye.value_re_axis_2">
+        <field name="name">170</field>
+    </record>
+    <record id="automatic_eye_axis_value_re36" model="eye.value_re_axis_2">
+        <field name="name">175</field>
+    </record>
+    <record id="automatic_eye_axis_value_re37" model="eye.value_re_axis_2">
+        <field name="name">180</field>
+    </record>
+</odoo>

@@ -1,0 +1,17 @@
+<odoo>
+    <data>
+        <!-- VIEW FOR THE OBJECT : counselling Sub State -->
+        <record id="automatic_substate_counselling1" model="counselling.substate">
+            <field name="stage_name">Sent to IOL</field>
+            <field name="is_start" eval="1"/>
+        </record>
+        <record id="automatic_substate_counselling2" model="counselling.substate">
+            <field name="stage_name">Update Fitness file</field>
+            <field name="is_start" eval="0"/>
+        </record>
+        <record id="automatic_substate_counselling3" model="counselling.substate">
+            <field name="stage_name">Schedule Surgery</field>
+            <field name="is_start" eval="0"/>
+        </record>
+    </data>
+</odoo>

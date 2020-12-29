@@ -1,0 +1,43 @@
+<odoo>
+    <record id="patient_revisit_view_form_counselling" model="ir.ui.view">
+        <field name="name">patient.visit.form.counselling</field>
+        <field name="model">medical.opthalmology</field>
+        <field name="inherit_id" ref="medical_opthalmology.patient_revisit_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//notebook/page[2]" position="after">
+                <page string="Counselling">
+                    <group>
+                        <field name="treatment_new_ids" mode='tree'>
+                            <tree string="Treatment details" editable="bottom">
+                                <field name="treatment"/>
+                                <field name="eye"/>
+                                <field name="date"/>
+                                <field name="amount"/>
+                            </tree>
+                        </field>
+                        <field name="investigation_details_ids" mode='tree'>
+                            <tree string="Investigation details" editable="bottom">
+                                <field name="investigation" widget="selection"/>
+                                <field name="eye"/>
+                                <field name="date"/>
+                                <field name="amount"/>
+                            </tree>
+                        </field>
+                        <field name="lens_details_ids" mode='tree'>
+                            <tree string="Lens details" editable="bottom">
+                                <field name="group"/>
+                                <field name="brand"/>
+                                <field name="model"/>
+                                <field name="power"/>
+                                <field name="item"/>
+                                <field name="rate"/>
+                            </tree>
+                        </field>
+                        <field name="counselling_note"/>
+                    </group>
+                </page>
+            </xpath>
+        </field>
+    </record>
+</odoo>
+

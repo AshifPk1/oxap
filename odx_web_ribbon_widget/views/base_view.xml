@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+<!-- Load css for ribbons -->
+<template id="assets_backend" name="ribbon_widget assets"
+          inherit_id="web.assets_backend">
+    <xpath expr="." position="inside">
+        <link rel="stylesheet"  type="text/scss"
+              href="/odx_web_ribbon_widget/static/src/css/ribbon.css"/>
+        <script type="text/javascript"
+                src="/odx_web_ribbon_widget/static/src/js/ribbon.js"/>
+    </xpath>
+</template>
+
+</odoo>

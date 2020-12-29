@@ -1,0 +1,508 @@
+<odoo>
+    <record id="old_glass_wizard_view" model="ir.ui.view">
+        <field name="name">old.glass.wizard.form</field>
+        <field name="model">old.glass.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Old Glass details" class="o_sale_order">
+                <h3>
+                    <field name="name" readonly="1"/>
+                </h3>
+                <div>
+                    <group>
+                        <group>
+                            <group>
+                                <field name="patient_id" placeholder="Patient Name"
+                                       style="width:50%" nolabel="1"/>
+                            </group>
+                            <group>
+                                <field name="identification_code" nolabel="1" style="width:25%"/>
+                            </group>
+                        </group>
+                        <group>
+                            <group>
+                                <field name="age" nolabel="1" style="width:40%"/>
+                            </group>
+                            <group>
+                                <field name="date" nolabel="1" style="width:30%"/>
+                            </group>
+                        </group>
+                    </group>
+                </div>
+                <div class="row">
+                    <div class="col-xs-4">
+                        <label style="color:#B10707;text-align:center;font-size:15px;width: 100%;font-weight: bold"
+                               string="RE"/>
+                    </div>
+                    <div class="col-xs-4">
+                        <label style="color:#B10707;text-align:center;font-size:15x;width: 100%;font-weight: bold"
+                               string="LE"/>
+                    </div>
+                    <div class="col-xs-3"></div>
+                    <div class="col-xs-1"></div>
+                </div>
+                <div style="background:#F3F5F6;" class="row">
+                    <div class="col-xs-8">
+                        <center>
+                            <h4>Current Details</h4>
+                        </center>
+                    </div>
+                </div>
+                <div style="background:#F3F5F6;" class="row">
+                    <div class="col-xs-4">
+                        <br/>
+                        <table name="table_re_1"
+                               style="font-size: 13px; border-top: 1px solid black; border-bottom: 1px solid black;  border-left: 1px solid black; border-right: 1px solid black; border-color:#DFDFDF;width:90%;">
+                            <thead>
+                                <td width='19%'> </td>
+                                <td width='19%'>Sph</td>
+                                <td width='19%'>Cyl</td>
+                                <td width='19%'>Axis</td>
+                                <td width='19%'>V/A</td>
+                            </thead>
+                            <tbody>
+                                <tr style="font-size: 13px; padding: 0px; background-color:#F5F6F9; border-top: 1px solid black; border-bottom: 1px solid black; border-color:#DFDFDF;">
+                                    <td class="text-center">
+                                        <span>DV</span>
+                                    </td>
+                                    <td style="font-weight: bold">
+                                        <field name="sphere_le_dv"/>
+                                    </td>
+                                    <td style="font-weight: bold">
+                                        <field name="cyl_le_dv"/>
+                                    </td>
+                                    <td style="font-weight: bold">
+                                        <field name="axis_le_dv"/>
+                                    </td>
+                                    <td style="font-weight: bold">
+                                        <field name="va_le_dv"/>
+                                    </td>
+                                </tr>
+                                <tr style="font-size: 13px padding: 0px; border-top: 1px solid black; border-bottom: 1px solid black; border-color:#DFDFDF;">
+                                    <td class="text-center">
+                                        <span>NV</span>
+                                    </td>
+                                    <td style="font-weight: bold">
+                                        <field name="sphere_le_nv"/>
+                                    </td>
+                                    <td style="font-weight: bold">
+                                        <field name="cyl_le_nv"/>
+                                    </td>
+                                    <td style="font-weight: bold">
+                                        <field name="axis_le_nv"/>
+                                    </td>
+                                    <td style="font-weight: bold">
+                                        <field name="va_le_nv"/>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <br/>
+                    </div>
+                    <div class="col-xs-4">
+                        <br/>
+                        <table name="table_le1"
+                               style="font-size: 13px; border-top: 1px solid black; border-bottom: 1px solid black;  border-left: 1px solid black; border-right: 1px solid black; border-color:#DFDFDF;width:90%;">
+                            <thead>
+                                <td width='19%'> </td>
+                                <td width='19%'>Sph</td>
+                                <td width='19%'>Cyl</td>
+                                <td width='19%'>Axis</td>
+                                <td width='19%'>V/A</td>
+                            </thead>
+                            <tbody>
+                                <tr style="font-size: 13px padding: 0px; border-top: 1px solid black; border-bottom: 1px solid black; border-color:#DFDFDF;">
+                                    <td class="text-center">
+                                        <span>DV</span>
+                                    </td>
+                                    <td style="font-weight: bold">
+                                        <field name="sphere_re_dv"/>
+                                    </td>
+                                    <td style="font-weight: bold">
+                                        <field name="cyl_re_dv"/>
+                                    </td>
+                                    <td style="font-weight: bold">
+                                        <field name="axis_re_dv"/>
+                                    </td>
+                                    <td style="font-weight: bold">
+                                        <field name="va_re_dv"/>
+                                    </td>
+                                </tr>
+                                <tr style="font-size: 13px; padding: 0px; background-color:#F5F6F9; border-top: 1px solid black; border-bottom: 1px solid black; border-color:#DFDFDF;">
+                                    <td class="text-center">
+                                        <span>NV</span>
+                                    </td>
+                                    <td style="font-weight: bold">
+                                        <field name="sphere_re_nv"/>
+                                    </td>
+                                    <td style="font-weight: bold">
+                                        <field name="cyl_re_nv"/>
+                                    </td>
+                                    <td style="font-weight: bold">
+                                        <field name="axis_re_nv"/>
+                                    </td>
+                                    <td style="font-weight: bold">
+                                        <field name="va_re_nv"/>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <br/>
+                    </div>
+                </div>
+                <br/>
+                <div style="background:#F3F5F6;" class="row">
+                    <div class="col-xs-10">
+                        <group>
+                            <field name="old_glass1_date" nolabel="1" placeholder="Old Glass @"/>
+                        </group>
+                    </div>
+                    <div class="col-xs-1"></div>
+                </div>
+                <div style="background:#F3F5F6;" class="row">
+                    <div class="col-xs-4">
+                        <br/>
+                        <table name="table_re_1"
+                               style="font-size: 13px; border-top: 1px solid black; border-bottom: 1px solid black;  border-left: 1px solid black; border-right: 1px solid black; border-color:#DFDFDF;width:90%;">
+                            <thead>
+                                <th width='19%'> </th>
+                                <th width='19%'>Sph</th>
+                                <th width='19%'>Cyl</th>
+                                <th width='19%'>Axis</th>
+                                <th width='19%'>V/A</th>
+                            </thead>
+                            <tbody>
+                                <tr style="font-size: 13px; padding: 0px; background-color:#F5F6F9; border-top: 1px solid black; border-bottom: 1px solid black; border-color:#DFDFDF;">
+                                    <td class="text-center">
+                                        <span>DV</span>
+                                    </td>
+                                    <td>
+                                        <field name="sph_dv_re1"/>
+                                    </td>
+                                    <td>
+                                        <field name="cyl_dv_re1"/>
+                                    </td>
+                                    <td>
+                                        <field name="axis_dv_re1"/>
+                                    </td>
+                                    <td>
+                                        <field name="va_dv_re1"/>
+                                    </td>
+                                </tr>
+                                <tr style="font-size: 13px padding: 0px; border-top: 1px solid black; border-bottom: 1px solid black; border-color:#DFDFDF;">
+                                    <td class="text-center">
+                                        <span>NV</span>
+                                    </td>
+                                    <td>
+                                        <field name="sph_nv_re1"/>
+                                    </td>
+                                    <td>
+                                        <field name="cyl_nv_re1"/>
+                                    </td>
+                                    <td>
+                                        <field name="axis_nv_re1"/>
+                                    </td>
+                                    <td>
+                                        <field name="va_nv_re1"/>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <br/>
+                    </div>
+                    <div class="col-xs-4">
+                        <br/>
+                        <table name="table_le1"
+                               style="font-size: 13px; border-top: 1px solid black; border-bottom: 1px solid black;  border-left: 1px solid black; border-right: 1px solid black; border-color:#DFDFDF;width:90%;">
+                            <thead>
+                                <th width='19%'> </th>
+                                <th width='19%'>Sph</th>
+                                <th width='19%'>Cyl</th>
+                                <th width='19%'>Axis</th>
+                                <th width='19%'>V/A</th>
+                            </thead>
+                            <tbody>
+                                <tr style="font-size: 13px padding: 0px; border-top: 1px solid black; border-bottom: 1px solid black; border-color:#DFDFDF;">
+                                    <td class="text-center">
+                                        <span>DV</span>
+                                    </td>
+                                    <td>
+                                        <field name="sph_dv_le1"/>
+                                    </td>
+                                    <td>
+                                        <field name="cyl_dv_le1"/>
+                                    </td>
+                                    <td>
+                                        <field name="axis_dv_le1"/>
+                                    </td>
+                                    <td>
+                                        <field name="va_dv_le1"/>
+                                    </td>
+                                </tr>
+                                <tr style="font-size: 13px; padding: 0px; background-color:#F5F6F9; border-top: 1px solid black; border-bottom: 1px solid black; border-color:#DFDFDF;">
+                                    <td class="text-center">
+                                        <span>NV</span>
+                                    </td>
+                                    <td>
+                                        <field name="sph_nv_le1"/>
+                                    </td>
+                                    <td>
+                                        <field name="cyl_nv_le1"/>
+                                    </td>
+                                    <td>
+                                        <field name="axis_nv_le1"/>
+                                    </td>
+                                    <td>
+                                        <field name="va_nv_le1"/>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <br/>
+                    </div>
+                    <div class="col-xs-3">
+                        <label for="glass_status1" string="Glass Status" style="width:60%"/>
+                        <field name="glass_status1" nolabel="1" style="width:60%"/>
+                        <label for="glass_type1" string="Glass Type" style="width:60%"/>
+                        <field name="glass_type1" nolabel="1" style="width:60%"/>
+                    </div>
+                    <div class="col-xs-1">
+                    </div>
+                </div>
+                <br/>
+                <div style="background:#F3F5F6;" class="row">
+                    <div class="col-xs-10">
+                        <group>
+                            <field name="old_glass2_date" nolabel="1" placeholder="Old Glass @"/>
+                        </group>
+                    </div>
+                    <div class="col-xs-1"></div>
+                </div>
+                <div style="background:#F3F5F6;" class="row">
+                    <div class="col-xs-4">
+                        <br/>
+                        <table style="font-size: 13px; border-top: 1px solid black; border-bottom: 1px solid black;  border-left: 1px solid black; border-right: 1px solid black; border-color:#DFDFDF;width:90%;">
+                            <thead>
+                                <th width='19%'> </th>
+                                <th width='19%'>Sph</th>
+                                <th width='19%'>Cyl</th>
+                                <th width='19%'>Axis</th>
+                                <th width='19%'>V/A</th>
+                            </thead>
+                            <tbody>
+                                <tr style="font-size: 13px; padding: 0px; background-color:#F5F6F9; border-top: 1px solid black; border-bottom: 1px solid black; border-color:#DFDFDF;">
+                                    <td class="text-center">
+                                        <span>DV</span>
+                                    </td>
+                                    <td>
+                                        <field name="sph_dv_re2"/>
+                                    </td>
+                                    <td>
+                                        <field name="cyl_dv_re2"/>
+                                    </td>
+                                    <td>
+                                        <field name="axis_dv_re2"/>
+                                    </td>
+                                    <td>
+                                        <field name="va_dv_re2"/>
+                                    </td>
+                                </tr>
+                                <tr style="font-size: 13px padding: 0px; border-top: 1px solid black; border-bottom: 1px solid black; border-color:#DFDFDF;">
+                                    <td class="text-center">
+                                        <span>NV</span>
+                                    </td>
+                                    <td>
+                                        <field name="sph_nv_re2"/>
+                                    </td>
+                                    <td>
+                                        <field name="cyl_nv_re2"/>
+                                    </td>
+                                    <td>
+                                        <field name="axis_nv_re2"/>
+                                    </td>
+                                    <td>
+                                        <field name="va_nv_re2"/>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <br/>
+                    </div>
+                    <div class="col-xs-4">
+                        <br/>
+                        <table style="font-size: 13px; border-top: 1px solid black; border-bottom: 1px solid black;  border-left: 1px solid black; border-right: 1px solid black; border-color:#DFDFDF;width:90%;">
+                            <thead>
+                                <th width='19%'> </th>
+                                <th width='19%'>Sph</th>
+                                <th width='19%'>Cyl</th>
+                                <th width='19%'>Axis</th>
+                                <th width='19%'>V/A</th>
+                            </thead>
+                            <tbody>
+                                <tr style="font-size: 13px padding: 0px; border-top: 1px solid black; border-bottom: 1px solid black; border-color:#DFDFDF;">
+                                    <td class="text-center">
+                                        <span>DV</span>
+                                    </td>
+                                    <td>
+                                        <field name="sph_dv_le2"/>
+                                    </td>
+                                    <td>
+                                        <field name="cyl_dv_le2"/>
+                                    </td>
+                                    <td>
+                                        <field name="axis_dv_le2"/>
+                                    </td>
+                                    <td>
+                                        <field name="va_dv_le2"/>
+                                    </td>
+                                </tr>
+                                <tr style="font-size: 13px; padding: 0px; background-color:#F5F6F9; border-top: 1px solid black; border-bottom: 1px solid black; border-color:#DFDFDF;">
+                                    <td class="text-center">
+                                        <span>NV</span>
+                                    </td>
+                                    <td>
+                                        <field name="sph_nv_le2"/>
+                                    </td>
+                                    <td>
+                                        <field name="cyl_nv_le2"/>
+                                    </td>
+                                    <td>
+                                        <field name="axis_nv_le2"/>
+                                    </td>
+                                    <td>
+                                        <field name="va_nv_le2"/>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <br/>
+                    </div>
+                    <div class="col-xs-3">
+                        <label for="glass_status2" string="Glass Status" style="width:60%"/>
+                        <field name="glass_status2" nolabel="1" style="width:60%"/>
+                        <label for="glass_type2" string="Glass Type" style="width:60%"/>
+                        <field name="glass_type2" nolabel="1" style="width:60%"/>
+                    </div>
+                    <div class="col-xs-1">
+                    </div>
+                </div>
+                <br/>
+                <div style="background:#F3F5F6;" class="row">
+                    <div class="col-xs-10">
+                        <group>
+                            <field name="old_glass3_date" nolabel="1" placeholder="Old Glass @"/>
+                        </group>
+                    </div>
+                    <div class="col-xs-1"></div>
+                </div>
+                <div style="background:#F3F5F6;" class="row">
+                    <div class="col-xs-4">
+                        <br/>
+                        <table style="font-size: 13px; border-top: 1px solid black; border-bottom: 1px solid black;  border-left: 1px solid black; border-right: 1px solid black; border-color:#DFDFDF;width:90%;">
+                            <thead>
+                                <th width='19%'> </th>
+                                <th width='19%'>Sph</th>
+                                <th width='19%'>Cyl</th>
+                                <th width='19%'>Axis</th>
+                                <th width='19%'>V/A</th>
+                            </thead>
+                            <tbody>
+                                <tr style="font-size: 13px; padding: 0px; background-color:#F5F6F9; border-top: 1px solid black; border-bottom: 1px solid black; border-color:#DFDFDF;">
+                                    <td class="text-center">
+                                        <span>DV</span>
+                                    </td>
+                                    <td>
+                                        <field name="sph_dv_re3"/>
+                                    </td>
+                                    <td>
+                                        <field name="cyl_dv_re3"/>
+                                    </td>
+                                    <td>
+                                        <field name="axis_dv_re3"/>
+                                    </td>
+                                    <td>
+                                        <field name="va_dv_re3"/>
+                                    </td>
+                                </tr>
+                                <tr style="font-size: 13px padding: 0px; border-top: 1px solid black; border-bottom: 1px solid black; border-color:#DFDFDF;">
+                                    <td class="text-center">
+                                        <span>NV</span>
+                                    </td>
+                                    <td>
+                                        <field name="sph_nv_re3"/>
+                                    </td>
+                                    <td>
+                                        <field name="cyl_nv_re3"/>
+                                    </td>
+                                    <td>
+                                        <field name="axis_nv_re3"/>
+                                    </td>
+                                    <td>
+                                        <field name="va_nv_re3"/>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <br/>
+                    </div>
+                    <div class="col-xs-4">
+                        <br/>
+                        <table style="font-size: 13px; border-top: 1px solid black; border-bottom: 1px solid black;  border-left: 1px solid black; border-right: 1px solid black; border-color:#DFDFDF;width:90%;">
+                            <thead>
+                                <th width='19%'> </th>
+                                <th width='19%'>Sph</th>
+                                <th width='19%'>Cyl</th>
+                                <th width='19%'>Axis</th>
+                                <th width='19%'>V/A</th>
+                            </thead>
+                            <tbody>
+                                <tr style="font-size: 13px padding: 0px; border-top: 1px solid black; border-bottom: 1px solid black; border-color:#DFDFDF;">
+                                    <td class="text-center">
+                                        <span>DV</span>
+                                    </td>
+                                    <td>
+                                        <field name="sph_dv_le3"/>
+                                    </td>
+                                    <td>
+                                        <field name="cyl_dv_le3"/>
+                                    </td>
+                                    <td>
+                                        <field name="axis_dv_le3"/>
+                                    </td>
+                                    <td>
+                                        <field name="va_dv_le3"/>
+                                    </td>
+                                </tr>
+                                <tr style="font-size: 13px; padding: 0px; background-color:#F5F6F9; border-top: 1px solid black; border-bottom: 1px solid black; border-color:#DFDFDF;">
+                                    <td class="text-center">
+                                        <span>NV</span>
+                                    </td>
+                                    <td>
+                                        <field name="sph_nv_le3"/>
+                                    </td>
+                                    <td>
+                                        <field name="cyl_nv_le3"/>
+                                    </td>
+                                    <td>
+                                        <field name="axis_nv_le3"/>
+                                    </td>
+                                    <td>
+                                        <field name="va_nv_le3"/>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <br/>
+                    </div>
+                    <div class="col-xs-3">
+                        <label for="glass_status3" string="Glass Status" style="width:60%"/>
+                        <field name="glass_status3" nolabel="1" style="width:60%"/>
+                        <label for="glass_type3" string="Glass Type" style="width:60%"/>
+                        <field name="glass_type3" nolabel="1" style="width:60%"/>
+                    </div>
+                    <div class="col-xs-1">
+                    </div>
+                </div>
+            </form>
+        </field>
+    </record>
+</odoo>

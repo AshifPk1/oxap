@@ -1,0 +1,124 @@
+<odoo>
+    <record id="eye_value_wizard_view" model="ir.ui.view">
+        <field name="name">eye.values.wizard.form</field>
+        <field name="model">eye.values.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Batch Details " class="o_sale_order">
+                <group col="4">
+                    <group style="width:20%">
+                        <div>
+                            <field name="eye_value_ids_le" nolabel="1" widget="many2many_checkboxes"/>
+                        </div>
+                    </group>
+                    <group style="width:20%">
+                        <div>
+                            <field name="eye_value_ids_me" nolabel="1" widget="many2many_checkboxes"/>
+                        </div>
+                    </group>
+                    <group style="width:20%">
+                        <div>
+                            <field name="eye_value_ids_re" nolabel="1" widget="many2many_checkboxes"/>
+                        </div>
+                    </group>
+                    <group style="width:20%">
+                        <div>
+                            <field name="eye_value_ids_re_2" nolabel="1" widget="many2many_checkboxes"/>
+                        </div>
+                    </group>
+                </group>
+                <footer>
+                    <button name="run" string="Apply"
+                            type="object" class="oe_highlight"/>
+                    or
+                    <button string="Cancel" class="oe_link" special="cancel"/>
+                </footer>
+
+            </form>
+        </field>
+    </record>
+    <record id="eye_value_wizard_axis_view" model="ir.ui.view">
+        <field name="name">eye.values.wizard.axis.form</field>
+        <field name="model">eye.values.wizard.axis</field>
+        <field name="arch" type="xml">
+            <form string="Axis value Details " class="o_sale_order">
+                <group col="4">
+                    <group style="width:20%">
+                        <div>
+                            <field name="eye_value_ids_le" nolabel="1" widget="many2many_checkboxes" horizontal="True"/>
+                        </div>
+                    </group>
+                    <group style="width:20%">
+                        <div>
+                            <field name="eye_value_ids_me" nolabel="1" widget="many2many_checkboxes" horizontal="True"/>
+                        </div>
+                    </group>
+                    <group style="width:20%">
+                        <div>
+                            <field name="eye_value_ids_re" nolabel="1" widget="many2many_checkboxes" horizontal="True"/>
+                        </div>
+                    </group>
+                    <group style="width:20%">
+                        <div>
+                            <field name="eye_value_ids_re_2" nolabel="1" widget="many2many_checkboxes"
+                                   horizontal="True"/>
+                        </div>
+                    </group>
+                </group>
+                <footer>
+                    <button name="run" string="Apply"
+                            type="object" class="oe_highlight"/>
+                    or
+                    <button string="Cancel" class="oe_link" special="cancel"/>
+                </footer>
+
+            </form>
+        </field>
+    </record>
+    <record id="eye_value_wizard_va_view" model="ir.ui.view">
+        <field name="name">eye.values.wizard.va.form</field>
+        <field name="model">eye.values.wizard.va</field>
+        <field name="arch" type="xml">
+            <form string="Va value Details " class="o_sale_order">
+                <group col="4">
+                    <field name="nv" invisible="True"/>
+                    <group style="width:20%">
+                        <div>
+                            <field name="eye_value_ids_le" nolabel="1" widget="many2many_checkboxes" horizontal="True"
+                                   attrs="{'invisible':[('nv','=',True)]}"/>
+                            <field name="eye_value_ids_nv_re" nolabel="1" widget="many2many_checkboxes"
+                                   horizontal="True" attrs="{'invisible':[('nv','=',False)]}"/>
+                        </div>
+                    </group>
+                    <group style="width:20%">
+                        <div>
+                            <field name="eye_value_ids_me" nolabel="1" widget="many2many_checkboxes" horizontal="True"
+                                   attrs="{'invisible':[('nv','=',True)]}"/>
+                            <field name="eye_value_ids_nv_re_2" nolabel="1" widget="many2many_checkboxes"
+                                   horizontal="True" attrs="{'invisible':[('nv','=',False)]}"/>
+                        </div>
+                    </group>
+                    <group style="width:20%">
+                        <div>
+                            <field name="eye_value_ids_re" nolabel="1" widget="many2many_checkboxes" horizontal="True"
+                                   attrs="{'invisible':[('nv','=',True)]}"/>
+                        </div>
+                    </group>
+                    <group style="width:20%">
+                        <div>
+                            <field name="eye_value_ids_re_2" nolabel="1" widget="many2many_checkboxes" horizontal="True"
+                                   attrs="{'invisible':[('nv','=',True)]}"/>
+                        </div>
+                    </group>
+                </group>
+                <footer>
+                    <button name="run" string="Apply"
+                            type="object" class="oe_highlight" attrs="{'invisible':[('nv','=',True)]}"/>
+                    <button name="run_nv" string="Apply"
+                            type="object" class="oe_highlight" attrs="{'invisible':[('nv','=',False)]}"/>
+                    or
+                    <button string="Cancel" class="oe_link" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+</odoo>

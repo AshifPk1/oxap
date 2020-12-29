@@ -1,0 +1,146 @@
+<odoo>
+    <record id="view_patient_appointment_form" model="ir.ui.view">
+        <field name="name">patient.appointment.form</field>
+        <field name="model">medical.appointment</field>
+        <field name="arch" type="xml">
+            <form string="Patient Appointment" class="o_sale_order">
+                <header>
+                    <button name="create_registration" string="Confirm" type='object' class="btn-primary"
+                            attrs="{'invisible':[('state','not in','draft')]}"/>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,confirmed"/>
+                </header>
+                <sheet>
+                    <h1>
+                        <field name="name" readonly="1"/>
+                        <div class="col-xs-5 pull-right" style="color:#0077b3;text-align:left;font-size:13px;">
+                            <group>
+                                <field name="note"
+                                       attrs="{'readonly': [('state', 'not in', 'draft')],'invisible': [('note', '=', False)]}"/>
+                                <field name="last_visit_date" placeholder="Last Visit Date" readonly="1"
+                                       attrs="{'invisible': [('last_visit_date', '=', False)]}"/>
+                                <field name="doctor_review_date" readonly="1"
+                                       attrs="{'invisible': [('doctor_review_date', '=', False)]}"/>
+                                <field name="appointment_date" attrs="{'readonly': [('state', 'not in', 'draft')]}"
+                                       placeholder="Appointment Date"/>
+                                <field name="appointment_time" widget="float_time"
+                                       attrs="{'readonly': [('state', 'not in', 'draft')]}"
+                                       placeholder="Appointment Time"/>
+                            </group>
+                        </div>
+                    </h1>
+                    <group string="Patient Information" col="3">
+                        <group style="width:35%">
+                            <h2>
+                                <field name="patient_id" style="width:130%;"
+                                       options='{"no_create_edit": True,"no_open": True}' placeholder="Patient Name"
+                                       attrs="{'readonly': [('state', 'not in', 'draft')]}"/>
+                            </h2>
+                            <field name="street"
+                                   placeholder="Address..."
+                                   class="o_address_street"
+                                   attrs="{'readonly': [('state', 'not in', 'draft')]}"
+                            />
+                            <field name="street2"
+                                   placeholder="Street 2..."
+                                   class="o_address_street" invisible="1"
+                                   attrs="{'readonly': [('state', 'not in', 'draft')]}"
+                            />
+                            <field name="city"
+                                   placeholder="Place"
+                                   class="o_address_city"
+                                   attrs="{'readonly': [('state', 'not in', 'draft')]}"
+                            />
+                            <field name="state_id"
+                                   class="o_address_state"
+                                   placeholder="State"
+                                   options='{"no_open": True,"no_create_edit": True,"no_quick_create":True}'
+                                   context="{'country_id': country_id, 'zip': zip}" invisible="1"
+                                   attrs="{'readonly': [('state', 'not in', 'draft')]}"
+                            />
+                            <field name="zip"
+                                   placeholder="ZIP"
+                                   class="o_address_zip" invisible="1"
+                                   attrs="{'readonly': [('state', 'not in', 'draft')]}"
+                            />
+                            <field name="country_id"
+                                   placeholder="Country"
+                                   class="o_address_country" invisible="1"
+                                   options='{"no_open": True, "no_create": True}'
+                                   attrs="{'readonly': [('state', 'not in', 'draft')]}"
+                            />
+                            <field name="phone" attrs="{'readonly': [('state', 'not in', 'draft')]}"
+                                   placeholder="Contact Number"/>
+                        </group>
+                        <group style="width:32.5%">
+                            <div style="height:60px">
+                            </div>
+                            <field name="age" attrs="{'readonly': [('state', 'not in', 'draft')]}"
+                                   placeholder="Age"/>
+                            <field name="gender" attrs="{'readonly': [('state', 'not in', 'draft')]}"
+                                   placeholder="Gender"/>
+                        </group>
+                        <group style="width:32.5%">
+                            <div style="height:60px">
+                            </div>
+                            <field name="identification_code" attrs="{'readonly': [('state', 'not in', 'draft')]}"
+                                   placeholder="File Number"/>
+                            <field name="doctor_id" options='{"no_create_edit": True,"no_open": True}'
+                                   attrs="{'readonly': [('state', 'not in', 'draft')]}"
+                                   placeholder="Doctor"/>
+                            <field name="tag_ids" widget="many2many_tags"
+                                   attrs="{'readonly': [('state', 'not in', 'draft')]}"
+                                   options="{'color_field': 'color'}" placeholder="Tags"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="patient_appointment_tree" model="ir.ui.view">
+        <field name="name">Patient Appointment Tree</field>
+        <field name="model">medical.appointment</field>
+        <field name="arch" type="xml">
+            <tree string="Appointment">
+                <field name="name"/>
+                <field name="patient_id"/>
+                <field name="identification_code"/>
+                <field name="doctor_id"/>
+                <field name="date" invisible="True"/>
+                <field name="tag_ids" widget="many2many_tags"/>
+                <field name="appointment_date"/>
+                <field name="appointment_time"/>
+                <field name="state"/>
+                <field name="last_visit_date"/>
+                <field name="date_today" invisible="True"/>
+            </tree>
+        </field>
+    </record>
+    <record id="appoinment_search_view" model="ir.ui.view">
+        <field name="name">appointment.search</field>
+        <field name="model">medical.appointment</field>
+        <field name="arch" type="xml">
+            <search string="Appointment">
+                <field name="identification_code" string="File Number"/>
+                <field name="date" string="Date"/>
+                <field name="patient_id" string="Patient"/>
+                <field name="phone" string="Phone Number"/>
+                <field name="doctor_id" string="Doctor"/>
+                <field name="state" string="State"/>
+                <separator/>
+                <filter string="Today" name="date_today"
+                        domain="[('date_today', '=', context_today().strftime('%Y-%m-%d'))]"/>
+            </search>
+        </field>
+    </record>
+    <record id="action_patient_appointment" model="ir.actions.act_window">
+        <field name="name">Patient Review</field>
+        <field name="res_model">medical.appointment</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="context">{'search_default_state':'draft'}</field>
+    </record>
+    <menuitem id="appointment_process"
+              groups="medical_opthalmology.group_reception_access,medical_opthalmology.group_counsellor_access"
+              action="action_patient_appointment" parent="medical_opthalmology.patient_visit_main"
+              sequence="7"/>
+</odoo>

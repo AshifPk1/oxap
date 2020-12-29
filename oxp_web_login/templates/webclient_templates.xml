@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="assets_login" inherit_id="web.assets_frontend">
+        <xpath expr="." position="inside">
+            <link rel="stylesheet" href="/oxp_web_login/static/src/css/main.css"/>
+        </xpath>
+    </template>
+
+    <template id="login_layout" inherit_id="web.login_layout" name="Login Layout Inherit">
+        <xpath expr="//t[@t-set='body_classname']" position="after">
+            <t t-set="body_classname" t-value="''"/>
+        </xpath>
+
+        <xpath expr="//div[hasclass('row')]" position="attributes">
+            <attribute name="class">body_login</attribute>
+        </xpath>
+
+        <xpath expr="//div[hasclass('o_database_list')]" position="before">
+            <div id="background-wrapper"
+                 t-attf-style="background-image: url('#{background_src}');"> </div>
+        </xpath>
+
+        <xpath expr="//div[hasclass('o_database_list')]" position="attributes">
+            <attribute name="class">col-lg-3 col-md-4 col-sm-4 col-xs-11 o_database_list</attribute>
+        </xpath>
+
+        <xpath expr="//div[hasclass('text-center')]/img" position="attributes">
+            <attribute name="class">company_logo</attribute>
+        </xpath>
+    </template>
+
+    <template id="login" inherit_id="web.login" name="Login Inherit">
+        <xpath expr="//div[@class='form-group field-db']" position="replace">
+            <div class="form-group field-db" t-if="databases and len(databases) &gt; 1">
+                <div class="input-group">
+                    <span class="focus-input100"> </span>
+                    <span class="input-group-btn">
+                        <a href="/web/database/selector" class="btn btn-select">
+                            <i class="fa fa-database"> </i>
+                        </a>
+                    </span>
+                    <input type="text" name="db" t-att-value="request.db" id="db" class="data_base_name"
+                           required="required" readonly="readonly"/>
+                </div>
+
+
+            </div>
+
+        </xpath>
+        <xpath expr="//div[@class='form-group field-login']" position="replace">
+            <div class="wrap-input100 validate-input">
+                <input type="text" class="input100" name="login" t-att-value="login" id="login" placeholder="Username"
+                       required="required" autofocus="autofocus" autocapitalize="off"/>
+                <span class="focus-input100"> </span>
+                <span class="symbol-input100">
+                    <i class="fa fa-user" aria-hidden="true"> </i>
+                </span>
+            </div>
+        </xpath>
+        <xpath expr="//div[@class='form-group field-password']" position="replace">
+            <div class="wrap-input100 validate-input">
+                <input type="password" name="password" id="password" placeholder="Password" class="input100"
+                       required="required" autocomplete="current-password"
+                       t-att-autofocus="'autofocus' if login else None" maxlength="4096"/>
+                <span class="focus-input100"> </span>
+                <span class="symbol-input100">
+                    <i class="fa fa-lock" aria-hidden="true"> </i>
+                </span>
+            </div>
+        </xpath>
+        <xpath expr="//div[@class='clearfix oe_login_buttons']" position="replace">
+            <div class="clearfix oe_login_buttons">
+                <button type="submit" class="login100-form-btn">Log in</button>
+            </div>
+        </xpath>
+        <xpath expr="//div[@class='clearfix oe_login_buttons']" position="after">
+            <div class="o_sub_menu_footer">
+                <a href="http://www.odoxsofthub.com" target="_blank">Powered by
+                    <span>OdoxSoftHub</span>
+                </a>
+            </div>
+        </xpath>
+    </template>
+    <template id="web_menu_secondary_inherit" inherit_id="web.menu_secondary" name="Login Inherit">
+        <xpath expr="//div[@class='o_sub_menu_footer']" position="replace">
+            <div class="o_sub_menu_footer">
+                <img src="/oxp_web_login/static/src/img/oxap_logo.png"
+                     style="padding: 18px; margin: 0px; height: auto; width: 165px;"/>
+                <br/>
+                <a href="http://www.odoxsofthub.com" target="_blank">Powered by
+                    <span>OdoxSoftHub</span>
+                </a>
+            </div>
+        </xpath>
+    </template>
+
+</odoo>

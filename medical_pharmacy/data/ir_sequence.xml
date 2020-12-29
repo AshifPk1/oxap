@@ -1,0 +1,9 @@
+<odoo>
+    <record id="token_patient_visit_pharmacy" model="ir.sequence">
+        <field name="name">Patient visit Token Pharmacy</field>
+        <field name="code">medical.pharmacy</field>
+        <field name="prefix">PH</field>
+        <field name="padding">4</field>
+        <field name="patient_id" eval="False"/>
+    </record>
+</odoo>

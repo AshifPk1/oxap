@@ -1,0 +1,37 @@
+<odoo>
+    <record id="invoice_import_wizrad_view" model="ir.ui.view">
+        <field name="name">doc.analysis.wiz</field>
+        <field name="model">doc.analysis.wiz</field>
+        <field name="arch" type="xml">
+            <form>
+                <group style="width:50%;">
+                    <field name="date_from"/>
+                    <field name="date_to"/>
+                </group>
+                <group style="width:50%;">
+                    <field name="doctor_id"/>
+                </group>
+
+                <footer>
+                    <button string="Get Report" type="object" class="oe_highlight" name="get_data"/>
+                    <button string="Cancel" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="doc_analysis_wiz_action" model="ir.actions.act_window">
+        <field name="name">Doctor Wise Analysis:Patient List</field>
+        <field name="res_model">doc.analysis.wiz</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+
+    <menuitem id="menu_hospital_report_main" name="Itees Reports" parent="medical_opthalmology.patient_revisit_root"
+              sequence="102"
+              groups="base.group_erp_manager,medical_opthalmology.group_counsellor_access"/>
+    <menuitem id="menu_revenue_report_main" name="Revenue Reports" parent="menu_hospital_report_main" sequence="3"/>
+    <menuitem id="menu_doctor_wise_analysis_list" name="Doctor Wise Patient List" action="doc_analysis_wiz_action"
+              parent="menu_hospital_report_main" sequence="1"/>
+</odoo>

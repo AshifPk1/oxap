@@ -1,0 +1,115 @@
+<odoo>
+    <record id="view_registration_payment_report_pivot" model="ir.ui.view">
+        <field name="name">account.payment.pivot</field>
+        <field name="model">account.payment</field>
+        <field name="arch" type="xml">
+            <pivot string="Registration payment Analysis" disable_linking="True">
+                <field name="payment_date" interval="day" type="col"/>
+                <field name="signed_total" type="measure"/>
+                <field name="state" type="col"/>
+            </pivot>
+        </field>
+    </record>
+    <record id="view_registration_payment_report_search" model="ir.ui.view">
+        <field name="name">account.payment.search</field>
+        <field name="model">account.payment</field>
+        <field name="arch" type="xml">
+            <search string="Invoices Analysis">
+                <field name="payment_date"/>
+                <filter string="Today" name="today"
+                        domain="[('payment_date', '&gt;=', context_today().strftime('%%Y-%%m-%%d'))]"/>
+            </search>
+        </field>
+    </record>
+    <record id="action_registration_payment_report_all" model="ir.actions.act_window">
+        <field name="name">Registration Payments</field>
+        <field name="res_model">account.payment</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">pivot,tree,form</field>
+        <field name="domain">[('registration_payment_bool', '=', True)]</field>
+        <field name="context">{ 'search_default_today':1'}</field>
+        <field name="search_view_id" ref="view_registration_payment_report_search"/>
+        <field name="help">From this report, you can have an overview of the amount invoiced to your patients from
+            registration. The search tool can also be used to personalise your Invoices reports and so, match this
+            analysis to your needs.
+        </field>
+    </record>
+    <record id="action_investigation_payment_report_all" model="ir.actions.act_window">
+        <field name="name">investigation Payments</field>
+        <field name="res_model">account.payment</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">pivot,tree,form</field>
+        <field name="domain">[('investigation_payment_bool', '=', True)]</field>
+        <field name="context">{ 'search_default_today':1'}</field>
+        <field name="search_view_id" ref="view_registration_payment_report_search"/>
+        <field name="help">From this report, you can have an overview of the amount invoiced to your patients from
+            registration. The search tool can also be used to personalise your Invoices reports and so, match this
+            analysis to your needs.
+        </field>
+    </record>
+    <record id="action_surgery_payment_report_all" model="ir.actions.act_window">
+        <field name="name">Surgery Payments</field>
+        <field name="res_model">account.payment</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">pivot,tree,form</field>
+        <field name="domain">[('surgery_payment_bool', '=', True)]</field>
+        <field name="context">{ 'search_default_today':1'}</field>
+        <field name="search_view_id" ref="view_registration_payment_report_search"/>
+        <field name="help">From this report, you can have an overview of the amount invoiced to your patients from
+            registration. The search tool can also be used to personalise your Invoices reports and so, match this
+            analysis to your needs.
+        </field>
+    </record>
+    <record id="action_optics_payment_report_all" model="ir.actions.act_window">
+        <field name="name">Optics Payments</field>
+        <field name="res_model">account.payment</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">pivot,tree,form</field>
+        <field name="domain">[('optics_payment_bool', '=', True)]</field>
+        <field name="context">{ 'search_default_today':1'}</field>
+        <field name="search_view_id" ref="view_registration_payment_report_search"/>
+        <field name="help">From this report, you can have an overview of the amount invoiced to your patients from
+            registration. The search tool can also be used to personalise your Invoices reports and so, match this
+            analysis to your needs.
+        </field>
+    </record>
+    <record id="action_pharmacy_payment_report_all" model="ir.actions.act_window">
+        <field name="name">Pharmacy Payments</field>
+        <field name="res_model">account.payment</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">pivot,tree,form</field>
+        <field name="domain">[('pharmacy_payment_bool', '=', True)]</field>
+        <field name="context">{ 'search_default_today':1'}</field>
+        <field name="search_view_id" ref="view_registration_payment_report_search"/>
+        <field name="help">From this report, you can have an overview of the amount invoiced to your patients from
+            registration. The search tool can also be used to personalise your Invoices reports and so, match this
+            analysis to your needs.
+        </field>
+    </record>
+    <record id="action_total_payment_report_all" model="ir.actions.act_window">
+        <field name="name">Total Payments</field>
+        <field name="res_model">account.payment</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">pivot,tree,form</field>
+        <field name="domain">[]</field>
+        <field name="context">{ 'search_default_today':1'}</field>
+        <field name="search_view_id" ref="view_registration_payment_report_search"/>
+        <field name="help">From this report, you can have an overview of the amount invoiced to your patients from
+            registration. The search tool can also be used to personalise your Invoices reports and so, match this
+            analysis to your needs.
+        </field>
+    </record>
+    <menuitem id="menu_registration_payment_pivot" action="action_registration_payment_report_all"
+              name="Registration Payments" parent="menu_payments_main" sequence="1" groups="group_reception_access"/>
+    <menuitem id="menu_investigation_payment_pivot" action="action_investigation_payment_report_all"
+              name="Investigation Payments" parent="menu_payments_main" sequence="2"
+              groups="group_reception_access,group_counsellor_access"/>
+    <menuitem id="menu_surgery_payment_pivot" action="action_surgery_payment_report_all" name="Surgery Payments"
+              parent="menu_payments_main" sequence="3" groups="group_reception_access,group_counsellor_access"/>
+    <menuitem id="menu_optics_payment_pivot" action="action_optics_payment_report_all" name="Optics Payments"
+              parent="menu_payments_main" sequence="4" groups="group_opticals_access,group_opticals_access"/>
+    <menuitem id="menu_pharmacy_payment_pivot" action="action_pharmacy_payment_report_all" name="Pharmacy Payments"
+              parent="menu_payments_main" sequence="5" groups="group_pharmacy_access"/>
+    <menuitem id="menu_total_payment_pivot" action="action_total_payment_report_all" name="Total Payments"
+              parent="menu_payments_main" sequence="6" groups="account.group_account_manager"/>
+</odoo>

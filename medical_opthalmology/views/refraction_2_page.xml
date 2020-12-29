@@ -1,0 +1,237 @@
+<odoo>
+    <record id="patient_revisit_view_form_refraction_2" model="ir.ui.view">
+        <field name="name">patient.visit.form.refraction2</field>
+        <field name="model">medical.opthalmology</field>
+        <field name="inherit_id" ref="medical_opthalmology.patient_revisit_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//notebook/page[1]" position="after">
+                <page string="PMT">
+                    <group col="4">
+                        <group style="width:26%">
+                            <div>
+                                <label for="visual_acuitity_ids" string=" " style="width: 42%"/>
+                                <label for="visual_acuitity_ids" string="RE"
+                                       style="color:#B10707;text-align:left;font-size:14px;width: 40%;font-weight: bold"/>
+                                <div style="height:5px">
+                                </div>
+                                <field name="cyclo_ar_l_ids" style="width: 90%">
+                                    <tree string="Cyclo Details LE" editable="bottom" nolabel='1' delete="false"
+                                          create="false">
+                                        <field name="sphere"/>
+                                        <button name="action_show_sphere" string="Register Values" type="object"
+                                                icon="fa-list" options="{&quot;warn&quot;: true}"/>
+                                        <field name="cyl"/>
+                                        <button name="action_show_cyl" string="Register Values" type="object"
+                                                icon="fa-list" options="{&quot;warn&quot;: true}"/>
+                                        <field name="axis"/>
+                                        <button name="action_show_axis" string="Register Values" type="object"
+                                                icon="fa-list" options="{&quot;warn&quot;: true}"/>
+                                        <field name="va"/>
+                                        <button name="action_show_va" string="Register Values" type="object"
+                                                icon="fa-list" options="{&quot;warn&quot;: true}"/>
+                                        <field name="head"/>
+                                    </tree>
+                                </field>
+                                <div style="height:15px">
+                                </div>
+                                <field name="alternate_glass_l_ids" mode='tree' style="width: 90%">
+                                    <tree string="Alternate Glass LE" editable="bottom" nolabel='1' delete="false"
+                                          create="false">
+                                        <field name="sphere"/>
+                                        <button name="action_show_sphere" string="Register Values" type="object"
+                                                icon="fa-list" options="{&quot;warn&quot;: true}"/>
+                                        <field name="cyl"/>
+                                        <button name="action_show_cyl" string="Register Values" type="object"
+                                                icon="fa-list" options="{&quot;warn&quot;: true}"/>
+                                        <field name="axis"/>
+                                        <button name="action_show_axis" string="Register Values" type="object"
+                                                icon="fa-list" options="{&quot;warn&quot;: true}"/>
+                                        <field name="va"/>
+                                        <button name="action_show_va" string="Register Values" type="object"
+                                                icon="fa-list" options="{&quot;warn&quot;: true}"/>
+                                        <field name="head"/>
+                                    </tree>
+                                </field>
+                                <div style="height:15px">
+                                </div>
+                                <field name="text_box" style="width: 97%" Placeholder="Note"/>
+                                <div style="height:27px">
+                                </div>
+                            </div>
+                        </group>
+                        <group style="width:7%">
+                            <div>
+                                <div style="height:51px">
+                                </div>
+                                <label for="cyclo_ar_le_ids" string="Dilated AR"
+                                       style="color:#B10707;text-align:left;font-size:12px;font-weight: bold"/>
+                                <div style="height:12px">
+                                </div>
+                                <label for="cyclo_ar_le_ids" string="Dilated Retina"
+                                       style="color:#B10707;text-align:left;font-size:12px;font-weight: bold"/>
+                                <div style="height:8px">
+                                </div>
+                                <label for="cyclo_ar_le_ids" string="Dilated Refraction"
+                                       style="color:#B10707;text-align:left;font-size:12px;font-weight: bold"/>
+                                <div style="height:50px">
+                                </div>
+                                <label for="alternate_glass_re_ids" string="Alternate Glass Prescription."
+                                       style="color:#B10707;text-align:left;font-size:12px;font-weight: bold;width: 90%"/>
+                            </div>
+                        </group>
+                        <group style="width: 25%">
+                            <div>
+                                <label for="visual_acuitity_ids" string=" " style="width: 42%"/>
+                                <label for="visual_acuitity_ids" string="LE"
+                                       style="color:#B10707;text-align:left;font-size:14px;width: 40%;font-weight: bold"/>
+                                <div style="height:5px">
+                                </div>
+                                <field name="cyclo_ar_r_ids" style="width: 90%">
+                                    <tree string="Cyclo Details RE" editable="bottom" nolabel='1' delete="false"
+                                          create="false">
+                                        <field name="head"/>
+                                        <field name="sphere"/>
+                                        <button name="action_show_sphere" string="Register Values" type="object"
+                                                icon="fa-list" options="{&quot;warn&quot;: true}"/>
+                                        <field name="cyl"/>
+                                        <button name="action_show_cyl" string="Register Values" type="object"
+                                                icon="fa-list" options="{&quot;warn&quot;: true}"/>
+                                        <field name="axis"/>
+                                        <button name="action_show_axis" string="Register Values" type="object"
+                                                icon="fa-list" options="{&quot;warn&quot;: true}"/>
+                                        <field name="va"/>
+                                        <button name="action_show_va" string="Register Values" type="object"
+                                                icon="fa-list" options="{&quot;warn&quot;: true}"/>
+                                    </tree>
+                                </field>
+                                <div style="height:15px">
+                                </div>
+                                <field name="alternate_glass_r_ids" mode='tree' style="width: 90%">
+                                    <tree string="Alternate Glass LE" editable="bottom" nolabel='1' delete="false"
+                                          create="false">
+                                        <field name="head"/>
+                                        <field name="sphere"/>
+                                        <button name="action_show_sphere" string="Register Values" type="object"
+                                                icon="fa-list" options="{&quot;warn&quot;: true}"/>
+                                        <field name="cyl"/>
+                                        <button name="action_show_cyl" string="Register Values" type="object"
+                                                icon="fa-list" options="{&quot;warn&quot;: true}"/>
+                                        <field name="axis"/>
+                                        <button name="action_show_axis" string="Register Values" type="object"
+                                                icon="fa-list" options="{&quot;warn&quot;: true}"/>
+                                        <field name="va"/>
+                                        <button name="action_show_va" string="Register Values" type="object"
+                                                icon="fa-list" options="{&quot;warn&quot;: true}"/>
+                                    </tree>
+                                </field>
+                                <div style="height:15px">
+                                </div>
+                            </div>
+                        </group>
+                        <group style="width:41%">
+                            <div>
+                                <div style="height:15px">
+                                </div>
+                                <label for="convergence" string="Convergence"
+                                       style="color:#B10707;text-align:left;font-size:12px;font-weight: bold;width:34%"/>
+                                <label for="npc" string="NPC"
+                                       style="color:#B10707;text-align:left;font-size:12px;font-weight: bold;width:37.5%"/>
+                                <label for="dist" string="Dist"
+                                       style="color:#B10707;text-align:left;font-size:12px;font-weight: bold;width:5%"/>
+                                <label for="dist" string=" " style="width:1%"/>
+                                <field name="dist" style="width: 17%"/>
+                                <field name="convergence" style="width:25%"/>
+                                <label for="dist" string=" " style="width:7%"/>
+                                <field name="npc" style="width: 15%"/>
+                                <label for="text_box" string=" " style="width:7%"/>
+                                <label for="text_box" string="CT/CUT"
+                                       style="color:#B10707;text-align:left;font-size:14px;font-weight: bold;width:10%"/>
+                                <label for="dist" string=" " style="width:4.5%"/>
+                                <label for="near" string="Near"
+                                       style="color:#B10707;text-align:left;font-size:12px;font-weight: bold;width:5.5%"/>
+                                <label for="dist" string=" " style="width:1%"/>
+                                <field name="near" style="width: 17%"/>
+                                <div style="height:25px">
+                                </div>
+                                <label for="mobility" string="Mobility"
+                                       style="color:#B10707;text-align:left;font-size:12px;font-weight: bold;width:72%"/>
+                                <label for="bsv" string="BSV(After Ref)"
+                                       style="color:#B10707;text-align:left;font-size:12px;font-weight: bold;width:25%"/>
+                                <field name="mobility" style="width: 25%"/>
+                                <label for="bsv" string=" " style="width:8%"/>
+                                <label for="mobility" string="Abnormal Head/Face Tilt"
+                                       style="color:#B10707;text-align:center;font-size:13px;font-weight: bold;width:34%"/>
+                                <label for="bsv" string=" " style="width:3%"/>
+                                <field name="bsv" style="width: 25%"/>
+                                <div style="height:25px">
+                                </div>
+                                <label for="bsv" string=" " style="width:35%"/>
+                                <label for="bsv" string="Synoptophore"
+                                       style="color:#B10707;text-align:left;font-size:14px;font-weight: bold;width:10%"/>
+                                <label for="bsv" string=" " style="width:30%"/>
+                                <div style="height:15px">
+                                </div>
+                                <label for="smp" string="SMP"
+                                       style="color:#B10707;text-align:left;font-size:12px;font-weight: bold;width:90%"/>
+                                <field name="smp" style="width: 25%"/>
+                                <div style="height:15px">
+                                </div>
+                                <label for="bsv" string=" " style="width:30%"/>
+                                <label for="subjective" string="Subjective"
+                                       style="color:#B10707;text-align:left;font-size:12px;font-weight: bold;width:12%"/>
+                                <label for="bsv" string=" " style="width:1%"/>
+                                <field name="subjective" style="width: 10%"/>
+                                <label for="bsv" string=" " style="width:0.2%"/>
+                                <field name="selection_refraction_3" style="width: 17%"/>
+                                <label for="bsv" string=" " style="width:1%"/>
+                                <label for="steriopsis" string="Steriopsis"
+                                       style="color:#B10707;text-align:left;font-size:12px;font-weight: bold;width:10%"/>
+                                <label for="subjective" string=" " style="width:17%"/>
+                                <label for="subjective" string="Angle"
+                                       style="color:#B10707;text-align:left;font-size:12px;font-weight: bold;width:6.5%"/>
+                                <label for="subjective" string=" " style="width:4.5%"/>
+                                <label for="objective" string="Objective"
+                                       style="color:#B10707;text-align:left;font-size:12px;font-weight: bold;width:11%"/>
+                                <label for="objective" string=" " style="width:2%"/>
+                                <field name="objective" style="width: 10%"/>
+                                <label for="bsv" string=" " style="width:0.2%"/>
+                                <field name="selection_refraction_4" style="width: 17%"/>
+                                <label for="bsv" string=" " style="width:1%"/>
+                                <field name="steriopsis" style="width:15%"/>
+                                <div style="height:25px">
+                                </div>
+                                <label for="bsv" string=" " style="width:65%"/>
+                                <label for="bsv" string="Adduction"
+                                       style="color:#B10707;text-align:left;font-size:12px;font-weight: bold;width:10%"/>
+                                <label for="bsv" string=" " style="width:5%"/>
+                                <label for="bsv" string="Abduction"
+                                       style="color:#B10707;text-align:left;font-size:12px;font-weight: bold;width:10%"/>
+                                <label for="bsv" string="Fusion"
+                                       style="color:#B10707;text-align:left;font-size:12px;font-weight: bold;width:10%"/>
+                                <label for="bsv" string=" " style="width:5%"/>
+                                <label for="bsv" string="Range"
+                                       style="color:#B10707;text-align:left;font-size:12px;font-weight: bold;width:9%"/>
+                                <label for="bsv" string=" " style="width:0.2%"/>
+                                <field name="range" style="width:10%"/>
+                                <label for="bsv" string=" " style="width:6.5%"/>
+                                <label for="make_point" string="Make Point"
+                                       style="color:#B10707;text-align:left;font-size:12px;font-weight: bold;width:17%"/>
+                                <label for="bsv" string=" " style="width:1.4%"/>
+                                <field name="make_point" style="width:10%"/>
+                                <label for="make_point_2" string=" " style="width:6%"/>
+                                <field name="make_point_2" style="width:10%"/>
+                                <label for="make_point_2" string=" " style="width:44.8%"/>
+                                <label for="break_point" string="Break Point"
+                                       style="color:#B10707;text-align:left;font-size:12px;font-weight: bold;width:17%"/>
+                                <label for="bsv" string=" " style="width:1.6%"/>
+                                <field name="break_point" style="width:10%"/>
+                                <label for="make_point_2" string=" " style="width:6%"/>
+                                <field name="break_point_2" style="width:10%"/>
+                            </div>
+                        </group>
+                    </group>
+                </page>
+            </xpath>
+        </field>
+    </record>
+</odoo>

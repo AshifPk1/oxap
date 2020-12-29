@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="generic_name_tree" model="ir.ui.view">
+        <field name="name">generic.name.tree</field>
+        <field name="model">generic.name</field>
+        <field name="arch" type="xml">
+            <tree string="Stages">
+                <field name="name"/>
+            </tree>
+        </field>
+    </record>
+    <record id="generic_name_form" model="ir.ui.view">
+        <field name="name">generic.name.form</field>
+        <field name="model">generic.name</field>
+        <field name="priority" eval="1"/>
+        <field name="arch" type="xml">
+            <form string="Stage">
+                <group>
+                    <group>
+                        <field name="name"/>
+                    </group>
+                </group>
+            </form>
+        </field>
+    </record>
+    <record id="generic_name_action" model="ir.actions.act_window">
+        <field name="name">Generic Name</field>
+        <field name="res_model">generic.name</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">
+                Click to set a new Generic Name
+            </p>
+        </field>
+    </record>
+    <menuitem
+            id="menu_generic_name"
+            name="Generic Name"
+            action="generic_name_action"
+            groups = "base.group_system"
+            parent="medical_opthalmology.configuration"/>
+</odoo>

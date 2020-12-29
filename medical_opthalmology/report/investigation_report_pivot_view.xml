@@ -1,0 +1,73 @@
+<odoo>
+    <record id="view_investigation_invoice_report_pivot" model="ir.ui.view">
+        <field name="name">investigation.invoice.report.pivot</field>
+        <field name="model">investigation.invoice.report</field>
+        <field name="arch" type="xml">
+            <pivot string="Registration Analysis" disable_linking="True">
+                <field name="categ_id" type="row"/>
+                <field name="date" interval="day" type="col"/>
+                <field name="price_total" type="measure"/>
+                <field name="state" type="col"/>
+            </pivot>
+        </field>
+    </record>
+    <record id="view_investigation_invoice_report_search" model="ir.ui.view">
+        <field name="name">investigation.invoice.report.search</field>
+        <field name="model">investigation.invoice.report</field>
+        <field name="arch" type="xml">
+            <search string="Invoices Analysis">
+                <filter string="My Invoices" name="my_invoice" domain="[('user_id', '=', uid)]"/>
+                <separator/>
+                <field name="date"/>
+                <filter string="This Year" name="thisyear"
+                        domain="['|', ('date', '=', False), '&amp;',('date','&lt;=', time.strftime('%%Y-12-31')),('date','&gt;=',time.strftime('%%Y-01-01'))]"
+                        help="Journal invoices with period in current year"/>
+                <separator/>
+                <filter string="To Invoice" domain="[('state','=','draft')]" help="Draft Invoices"/>
+                <filter string="Invoiced" name="current" domain="[('state','not in', ('draft','cancel'))]"/>
+                <separator/>
+                <filter string="Today" name="today"
+                        domain="[('date', '&gt;=', context_today().strftime('%%Y-%%m-%%d'))]"/>
+                <filter string="This Month" name="this_month"
+                        domain="[('date', '&gt;=', context_today().strftime('%%Y-%%m-01'))]"/>
+                <filter string="Last Month" name="last_month"
+                        domain="['&amp;', ('date', '&gt;=', (context_today() - relativedelta(months=1)).strftime('%%Y-%%m-01')), ('date', '&lt;', context_today().strftime('%%Y-%%m-01'))]"/>
+                <separator/>
+                <filter string="Customer" name="customer"
+                        domain="['|', ('type','=','out_invoice'),('type','=','out_refund')]"/>
+                <filter string="Vendor" name="supplier"
+                        domain="['|', ('type','=','in_invoice'),('type','=','in_refund')]"/>
+                <separator/>
+                <filter string="Invoice" domain="['|', ('type','=','out_invoice'),('type','=','in_invoice')]"/>
+                <filter string="Credit Note" domain="['|', ('type','=','out_refund'),('type','=','in_refund')]"/>
+                <field name="partner_id" operator="child_of"/>
+                <field name="user_id"/>
+                <group expand="1" string="Group By">
+                    <filter string="Partner" name="partner_id"
+                            context="{'group_by':'partner_id','residual_visible':True}"/>
+                    <filter string="Salesperson" name='user' context="{'group_by':'user_id'}"/>
+                    <filter string="Status" context="{'group_by':'state'}"/>
+                    <filter string="Company" context="{'group_by':'company_id'}" groups="base.group_multi_company"/>
+                    <separator orientation="vertical"/>
+                    <filter string="Date" context="{'group_by':'date'}"/>
+                    <filter string="Due Month" context="{'group_by':'date_due:month'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+    <record id="action_investigation_invoice_report_all" model="ir.actions.act_window">
+        <field name="name">Investigation Report</field>
+        <field name="res_model">investigation.invoice.report</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">pivot,graph</field>
+        <field name="context">{'search_default_current':1, 'search_default_customer':1,'search_default_today':1,
+            'group_by':[], 'group_by_no_leaf':1, 'search_default_year': 1}
+        </field>
+        <field name="search_view_id" ref="view_registration_invoice_report_search"/>
+        <field name="help">From this report, you can have an overview of the amount invoiced to your customers. The
+            search tool can also be used to personalise your Invoices reports and so, match this analysis to your needs.
+        </field>
+    </record>
+    <menuitem id="menu_investigation_pivot" action="action_investigation_invoice_report_all" name="Investigation Report"
+              parent="menu_invoice_main" sequence="2" groups="group_reception_access"/>
+</odoo>

@@ -1,0 +1,254 @@
+<odoo>
+    <record id="view_registration_invoice_report_search" model="ir.ui.view">
+        <field name="name">registration.account.invoice.report.search</field>
+        <field name="model">account.invoice</field>
+        <field name="arch" type="xml">
+            <search string="Invoices Analysis">
+                <filter string="My Invoices" name="my_invoice" domain="[('user_id', '=', uid)]"/>
+                <separator/>
+                <field name="date"/>
+                <filter string="This Year" name="thisyear"
+                        domain="['|', ('date', '=', False), '&amp;',('date','&lt;=', time.strftime('%%Y-12-31')),('date','&gt;=',time.strftime('%%Y-01-01'))]"
+                        help="Journal invoices with period in current year"/>
+                <separator/>
+                <filter string="To Invoice" domain="[('state','=','draft')]" help="Draft Invoices"/>
+                <filter string="Invoiced" name="current" domain="[('state','not in', ('draft','cancel'))]"/>
+                <separator/>
+                <filter string="Today" name="today"
+                        domain="[('date', '&gt;=', context_today().strftime('%%Y-%%m-%%d'))]"/>
+                <filter string="This Month" name="this_month"
+                        domain="[('date', '&gt;=', context_today().strftime('%%Y-%%m-01'))]"/>
+                <filter string="Last Month" name="last_month"
+                        domain="['&amp;', ('date', '&gt;=', (context_today() - relativedelta(months=1)).strftime('%%Y-%%m-01')), ('date', '&lt;', context_today().strftime('%%Y-%%m-01'))]"/>
+                <separator/>
+                <filter string="Customer" name="customer"
+                        domain="['|', ('type','=','out_invoice'),('type','=','out_refund')]"/>
+                <filter string="Vendor" name="supplier"
+                        domain="['|', ('type','=','in_invoice'),('type','=','in_refund')]"/>
+                <separator/>
+                <filter string="Invoice" domain="['|', ('type','=','out_invoice'),('type','=','in_invoice')]"/>
+                <filter string="Credit Note" domain="['|', ('type','=','out_refund'),('type','=','in_refund')]"/>
+                <field name="partner_id" operator="child_of"/>
+                <field name="user_id"/>
+                <group expand="1" string="Group By">
+                    <filter string="Partner" name="partner_id"
+                            context="{'group_by':'partner_id','residual_visible':True}"/>
+                    <filter string="Salesperson" name='user' context="{'group_by':'user_id'}"/>
+                    <filter string="Status" context="{'group_by':'state'}"/>
+                    <filter string="Company" context="{'group_by':'company_id'}" groups="base.group_multi_company"/>
+                    <separator orientation="vertical"/>
+                    <filter string="Date" context="{'group_by':'date'}"/>
+                    <filter string="Due Month" context="{'group_by':'date_due:month'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+    <record id="registration_invoices" model="ir.actions.act_window">
+        <field name="name">Registration Invoices</field>
+        <field name="res_model">account.invoice</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form,calendar,graph,kanban,pivot</field>
+        <field name="view_id" ref="account.invoice_tree"/>
+        <field name="search_view_id" ref="view_registration_invoice_report_search"/>
+        <field name="domain">[
+            ('state', 'not in', ['draft', 'cancel']),
+            ('type', 'in', ['out_invoice','out_refund']),
+            ('registration_bool','=',True)]
+        </field>
+        <field name="context">{
+            'default_team_id': False,
+            'default_type':'out_invoice',
+            'default_registration_bool':1,
+            'default_registration_payment_bool':1,
+            'type':'out_invoice',
+            'journal_type': 'sale',
+            'search_default_customer':1,
+            'search_default_today':1,
+            'search_default_year': 1,
+            }
+        </field>
+    </record>
+    <record id="action_invoice_form_view1" model="ir.actions.act_window.view">
+        <field eval="2" name="sequence"/>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="account.invoice_form"/>
+        <field name="act_window_id" ref="registration_invoices"/>
+    </record>
+    <record id="action_regist_invoice_tree_view1" model="ir.actions.act_window.view">
+        <field eval="1" name="sequence"/>
+        <field name="view_mode">tree</field>
+        <field name="view_id" ref="account.invoice_tree"/>
+        <field name="act_window_id" ref="registration_invoices"/>
+    </record>
+    <record id="investigation_invoices" model="ir.actions.act_window">
+        <field name="name">Investigation Invoices</field>
+        <field name="res_model">account.invoice</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form,calendar,graph,kanban,pivot</field>
+        <field name="view_id" ref="account.invoice_tree"/>
+        <field name="search_view_id" ref="view_registration_invoice_report_search"/>
+        <field name="domain">[
+            ('state', 'not in', ['draft', 'cancel']),
+            ('type', 'in', ['out_invoice','out_refund']),
+            ('investigation_bool','=',True)]
+        </field>
+        <field name="context">{
+            'default_team_id': False,
+            'default_type':'out_invoice',
+            'default_investigation_bool':1,
+            'default_investigation_payment_bool':1,
+            'type':'out_invoice',
+            'journal_type': 'sale',
+            'search_default_customer':1,
+            'search_default_today':1,
+            'search_default_year': 1,
+            }
+        </field>
+    </record>
+    <record id="action_investigation_invoice_form_view1" model="ir.actions.act_window.view">
+        <field eval="2" name="sequence"/>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="account.invoice_form"/>
+        <field name="act_window_id" ref="investigation_invoices"/>
+    </record>
+    <record id="action_investigation_invoice_tree_view1" model="ir.actions.act_window.view">
+        <field eval="1" name="sequence"/>
+        <field name="view_mode">tree</field>
+        <field name="view_id" ref="account.invoice_tree"/>
+        <field name="act_window_id" ref="investigation_invoices"/>
+    </record>
+    <record id="surgery_invoices" model="ir.actions.act_window">
+        <field name="name">Surgery Invoices</field>
+        <field name="res_model">account.invoice</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form,calendar,graph,kanban,pivot</field>
+        <field name="view_id" ref="account.invoice_tree"/>
+        <field name="search_view_id" ref="view_registration_invoice_report_search"/>
+        <field name="domain">[
+            ('state', 'not in', ['draft', 'cancel']),
+            ('type', 'in', ['out_invoice','out_refund']),
+            ('surgery_bool','=',True)]
+        </field>
+        <field name="context">{
+            'default_team_id': False,
+            'default_type':'out_invoice',
+            'default_surgery_bool':1,
+            'default_surgery_payment_bool':1,
+            'type':'out_invoice',
+            'journal_type': 'sale',
+            'search_default_customer':1,
+            'search_default_today':1,
+            'search_default_year': 1,
+            }
+        </field>
+    </record>
+    <record id="action_surgery_invoice_form_view1" model="ir.actions.act_window.view">
+        <field eval="2" name="sequence"/>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="account.invoice_form"/>
+        <field name="act_window_id" ref="surgery_invoices"/>
+    </record>
+    <record id="action_surgery_invoice_tree_view1" model="ir.actions.act_window.view">
+        <field eval="1" name="sequence"/>
+        <field name="view_mode">tree</field>
+        <field name="view_id" ref="account.invoice_tree"/>
+        <field name="act_window_id" ref="surgery_invoices"/>
+    </record>
+    <record id="optics_invoices" model="ir.actions.act_window">
+        <field name="name">Optics Invoices</field>
+        <field name="res_model">account.invoice</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form,calendar,graph,kanban,pivot</field>
+        <field name="view_id" ref="account.invoice_tree"/>
+        <field name="search_view_id" ref="view_registration_invoice_report_search"/>
+        <field name="domain">[
+            ('state', 'not in', ['draft', 'cancel']),
+            ('type', 'in', ['out_invoice','out_refund']),
+            ('optics_bool','=',True)]
+        </field>
+        <field name="context">{
+            'default_team_id': False,
+            'default_type':'out_invoice',
+            'default_optics_bool':1,
+            'default_optics_payment_bool':1,
+            'type':'out_invoice',
+            'journal_type': 'sale',
+            'search_default_customer':1,
+            'search_default_today':1,
+            'search_default_year': 1,
+            }
+        </field>
+    </record>
+    <record id="action_optics_invoice_form_view1" model="ir.actions.act_window.view">
+        <field eval="2" name="sequence"/>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="account.invoice_form"/>
+        <field name="act_window_id" ref="optics_invoices"/>
+    </record>
+    <record id="action_optics_invoice_tree_view1" model="ir.actions.act_window.view">
+        <field eval="1" name="sequence"/>
+        <field name="view_mode">tree</field>
+        <field name="view_id" ref="account.invoice_tree"/>
+        <field name="act_window_id" ref="optics_invoices"/>
+    </record>
+    <record id="pharmacy_invoices" model="ir.actions.act_window">
+        <field name="name">Pharmacy Invoices</field>
+        <field name="res_model">account.invoice</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form,calendar,graph,kanban,pivot</field>
+        <field name="view_id" ref="account.invoice_tree"/>
+        <field name="search_view_id" ref="view_registration_invoice_report_search"/>
+        <field name="domain">[
+            ('state', 'not in', ['draft', 'cancel']),
+            ('type', 'in', ['out_invoice','out_refund']),
+            ('pharmacy_bool','=',True)]
+        </field>
+        <field name="context">{
+            'default_team_id': False,
+            'default_type':'out_invoice',
+            'default_pharmacy_bool':1,
+            'default_pharmacy_payment_bool':1,
+            'type':'out_invoice',
+            'journal_type': 'sale',
+            'search_default_customer':1,
+            'search_default_today':1,
+            'search_default_year': 1,
+            }
+        </field>
+    </record>
+    <record id="action_pharmacy_invoice_form_view1" model="ir.actions.act_window.view">
+        <field eval="2" name="sequence"/>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="account.invoice_form"/>
+        <field name="act_window_id" ref="pharmacy_invoices"/>
+    </record>
+    <record id="action_pharmacy_invoice_tree_view1" model="ir.actions.act_window.view">
+        <field eval="1" name="sequence"/>
+        <field name="view_mode">tree</field>
+        <field name="view_id" ref="account.invoice_tree"/>
+        <field name="act_window_id" ref="pharmacy_invoices"/>
+    </record>
+
+    <record id="medical_invoice_tree" model="ir.ui.view">
+        <field name="name">account.medical.invoice.tree</field>
+        <field name="model">account.invoice</field>
+        <field name="inherit_id" ref="account.invoice_tree"/>
+        <field name="arch" type="xml">
+            <field name="origin" position="after">
+                <field name="journal_id"/>
+            </field>
+        </field>
+    </record>
+    <menuitem id="invoices_main" name="Invoices" parent="patient_revisit_root" sequence="6"
+              groups="group_reception_access,group_counsellor_access,group_opticals_access,group_pharmacy_access"/>
+    <menuitem id="invoices_registration" parent="invoices_main" action="registration_invoices" sequence="1"
+              groups="group_reception_access"/>
+    <menuitem id="invoices_investigation" parent="invoices_main" action="investigation_invoices" sequence="2"
+              groups="group_reception_access,group_counsellor_access"/>
+    <menuitem id="invoices_surgery" parent="invoices_main" action="surgery_invoices" sequence="3"
+              groups="group_reception_access,group_counsellor_access"/>
+    <menuitem id="invoices_optics" parent="invoices_main" action="optics_invoices" sequence="4"
+              groups="group_opticals_access"/>
+    <menuitem id="invoices_pharmacy" parent="invoices_main" action="pharmacy_invoices" sequence="5"
+              groups="group_pharmacy_access"/>
+</odoo>

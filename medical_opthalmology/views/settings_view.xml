@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="res_config_settings_view_form" model="ir.ui.view">
+        <field name="name">res.config.settings.view.form.inherit.optics</field>
+        <field name="model">res.config.settings</field>
+        <field name="priority" eval="90"/>
+        <field name="inherit_id" ref="base.res_config_settings_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[hasclass('settings')]" position="inside">
+                <div class="app_settings_block o_not_app" data-string="Optics" data-key="medical_opthalmology"
+                     string="Optics">
+                    <h2>Registration Initials</h2>
+                    <div class="row mt16 o_settings_container">
+                        <div class="col-md-6 col-xs-12 o_setting_box">
+                            <div class="o_setting_right_pane">
+                                <label string="Optics"/>
+                                <field name="default_registraion_product_id"/>
+                                <div class="text-muted">
+                                    Payroll rules that apply to your country
+                                </div>
+                                <div class="mt16" id="localization_text">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </xpath>
+        </field>
+    </record>
+    <record id="optics_config_setting_act_window" model="ir.actions.act_window">
+        <field name="name">Settings</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">res.config.settings</field>
+        <field name="view_mode">form</field>
+        <field name="target">inline</field>
+        <field name="context">{'module' : 'medical_opthalmology'}</field>
+    </record>
+    <menuitem id="menu_optics_general_settings"
+              name="Settings"
+              parent="medical_opthalmology.configuration"
+              sequence="1"
+              action="optics_config_setting_act_window"
+              groups="base.group_system"/>
+</odoo>

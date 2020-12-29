@@ -1,0 +1,126 @@
+<odoo>
+    <record id="product_template_view_form_inherit_registration_product" model="ir.ui.view">
+        <field name="name">product.template.view.form.inherit.reg.product</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="product.product_template_form_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//form/sheet/div/div[@name='options']/div[2]" position="after">
+                <field string="Registration Product" name="is_registration_product"/>
+                <label for="is_registration_product"/>
+            </xpath>
+            <xpath expr="//form/sheet/notebook/page[4]" position="after">
+                <field invisible="1" name="is_surgery_lens"/>
+                <page string="Lens Details" attrs="{'invisible': [('is_surgery_lens','!=', True)]}">
+                    <group>
+                        <group>
+                            <field name="power" string="Power"/>
+                            <field name="item" string="Item"/>
+                        </group>
+                    </group>
+                </page>
+            </xpath>
+            <xpath expr="//field[@name='categ_id']" position="after">
+                <field name="generic_name_id"/>
+                <field name="brand"/>
+            </xpath>
+        </field>
+    </record>
+    <record id="product_template_search_view_inherit" model="ir.ui.view">
+        <field name="name">product.template.view.form.inherit.search.view</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="product.product_template_search_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='categ_id']" position="after">
+                <field name="generic_name_id"/>
+            </xpath>
+            <xpath expr="//search" position="inside">
+                <group expand="0" string="Group By">
+                    <filter string="Generic Name" domain="[]" context="{'group_by':'generic_name_id'}"/>
+                </group>
+            </xpath>
+        </field>
+    </record>
+    <record model="ir.ui.view" id="inventory_view_inherit">
+        <field name="name">product.product.inherit</field>
+        <field name="model">product.product</field>
+        <field name="type">tree</field>
+        <field name="inherit_id" ref="stock_account.view_stock_product_tree2"/>
+        <field name="arch" type="xml">
+            <xpath expr="/tree/field[@name='stock_value']" position="after">
+                <field name="sale_value"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="action_surgery_products" model="ir.actions.act_window">
+        <field name="name">Surgery Packages</field>
+        <field name="res_model">product.template</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">kanban,tree,form</field>
+        <field name="view_id" ref="product.product_template_kanban_view"/>
+        <field name="context">{'default_is_surgery_package':True,'default_type':'service','default_purchase_ok':False}
+        </field>
+        <field name="domain">[('is_surgery_package', '=', True)]</field>
+    </record>
+    <record id="action_investigation_products" model="ir.actions.act_window">
+        <field name="name">Investigations</field>
+        <field name="res_model">product.template</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">kanban,tree,form</field>
+        <field name="view_id" ref="product.product_template_kanban_view"/>
+        <field name="context">{'default_is_investigations':True,'default_type':'service','default_purchase_ok':False}
+        </field>
+        <field name="domain">[('is_investigations', '=', True)]</field>
+    </record>
+    <record id="action_surgery_lens_products" model="ir.actions.act_window">
+        <field name="name">Surgery Lenses</field>
+        <field name="res_model">product.template</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">kanban,tree,form</field>
+        <field name="view_id" ref="product.product_template_kanban_view"/>
+        <field name="context">{'default_is_surgery_lens':True,'default_type':'product'}</field>
+        <field name="domain">[('is_surgery_lens', '=', True)]</field>
+    </record>
+    <record id="action_lens_products" model="ir.actions.act_window">
+        <field name="name">Optical Lenses</field>
+        <field name="res_model">product.template</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">kanban,tree,form</field>
+        <field name="view_id" ref="product.product_template_kanban_view"/>
+        <field name="context">{'default_is_lens':True,'default_type':'product'}</field>
+        <field name="domain">[('is_lens', '=', True)]</field>
+    </record>
+    <record id="action_frame_products" model="ir.actions.act_window">
+        <field name="name">Optical Frames</field>
+        <field name="res_model">product.template</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">kanban,tree,form</field>
+        <field name="view_id" ref="product.product_template_kanban_view"/>
+        <field name="context">{'default_is_frame':True,'default_type':'product'}</field>
+        <field name="domain">[('is_frame', '=', True)]</field>
+    </record>
+    <record id="action_pharmacy_products" model="ir.actions.act_window">
+        <field name="name">Pharamcy Products</field>
+        <field name="res_model">product.template</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">kanban,tree,form</field>
+        <field name="view_id" ref="product.product_template_kanban_view"/>
+        <field name="context">{'default_is_pharmacy':True,'default_type':'product','default_tracking':'lot'}</field>
+        <field name="domain">[('is_pharmacy', '=', True)]</field>
+    </record>
+    <menuitem id="products" name="Products" parent="medical_opthalmology.patient_revisit_root" sequence="3"
+              groups="group_opticals_access,group_pharmacy_access,group_counsellor_access,group_doctor_access"/>
+    <menuitem id="surgery_products" parent="medical_opthalmology.products" action="action_surgery_products" sequence="1"
+              groups="group_counsellor_access,group_doctor_access"/>
+    <menuitem id="investigations_products" parent="medical_opthalmology.products" action="action_investigation_products"
+              sequence="2" groups="group_counsellor_access,group_doctor_access"/>
+    <menuitem id="surgery_lens" parent="medical_opthalmology.products" action="action_surgery_lens_products"
+              sequence="3" groups="group_counsellor_access"/>
+    <menuitem id="is_lens" parent="medical_opthalmology.products" action="action_lens_products" sequence="4"
+              groups="group_opticals_access"/>
+    <menuitem id="frame_products" parent="medical_opthalmology.products" action="action_frame_products" sequence="5"
+              groups="group_opticals_access"/>
+    <menuitem id="pharmacy_products" parent="medical_opthalmology.products" action="action_pharmacy_products"
+              sequence="6" groups="group_pharmacy_access,group_doctor_access"/>
+</odoo>
+

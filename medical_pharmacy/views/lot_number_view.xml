@@ -1,0 +1,54 @@
+<odoo>
+    <record id="view_production_lot_tree_inherited" model="ir.ui.view">
+        <field name="name">stock.production.lot.inherited</field>
+        <field name="model">stock.production.lot</field>
+        <field name="inherit_id" ref="stock.view_production_lot_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='create_date']" position="before">
+                <field name="exp_date_test" string="Expiry Date"/>
+                <field name="sale_price"/>
+            </xpath>
+        </field>
+    </record>
+    <record id="view_production_lot_form_inherited" model="ir.ui.view">
+        <field name="name">stock.production.lot.form.inherited</field>
+        <field name="model">stock.production.lot</field>
+        <field name="inherit_id" ref="stock.view_production_lot_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[@class='o_row']" position="after">
+                <field name="life_date"/>
+                <field name="expiry_status" force_save="1"/>
+                <field name="exp_date_test" string="Expiry Date" force_save="1"/>
+                <field name="sale_price" force_save="1"/>
+                <field name="qty_available" invisible="1"/>
+            </xpath>
+            <xpath expr="//field[@name='life_date']" position="attributes">
+                <attribute name="invisible">True</attribute>
+            </xpath>
+        </field>
+    </record>
+    <record id="view_move_form_expiry_life_date" model="ir.ui.view">
+        <field name="name">stock.production.lot.inherit.form.lifedate</field>
+        <field name="model">stock.production.lot</field>
+        <field name="inherit_id" ref="product_expiry.view_move_form_expiry"/>
+        <field name="arch" type="xml">
+            <xpath expr="//group[2]/group[2]/field[@name='life_date']" position="replace">
+                <field name="life_date" invisible='1' force_save="1"/>
+            </xpath>
+        </field>
+    </record>
+        <record id="inventory_group_by" model="ir.ui.view">
+        <field name="name">stock.production.lot.view.group</field>
+        <field name="model">stock.production.lot</field>
+        <field name="inherit_id" ref="stock.search_product_lot_filter"/>
+        <field name="arch" type="xml">
+            <search string="Product Lots Filter">
+                <group string="Group By">
+                    <filter name="group_expiry_date" string="Expiry Date" domain="[('exp_date_test','&gt;=', datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S'))]" context="{'group_by':'exp_date_test'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+</odoo>
+
+<!--&gt;-->

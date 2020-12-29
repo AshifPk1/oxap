@@ -1,0 +1,55 @@
+<odoo>
+    <record id="doctor_cosultaion_warning_wizard_view" model="ir.ui.view">
+        <field name="name">doctor.warning.wizard.form</field>
+        <field name="model">doctor.warning.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Doctor warning">
+                <h4 style="color:#B10707;text-align:center;font-weight: bold;">The following marked will go to its
+                    respective states. you can change the values here.
+                </h4>
+                <group col="4">
+                    <group style="width:50%" string="Optics">
+                        <field name="glass_status"/>
+                        <field name="glass_description"/>
+                    </group>
+                    <group style="width:50%" string="Counselling">
+                        <field name="surgery_status" style="color:green;"/>
+                        <field name="counselling_text"/>
+                    </group>
+                    <group style="width:50%" string="Treatment">
+                        <field name="treatment_status" style="color:green;"/>
+                        <field name="treatment_prescription"/>
+                    </group>
+                    <group style="width:50%" string="Review">
+                        <field name="one_week"/>
+                        <field name="two_week"/>
+                        <field name="one_month"/>
+                        <field name="other"/>
+                        <field name="review_text"
+                               attrs="{'invisible':[('other','=',False)],'required':[('other','=',True)]}"/>
+                        <field name="note"/>
+                    </group>
+                </group>
+                <notebook>
+                    <page string="Medications">
+                        <field name="medicine_ids">
+                            <tree editable="bottom">
+                                <field name="product_id"/>
+                                <field name="eye"/>
+                                <field name="stock"/>
+                                <field name="frequency" invisible="1"/>
+                                <field name="frequency_id"/>
+                                <field name="days"/>
+                            </tree>
+                        </field>
+                    </page>
+                </notebook>
+                <footer>
+                    <button name="confirm_values" string="Confirm" type='object' class="btn-primary"/>
+                    OR
+                    <button string="Cancel" class="btn-default" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+</odoo>
