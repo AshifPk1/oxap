@@ -7,13 +7,6 @@ from odoo import api, fields, models
 class ProductProduct(models.Model):
     _inherit = 'product.product'
 
-    sale_value = fields.Float("Sales Value", compute='compute_sales_value')
-
-    @api.depends('qty_available', 'lst_price')
-    def compute_sales_value(self):
-        for rec in self:
-            rec.sale_value = rec.qty_available * rec.lst_price
-
     @api.multi
     def _sales_count(self):
         r = {}
@@ -38,19 +31,6 @@ class ProductProduct(models.Model):
 class ProductTemplate(models.Model):
     _inherit = 'product.template'
 
-    is_surgery_package = fields.Boolean('Surgery Packages')
-    is_investigations = fields.Boolean('Investigations')
-    is_surgery_lens = fields.Boolean('Surgery Lens')
-    is_lens = fields.Boolean('Lens')
-    is_frame = fields.Boolean('Frames')
-    is_pharmacy = fields.Boolean('Pharmacy')
-    is_registration_product = fields.Boolean(default=False, string='Registration Product')
-    power = fields.Char('Power')
-    item = fields.Char('Item')
-    rate = fields.Float('Amount')
-    generic_name_id = fields.Many2one('generic.name', "Generic Name")
-    brand = fields.Char('Brand')
-
     @api.multi
     def action_view_sales(self):
         self.ensure_one()
@@ -68,10 +48,3 @@ class ProductTemplate(models.Model):
             'res_model': action.res_model,
             'domain': [('state', 'in', ['sale', 'done', 'paid']), ('product_id.product_tmpl_id', '=', self.id)],
         }
-
-    @api.model
-    def name_search(self, name='', args=None, operator='ilike', limit=100):
-        args = args or []
-        domain_name = ['|', '|', ('name', 'ilike', name), ('default_code', 'ilike', name), ('generic_name_id', 'ilike', name)]
-        recs = self.search(domain_name + args, limit=limit)
-        return recs.name_get()

@@ -11,8 +11,6 @@ class PharmacyInvoiceReport(models.Model):
     @api.multi
     @api.depends('currency_id', 'date', 'price_total', 'price_average', 'residual')
     def _compute_amounts_in_user_currency(self):
-        """Compute the amounts in the currency of the user
-        """
         context = dict(self._context or {})
         user_currency_id = self.env.user.company_id.currency_id
         currency_rate_id = self.env['res.currency.rate'].search([
@@ -47,7 +45,6 @@ class PharmacyInvoiceReport(models.Model):
                                                digits=0)
     currency_rate = fields.Float(string='Currency Rate', readonly=True, group_operator="avg",
                                  groups="base.group_multi_currency")
-    # nbr = fields.Integer(string='# of Lines', readonly=True)  # TDE FIXME master: rename into nbr_lines
     type = fields.Selection([
         ('out_invoice', 'Customer Invoice'),
         ('in_invoice', 'Vendor Bill'),
@@ -95,7 +92,7 @@ class PharmacyInvoiceReport(models.Model):
     def _select(self):
         select_str = """
             SELECT sub.id, sub.date, sub.product_id, sub.partner_id, sub.country_id, sub.account_analytic_id,
-                sub.payment_term_id, sub.uom_name, sub.currency_id, sub.journal_id,
+                sub.currency_id, sub.journal_id,
                 sub.fiscal_position_id, sub.user_id, sub.company_id, sub.type, sub.state,
                 sub.categ_id, sub.date_due, sub.account_id, sub.account_line_id,
                 sub.product_qty, sub.price_total as price_total, sub.price_average as price_average,
@@ -114,7 +111,7 @@ class PharmacyInvoiceReport(models.Model):
 
                     ai.type, ai.state, pt.categ_id, ai.date_due, ai.account_id, ail.account_id AS account_line_id,
                     SUM ((invoice_type.sign_qty * ail.quantity) / u.factor * u2.factor) AS product_qty,
-                    SUM(ail.price_subtotal_signed * invoice_type.sign) AS price_total,
+                    SUM(ail.price_total * invoice_type.sign_qty) AS price_total,
                     SUM(ABS(ail.price_subtotal_signed)) / CASE
                             WHEN SUM(ail.quantity / u.factor * u2.factor) <> 0::numeric
                                THEN SUM(ail.quantity / u.factor * u2.factor)

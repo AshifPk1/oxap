@@ -1,10 +1,9 @@
 # -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
-from odoo import models, api, _, fields
-from odoo.tools.misc import formatLang
-from odoo.tools import DEFAULT_SERVER_DATE_FORMAT
 from datetime import datetime, timedelta
+from odoo import models, api, _
+from odoo.tools import DEFAULT_SERVER_DATE_FORMAT
 
 
 class ReportPartnerLedger(models.AbstractModel):
@@ -162,7 +161,7 @@ class ReportPartnerLedger(models.AbstractModel):
                     caret_type = 'account.move'
                     if line.invoice_id:
                         caret_type = 'account.invoice.in' if line.invoice_id.type in (
-                        'in_refund', 'in_invoice') else 'account.invoice.out'
+                            'in_refund', 'in_invoice') else 'account.invoice.out'
                     elif line.payment_id:
                         caret_type = 'account.payment'
                     domain_lines.append({

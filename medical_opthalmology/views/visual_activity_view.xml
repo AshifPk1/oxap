@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="patient_acuitity_view_form" model="ir.ui.view">
+        <field name="name">visual acuitity</field>
+        <field name="model">visual.acuity</field>
+        <field name="arch" type="xml">
+            <form string="Patient Revisit">
+                <header>
+                </header>
+                <sheet>
+                    <div class="oe_title" name="title">
+                        <label class="oe_edit_only" for="va" string="V/A"/>
+                        <h1>
+                            <field name="va" placeholder="V/A"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="le"/>
+                            <field name="re"/>
+                        </group>
+                    </group>
+                </sheet>
+
+            </form>
+        </field>
+    </record>
+    <record id="patient_pg_power_view_form" model="ir.ui.view">
+        <field name="name">PG Power</field>
+        <field name="model">pg.power</field>
+        <field name="arch" type="xml">
+            <form string="PG Power">
+                <header>
+                </header>
+                <sheet>
+                    <div class="oe_title" name="title">
+                        <label class="oe_edit_only" for="head" string=""/>
+                        <h1>
+                            <field name="head" placeholder="category"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="sphere"/>
+                            <field name="cyl"/>
+                            <field name="axis"/>
+                        </group>
+                    </group>
+                </sheet>
+
+            </form>
+        </field>
+    </record>
+    <record id="undilated_refraction_view_form" model="ir.ui.view">
+        <field name="name">PG Power</field>
+        <field name="model">undilated.refraction</field>
+        <field name="arch" type="xml">
+            <form string="Undilated Refraction">
+                <sheet>
+                    <div class="oe_title" name="title">
+                        <label class="oe_edit_only" for="head" string=""/>
+                        <h1>
+                            <field name="head" placeholder="category" nolabel="true"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="sphere"/>
+                            <field name="cyl"/>
+                            <field name="axis"/>
+                            <field name="pin_hole"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="undilated_ar_view_form" model="ir.ui.view">
+        <field name="name">Undilated AR</field>
+        <field name="model">undilated.ar</field>
+        <field name="arch" type="xml">
+            <form string="Undilated AR">
+                <sheet>
+                    <div class="oe_title" name="title">
+                        <label class="oe_edit_only" for="undilated_ar" string=""/>
+                        <h1>
+                            <field name="undilated_ar" placeholder="Undilated AR"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="sphere"/>
+                            <field name="cyl"/>
+                            <field name="axis"/>
+                        </group>
+                    </group>
+                </sheet>
+
+            </form>
+        </field>
+    </record>
+    <record id="dilated_refraction_view_form" model="ir.ui.view">
+        <field name="name">Dilated Refraction</field>
+        <field name="model">dilated.refraction</field>
+        <field name="arch" type="xml">
+            <form string="Undilated AR">
+                <sheet>
+                    <div class="oe_title" name="title">
+                        <label class="oe_edit_only" for="head" string=""/>
+                        <h1>
+                            <field name="head" placeholder="Dilated AR"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="sphere"/>
+                            <field name="cyl"/>
+                            <field name="axis"/>
+                            <field name="va"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="dilated_ar_view_form" model="ir.ui.view">
+        <field name="name">Dilated AR</field>
+        <field name="model">dilated.ar</field>
+        <field name="arch" type="xml">
+            <form string="Dilated AR">
+                <sheet>
+                    <div class="oe_title" name="title">
+                        <label class="oe_edit_only" for="dilated_ar" string=""/>
+                        <h1>
+                            <field name="dilated_ar" placeholder="Dilated AR"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="sphere"/>
+                            <field name="cyl"/>
+                            <field name="axis"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record model="ir.actions.act_window" id="patient_visual_acuity_action">
+        <field name="name">Visual Acuity</field>
+        <field name="res_model">visual.acuity</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">Create the visual acuity
+            </p>
+        </field>
+    </record>
+    <record model="ir.actions.act_window" id="patient_pg_power_action">
+        <field name="name">PG Power</field>
+        <field name="res_model">pg.power</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">Create the PG power
+            </p>
+        </field>
+    </record>
+    <record model="ir.actions.act_window" id="undilated_refraction_action">
+        <field name="name">Undilated Refraction</field>
+        <field name="res_model">undilated.refraction</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">Create the Undilated Refraction
+            </p>
+        </field>
+    </record>
+    <record model="ir.actions.act_window" id="undilated_ar_action">
+        <field name="name">Undilated AR</field>
+        <field name="res_model">undilated.ar</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">Create the Undilated AR
+            </p>
+        </field>
+    </record>
+    <record model="ir.actions.act_window" id="dilated_refraction_action">
+        <field name="name">Dilated Refraction</field>
+        <field name="res_model">dilated.refraction</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">Create the Dilated Refraction
+            </p>
+        </field>
+    </record>
+    <record model="ir.actions.act_window" id="dilated_ar_action">
+        <field name="name">Dilated AR</field>
+        <field name="res_model">dilated.ar</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">Create the Dilated AR
+            </p>
+        </field>
+    </record>
+    <record model="ir.actions.act_window" id="extra_info_action">
+        <field name="name">Extra Info</field>
+        <field name="res_model">extra.info</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">Create the Extra Informations required in Refraction
+            </p>
+        </field>
+    </record>
+    <menuitem id="visual_acuity" name="Visual Acuitity" parent="patient_visit_main"
+              action="patient_visual_acuity_action"/>
+    <menuitem id="pg_power" name="PG Power" parent="patient_visit_main" action="patient_pg_power_action"/>
+    <menuitem id="undilated_refraction" name="Undilated Refraction" parent="patient_visit_main"
+              action="undilated_refraction_action"/>
+    <menuitem id="undilated_ar" name="Undilated AR" parent="patient_visit_main" action="undilated_ar_action"/>
+    <menuitem id="dilated_refraction" name="Dilated Refraction" parent="patient_visit_main"
+              action="dilated_refraction_action"/>
+    <menuitem id="dilated_ar" name="Dilated AR" parent="patient_visit_main" action="dilated_ar_action"/>
+    <menuitem id="extra_info" name="Extra Informations" parent="patient_visit_main" action="extra_info_action"/>
+</odoo>

@@ -32,7 +32,6 @@
                     or
                     <button string="Cancel" class="oe_link" special="cancel"/>
                 </footer>
-
             </form>
         </field>
     </record>
@@ -70,7 +69,6 @@
                     or
                     <button string="Cancel" class="oe_link" special="cancel"/>
                 </footer>
-
             </form>
         </field>
     </record>

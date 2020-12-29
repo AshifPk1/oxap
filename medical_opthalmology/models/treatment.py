@@ -23,11 +23,8 @@ class DoctorTreatment(models.Model):
     _name = 'doctor.treatment'
 
     medicine_id = fields.Many2one('medical.opthalmology')
-    pharmacy_id = fields.Many2one('medical.pharmacy')
-    product_id = fields.Many2one('product.template', string='Product', domain=[('is_pharmacy', '=', True)],
-                                 required=True)
-    categ_id = fields.Many2one('product.category', string='Product Category', related='product_id.categ_id',readonly=True)
-
+    product_id = fields.Many2one('product.template', required=True, string='Product',
+                                 domain=[('is_pharmacy', '=', True)])
     days = fields.Char(string='Days')
     frequency = fields.Char(string='Frequency')
     frequency_id = fields.Many2one('pharmacy.frequency', string='Frequency')

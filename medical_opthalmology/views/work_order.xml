@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8" ?>
 <odoo>
     <record id="view_optics_work_order_form" model="ir.ui.view">
         <field name="name">optics.work.order.form</field>
@@ -19,7 +20,6 @@
                             icon="btn-primary" type="object" class="oe_highlight"/>
                     <button name="print_invoice" string="Print Invoice" states="invoiced,paid"
                             icon="fa-close" type="object" class="oe_highlight"/>
-                    <button name="action_draft_work_order" states="cancel" type="object" string="Set to Quotation"/>
                     <button name="credit_note_optics" string="Credit Note"
                             icon="fa-plus-square" type="object" attrs="{'invisible':[('state','not in','paid')]}"
                             class="btn-default"/>
@@ -31,6 +31,7 @@
                         <group>
                             <field name="name" nolabel="1" readonly="1"/>
                         </group>
+
                         <div class="oe_button_box" name="button_box">
                             <button type="object"
                                     name="delivery_button"
@@ -267,12 +268,11 @@
                     <page string="Other Information">
                         <group>
                             <group string="Sales Information" name="sales_person">
-                                <field name="sales_person_id"/>
+                                <field name="user_id"/>
                                 <field name="team_id" options="{'no_create': True}"/>
                                 <field name="client_order_ref"/>
                                 <field name="company_id" options="{'no_create': True}"
                                        groups="base.group_multi_company"/>
-                                <field name="refraction_id" attrs="{'readonly': [('state', 'not in', 'refraction')]}"/>
                             </group>
                             <group name="sale_pay" string="Invoicing">
                                 <field name="date_order"
@@ -286,10 +286,6 @@
                         </group>
                     </page>
                 </notebook>
-                <div class="oe_chatter">
-                    <field name="message_follower_ids" widget="mail_followers"/>
-                    <field name="message_ids" widget="mail_thread"/>
-                </div>
             </form>
         </field>
     </record>
@@ -305,10 +301,9 @@
                 <field name="delivery_status"/>
                 <field name="delivery_date"/>
                 <field name="invoice_date"/>
-                <field name="sales_person_id"/>
-                <field name="amount_total" sum="amount_total"/>
-                <field name="advance_amount" sum="advance_amount"/>
-                <field name="balance_amount" string="Balance" sum="balance_amount"/>
+                <field name="amount_total"/>
+                <field name="advance_amount"/>
+                <field name="balance_amount" string="Balance"/>
                 <field name="state"/>
             </tree>
         </field>

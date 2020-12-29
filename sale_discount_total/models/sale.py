@@ -113,7 +113,6 @@ class AccountTax(models.Model):
 
         if not round_tax:
             prec += 5
-        # total_excluded = total_included = base = round(price_unit * quantity, prec)
         total_excluded = total_included = base = (price_unit * quantity)
 
         for tax in self.sorted(key=lambda r: r.sequence):

@@ -1,5 +1,4 @@
 from odoo import api, models, fields, _
-from datetime import datetime
 
 
 class VisualAcuity(models.Model):
@@ -14,7 +13,6 @@ class VisualAcuity(models.Model):
         ('e_chart', 'E-Chart')
     ], string=' ')
     pinhole = fields.Char('PH', store=True)
-
     patient_visit_re_id = fields.Many2one('medical.opthalmology', store=True)
     patient_visit_id = fields.Many2one('medical.opthalmology', store=True)
 
@@ -105,6 +103,7 @@ class DilatedAR(models.Model):
         else:
             self.color_status = False
 
+    # @api.onchange('sphere','cyl','axis','va')
     def on_change_values(self):
         for record in self:
             if record.dilated_ar == 'NV' or record.dilated_ar == 'DV':
@@ -164,7 +163,6 @@ class DilatedAR(models.Model):
 
     def action_show_va(self):
         view = self.env.ref('medical_opthalmology.eye_value_wizard_va_view')
-        context = self.env.context.copy()
         self.on_change_values()
         nv_is = False
         if self.dilated_ar == 'NV':
@@ -232,11 +230,13 @@ class OpticalInvestigations(models.Model):
     eye = fields.Selection([('left_eye', 'LE'), ('right_eye', 'RE'), ('both', 'BE')])
     patient_visit_id = fields.Many2one('medical.opthalmology', store=True)
     patient_visit_optics_id = fields.Many2one('medical.optics', store=True)
-    tax_ids = fields.Many2many('account.tax', string='Tax', store=True)
+    tax_ids = fields.Many2many('account.tax', string='Tax', store=True, domain=[('type_tax_use', '=', 'sale')])
     price_tax = fields.Float(compute='_compute_amount', string='Taxes', readonly=True, store=True)
     discount = fields.Float('Discount', readonly=False, store=True)
     sub_total = fields.Float('Sub Total', compute='compute_sub_total')
     price_total = fields.Float(compute='_compute_amount', string='Total', readonly=True, store=True)
+    instruction_id = fields.Many2many('investigation.instruction', String='Instruction')
+    report = fields.Char('Report')
 
     @api.onchange('investigation')
     def _onchange_investigations(self):
@@ -291,7 +291,7 @@ class Prescription(models.Model):
     @api.depends('product_id', 'quantity', 'price_unit')
     def compute_sub_total(self):
         for record in self:
-            record.sub_total = (record.price_unit) * (record.quantity)
+            record.sub_total = record.price_unit * (record.quantity)
 
     @api.onchange('product_id')
     def _onchange_product_ids(self):
@@ -499,7 +499,6 @@ class CycloDetails(models.Model):
 
     def action_show_sphere(self):
         view = self.env.ref('medical_opthalmology.eye_value_wizard_view')
-        context = self.env.context.copy()
 
         return {
             'name': _('Register Sphere Values'),
@@ -515,7 +514,6 @@ class CycloDetails(models.Model):
 
     def action_show_cyl(self):
         view = self.env.ref('medical_opthalmology.eye_value_wizard_view')
-        context = self.env.context.copy()
 
         return {
             'name': _('Register Cyl Values'),
@@ -531,7 +529,6 @@ class CycloDetails(models.Model):
 
     def action_show_axis(self):
         view = self.env.ref('medical_opthalmology.eye_value_wizard_axis_view')
-        context = self.env.context.copy()
 
         return {
             'name': _('Register Axis Values'),
@@ -547,7 +544,6 @@ class CycloDetails(models.Model):
 
     def action_show_va(self):
         view = self.env.ref('medical_opthalmology.eye_value_wizard_va_view')
-        context = self.env.context.copy()
 
         return {
             'name': _('Register Values'),
@@ -575,7 +571,6 @@ class AlternateGlass(models.Model):
 
     def action_show_sphere(self):
         view = self.env.ref('medical_opthalmology.eye_value_wizard_view')
-        context = self.env.context.copy()
 
         return {
             'name': _('Register Sphere Values'),
@@ -591,7 +586,6 @@ class AlternateGlass(models.Model):
 
     def action_show_cyl(self):
         view = self.env.ref('medical_opthalmology.eye_value_wizard_view')
-        context = self.env.context.copy()
 
         return {
             'name': _('Register Cyl Values'),
@@ -607,7 +601,6 @@ class AlternateGlass(models.Model):
 
     def action_show_axis(self):
         view = self.env.ref('medical_opthalmology.eye_value_wizard_axis_view')
-        context = self.env.context.copy()
 
         return {
             'name': _('Register Axis Values'),
@@ -623,7 +616,6 @@ class AlternateGlass(models.Model):
 
     def action_show_va(self):
         view = self.env.ref('medical_opthalmology.eye_value_wizard_va_view')
-        context = self.env.context.copy()
 
         return {
             'name': _('Register Values'),
@@ -659,7 +651,7 @@ class SurgeryPackage(models.Model):
     amount = fields.Float('Amount', store=True)
     qty = fields.Float('Qty', default=1, store=True)
     space = fields.Char(' ', readonly=True, store=True)
-    tax_ids = fields.Many2many('account.tax', string='Tax', store=True)
+    tax_ids = fields.Many2many('account.tax', string='Tax', store=True, domain=[('type_tax_use', '=', 'sale')])
 
     price_tax = fields.Float(compute='_compute_amount', string='Taxes', readonly=True, store=True)
     discount = fields.Float('Discount', readonly=False, store=True)
@@ -673,7 +665,7 @@ class SurgeryPackage(models.Model):
     @api.depends('surgery', 'qty', 'amount')
     def compute_sub_total(self):
         for record in self:
-            record.sub_total = (record.amount) * (record.qty)
+            record.sub_total = record.amount * record.qty
 
     @api.depends('qty', 'discount', 'amount', 'tax_ids', )
     def _compute_amount(self):
@@ -681,7 +673,6 @@ class SurgeryPackage(models.Model):
         Compute the amounts of the SO line.
         """
         for line in self:
-            print(line.discount)
             price = line.amount * (1 - (line.discount or 0.0) / 100.0)
             taxes = line.tax_ids.compute_all(price, line.patient_visit_id.currency_id, line.qty,
                                              product=line.surgery, partner=False)
@@ -805,7 +796,6 @@ class VisualAcuityLe(models.Model):
 
     def action_show_re(self):
         view = self.env.ref('medical_opthalmology.eye_value_wizard_va_view')
-        context = self.env.context.copy()
 
         return {
             'name': _('Register Values'),
@@ -821,7 +811,6 @@ class VisualAcuityLe(models.Model):
 
     def action_show_le(self):
         view = self.env.ref('medical_opthalmology.eye_value_wizard_va_view')
-        context = self.env.context.copy()
 
         return {
             'name': _('Register Values'),
@@ -853,7 +842,6 @@ class VisualAcuityRe(models.Model):
 
     def action_show_re(self):
         view = self.env.ref('medical_opthalmology.eye_value_wizard_va_view')
-        context = self.env.context.copy()
 
         return {
             'name': _('Register Values'),
@@ -869,7 +857,6 @@ class VisualAcuityRe(models.Model):
 
     def action_show_le(self):
         view = self.env.ref('medical_opthalmology.eye_value_wizard_va_view')
-        context = self.env.context.copy()
 
         return {
             'name': _('Register Values'),
@@ -915,7 +902,6 @@ class DilatedARLe(models.Model):
 
     def action_show_cyl(self):
         view = self.env.ref('medical_opthalmology.eye_value_wizard_view')
-        context = self.env.context.copy()
         self.on_change_values()
         return {
             'name': _('Register Cyl Values'),
@@ -931,7 +917,6 @@ class DilatedARLe(models.Model):
 
     def action_show_axis(self):
         view = self.env.ref('medical_opthalmology.eye_value_wizard_axis_view')
-        context = self.env.context.copy()
         self.on_change_values()
         return {
             'name': _('Register Axis Values'),
@@ -979,7 +964,6 @@ class DilatedARRe(models.Model):
     @api.multi
     def action_show_sphere(self):
         view = self.env.ref('medical_opthalmology.eye_value_wizard_view')
-        context = self.env.context.copy()
 
         self.on_change_values()
         return {
@@ -996,7 +980,6 @@ class DilatedARRe(models.Model):
 
     def action_show_cyl(self):
         view = self.env.ref('medical_opthalmology.eye_value_wizard_view')
-        context = self.env.context.copy()
         self.on_change_values()
         return {
             'name': _('Register Cyl Values'),
@@ -1012,7 +995,6 @@ class DilatedARRe(models.Model):
 
     def action_show_axis(self):
         view = self.env.ref('medical_opthalmology.eye_value_wizard_axis_view')
-        context = self.env.context.copy()
         self.on_change_values()
         return {
             'name': _('Register Axis Values'),
@@ -1028,7 +1010,6 @@ class DilatedARRe(models.Model):
 
     def action_show_va(self):
         view = self.env.ref('medical_opthalmology.eye_value_wizard_va_view')
-        context = self.env.context.copy()
         self.on_change_values()
         nv_is = False
         if self.dilated_ar == 'NV':
@@ -1046,7 +1027,13 @@ class DilatedARRe(models.Model):
         }
 
 
-class GenericName(models.Model):
-    _name = 'generic.name'
+class DialataionTplus(models.Model):
+    _name = 'dialataion.tplus'
+
+    name = fields.Char(string='Name', required=True)
+
+
+class InvestigationInstruction(models.Model):
+    _name = 'investigation.instruction'
 
     name = fields.Char(string='Name', required=True)

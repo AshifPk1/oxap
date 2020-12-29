@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="patient_revisit_view_form_iol" model="ir.ui.view">
+        <field name="name">patient.visit.form.iol</field>
+        <field name="model">medical.opthalmology</field>
+        <field name="inherit_id" ref="medical_opthalmology.patient_revisit_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//notebook/page[3]" position="after">
+                <page string="IOL">
+                    <group>
+                        <group>
+                            <div>
+                                <label for="iol_ids" string=" "/>
+                                <field name="iol_ids" mode='tree' style="width:90%">
+                                    <tree string="IOL" editable="bottom" delete="false" create="false">
+                                        <field name="iol" readonly="True"/>
+                                        <field name="type_iol"/>
+                                        <field name="constant"/>
+                                        <field name="iol_power"/>
+                                        <field name="ac"/>
+                                    </tree>
+                                </field>
+                            </div>
+                        </group>
+                    </group>
+                </page>
+            </xpath>
+        </field>
+    </record>
+</odoo>
+

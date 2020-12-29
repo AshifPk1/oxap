@@ -167,7 +167,6 @@
                 </tr>
             </t>
         </template>
-
         <template id="main_template">
             <div class='o_account_reports_body'>
                 <div class="container o_account_reports_page o_account_reports_no_print">
@@ -233,6 +232,7 @@
                 </t>
             </xpath>
         </template>
+
         <template id="template_aged_partner_balance_report" inherit_id="account_reports.main_template" primary="True">
             <xpath expr="//table" position="attributes">
                 <attribute name="class">o_account_reports_table table-striped</attribute>
@@ -334,6 +334,7 @@
             </xpath>
         </template>
 
+
         <!-- trial balance templates -->
         <template id="template_coa_report" inherit_id="account_reports.main_template" primary="True">
             <xpath expr="//thead/tr" position="before">
@@ -350,6 +351,7 @@
                     </th>
                     <th t-att-class="'o_account_report_column_header text-center'" colspan="2">Total</th>
                     <!--<th t-att-class="'o_account_report_column_header text-center'" colspan="2">Total</th>-->
+
                 </tr>
             </xpath>
         </template>

@@ -60,12 +60,10 @@ class MedicalPractitioner(models.Model):
 
     @api.model
     def create(self, vals):
-        # create related user for Practitioner
-        res = super(MedicalPractitioner, self).create(vals)
+        res =super(MedicalPractitioner, self).create(vals)
         user = self.env['res.users'].create({'name': vals.get('name'),
-                                             'login': vals.get('email'),
-                                             'email': vals.get('email')})
+                                               'login': vals.get('name')})
 
         res.related_user_id = user.id
-        # user.action_reset_password()
+
         return res

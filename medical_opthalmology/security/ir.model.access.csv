@@ -73,6 +73,7 @@ access_recption_sale_order,reception_sale_order,model_sale_order,base.group_user
 access_recption_sale_order_line,reception_sale_order_line,model_sale_order_line,base.group_user,1,1,1,1
 access_recption_account_move,reception_account_move,account.model_account_move,base.group_user,1,1,1,1
 access_stock_warehouse_orderpoint,reception_stock_warehouse_orderpoint,stock.model_stock_warehouse_orderpoint,base.group_user,1,1,1,1
+
 access_medical_optical_product_template,access_medical_optical_product_template,product.model_product_template,medical_opthalmology.group_opticals_access,1,1,1,1
 access_medical_optical_product_product,access_medical_optical_product_product,product.model_product_product,medical_opthalmology.group_opticals_access,1,1,1,1
 access_medical_optical_price_hist,access_medical_optical_price_hist,product.model_product_price_history,medical_opthalmology.group_opticals_access,1,1,1,1
@@ -80,10 +81,14 @@ access_visual_acuity_le,access_visual_acuity_le,medical_opthalmology.model_visua
 access_visual_acuity_re,access_visual_acuity_re,medical_opthalmology.model_visual_acuity_re,,1,1,1,1
 access_dilated_ar_le,access_dilated_ar_le,medical_opthalmology.model_dilated_ar_le,,1,1,1,1
 access_dilated_ar_re,access_dilated_ar_re,medical_opthalmology.model_dilated_ar_re,,1,1,1,1
-access_doctor_treatment,access_doctor.treatment,medical_opthalmology.model_doctor_treatment,,1,1,1,1
+access_medical_refractionist,access_medical_refractionist,medical_opthalmology.model_medical_refractionist,,1,1,1,1
 access_pharmacy_frequency,access_pharmacy.frequency,medical_opthalmology.model_pharmacy_frequency,,1,1,1,1
-access_generic_name,access_generic.name,medical_opthalmology.model_generic_name,,1,1,1,1
-access_work_order_reject_reason,access_work.order.reject.reason,medical_opthalmology.model_work_order_reject_reason,,1,1,1,1
+access_doctor_treatment,access_doctor.treatment,medical_opthalmology.model_doctor_treatment,,1,1,1,1
+access_optical_procedure,access_optical.procedure,medical_opthalmology.model_optical_procedure,,1,1,1,1
+access_dialataion_tplus,access_dialataion.tplus,medical_opthalmology.model_dialataion_tplus,,1,1,1,1
+access_investigation_instruction,access_investigation.instruction,medical_opthalmology.model_investigation_instruction,,1,1,1,1
+
+
 
 
 

@@ -1,23 +1,65 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <odoo>
     <template id="external_layout_standard">
-        <div class="header o_background_header">
+        <div class="header">
             <div class="row">
-                <div>
-                    <img t-if="company.logo" t-att-src="'data:image/png;base64,%s' % to_text(company.logo)"
-                         style="height: 80px; width: 180px;"/>
+                <div class="col-xs-9 ">
+                    <img t-att-src="'medical_opthalmology/static/src/img/header.png'" style="width:1000px;"/>
+                </div>
+                <div class="col-xs-3">
+                    <span style="text-align:right;font-size: 18px;" >Koodathai,
+                    </span>
+                    <br/>
+                    <span style="text-align:right;font-size: 18px;" >Mukkam Road,
+                    </span>
+                    <br/>
+                    <span style="text-align:right;font-size: 18px;">Thamarassery,
+                    </span>
+                    <br/>
+                    <span style="text-align:right;font-size: 18px;">Kozhikode
+                    </span>
+                    <br/>
+                    <span style="text-align:right;font-size: 18px;">Kerala, 673573
+                    </span>
+                    <br/>
                 </div>
             </div>
         </div>
         <div class="article">
             <t t-raw="0"/>
         </div>
-        <div class="footer o_boxed_footer">
-            <div class="row">
-                <div style="border: 1px solid black;"></div>
+        <div class="footer">
+            <div class="text-center" style="border-top: 1px solid black;">
+                <ul class="list-inline mb4">
+                    <li t-if="company.phone">Phone:
+                        <span t-field="company.phone"/>
+                    </li>
+                    <li t-if="company.email">Email:
+                        <span t-field="company.email"/>
+                    </li>
+                    <li t-if="company.website">Web:
+                        <span t-field="company.website"/>
+                    </li>
+                </ul>
+
+                <div class="text-muted">
+                    Page:
+                    <span class="page"/>
+                    /
+                    <span class="topage"/>
+                </div>
             </div>
         </div>
     </template>
+    <template id="external_layout_standard_without_header">
+        <div class="header">
+        </div>
+
+        <div class="article">
+            <t t-raw="0"/>
+        </div>
+    </template>
+
     <template id="external_layout_custom">
         <!-- Multicompany -->
         <t t-if="not o and doc">
@@ -30,8 +72,24 @@
         <t t-if="not o or not 'company_id' in o">
             <t t-set="company" t-value="res_company"/>
         </t>
-
         <t t-call="medical_opthalmology.external_layout_standard">
+            <t t-raw="0"/>
+        </t>
+    </template>
+    <template id="external_layout_custom_without_header">
+        <!--         Multicompany -->
+        <t t-if="not o and doc">
+            <t t-set="o" t-value="doc"/>
+        </t>
+
+        <t t-if="o and 'company_id' in o">
+            <t t-set="company" t-value="o.company_id.sudo()"/>
+        </t>
+        <t t-if="not o or not 'company_id' in o">
+            <t t-set="company" t-value="res_company"/>
+        </t>
+
+        <t t-call="medical_pharmacy.external_layout_standard_without_header">
             <t t-raw="0"/>
         </t>
     </template>

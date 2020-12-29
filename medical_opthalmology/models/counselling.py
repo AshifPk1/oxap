@@ -7,7 +7,6 @@ from odoo.exceptions import UserError
 class Counselling(models.Model):
     _inherit = 'medical.opthalmology'
 
-
     referred_to_surgery = fields.Boolean('Referred To Surgery')
     referred_to_counselling = fields.Boolean('Referred To Counselling')
     counselling_text = fields.Text('Counselling Text')
@@ -43,7 +42,6 @@ class Counselling(models.Model):
     registration_invoice_number_test2 = fields.Char()
     registration_invoice_number_test3 = fields.Char()
 
-    # check Surgery date greater than current date
     @api.onchange('surgery_date')
     def _onchange_surgery_date(self):
         if self.surgery_date:
@@ -235,7 +233,7 @@ class Counselling(models.Model):
                         record.final_total = (record.total_amount - record.discount) + record.tax_amount
                     else:
                         record.final_total = (record.total_amount - (
-                                (record.total_amount) * ((record.discount) / 100))) + record.tax_amount
+                                record.total_amount * (record.discount / 100))) + record.tax_amount
                 else:
                     record.final_total = record.total_amount + record.tax_amount
 
@@ -249,7 +247,7 @@ class Counselling(models.Model):
     @api.multi
     def create_order(self):
         debit_vals = []
-        invoice_obj = self.env['account.invoice']
+        invoice_obj = self.env['account.invoice'].sudo()
         if not self.counselling_invoice_id:
             for record in self.investigation_details_ids:
                 account = record.investigation.property_account_income_id or record.investigation.categ_id.property_account_income_categ_id
@@ -278,7 +276,6 @@ class Counselling(models.Model):
                 'date_invoice': self.date,
                 'invoice_line_ids': debit_vals,
                 'patient_visit_id': self.id,
-                'doctor_id': self.doctor_id.id,
                 'discount_type': self.discount_type,
                 'discount_rate': self.discount,
                 'investigation_bool': True,
@@ -336,7 +333,6 @@ class Counselling(models.Model):
             record = invoice_obj.create({
                 'partner_id': self.patient_id.partner_id.id,
                 'identification_code': self.patient_id.identification_code,
-                'doctor_id': self.doctor_id.id,
                 'date_invoice': self.date,
                 'discount_type': self.discount_type_surgery,
                 'discount_rate': self.discount_surgery,
@@ -410,21 +406,12 @@ class Counselling(models.Model):
         data_dict = {'datas': self.id}
         return self.env.ref('medical_opthalmology.medical_detail_template').report_action([], data=data_dict)
 
+    @api.multi
+    def print_medical_report_wo_header(self):
+        data_dict = {'datas': self.id}
+        return self.env.ref('medical_opthalmology.medical_detail_template_wo_header').report_action([], data=data_dict)
 
-class CounsellingSubStates(models.Model):
-    _name = 'counselling.substate'
-    _rec_name = 'stage_name'
 
-    @api.model
-    def create(self, vals):
-        if vals.get('name', _('New')) == _('New'):
-            if 'stage_name' in vals:
-                vals['name'] = self.env['ir.sequence'].next_by_code(
-                    'counselling.substate') or _('New')
-        return super(CounsellingSubStates, self).create(vals)
-
-    name = fields.Char(string='Sub State No', required=True, copy=False, readonly=True, ondelete='cascade', index=True,
-                       default=lambda self: _('New'))
-    stage_name = fields.Char('Stage Name')
-    requirements = fields.Text('Requirements', help="Enter here the internal requirements for this stage.")
-    is_start = fields.Boolean('Starting Stage')
+    def create_procedure(self):
+        self.write({'state': 'procedure'})
+        self.write({'procedure_type': 'treatment'})

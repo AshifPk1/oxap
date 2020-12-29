@@ -50,7 +50,6 @@ class RegistrationInvoiceReport(models.Model):
                                                digits=0)
     currency_rate = fields.Float(string='Currency Rate', readonly=True, group_operator="avg",
                                  groups="base.group_multi_currency")
-    # nbr = fields.Integer(string='# of Lines', readonly=True)  # TDE FIXME master: rename into nbr_lines
     type = fields.Selection([
         ('out_invoice', 'Customer Invoice'),
         ('in_invoice', 'Vendor Bill'),

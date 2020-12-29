@@ -6,12 +6,12 @@
 from datetime import date, datetime, timedelta
 from dateutil.relativedelta import relativedelta
 import mock
+
 from odoo import fields
 from odoo.tests.common import TransactionCase
 from odoo.exceptions import ValidationError
 
 import logging
-
 _logger = logging.getLogger(__name__)
 
 MOCK_PATH = 'odoo.addons.medical.models.medical_patient.date'
@@ -149,7 +149,7 @@ class TestMedicalPatient(TransactionCase):
         ).date()
         current_date = date.today()
         delta = current_date - birthdate
-        years = delta.days / 365
+        years = delta.days/365
         result = self.env['medical.patient'].search(
             [('age_years', '=', years)]
         )

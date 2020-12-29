@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8" ?>
 <odoo>
     <record id="view_reference_from_tree" model="ir.ui.view">
         <field name="name">Reference_From_Tree</field>

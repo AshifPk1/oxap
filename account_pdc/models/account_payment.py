@@ -1,7 +1,8 @@
+from datetime import date
+
 from odoo import models, fields, api, _
 from odoo.exceptions import UserError
 from odoo.exceptions import ValidationError
-from datetime import datetime, date, timedelta
 
 
 class AccountRegisterPayments(models.TransientModel):
@@ -21,37 +22,6 @@ class AccountRegisterPayments(models.TransientModel):
             })
         return res
 
-    @api.multi
-    def process_pdc(self):
-        Payment = self.env['account.payment']
-        payments_pdc = self.env['account.payment'].search(
-            [('invoice_ids', '=', self.invoice_ids.ids), ('state', '=', 'pdc')], limit=1)
-        if payments_pdc:
-            raise UserError(_("Payment for the selected invoices already exist in PDC state "))
-
-        else:
-            payments = Payment
-            for payment_vals in self.get_payments_vals():
-                payments += Payment.create(payment_vals)
-            for payment in payments:
-                payment.update({'state': 'pdc',
-                                'effective_date': self.effective_date})
-            return {
-                'name': _('Payments'),
-                'domain': [('id', 'in', payments.ids), ('state', '=', 'pdc')],
-                'view_type': 'form',
-                'view_mode': 'tree,form',
-                'res_model': 'account.payment',
-                'view_id': False,
-                'type': 'ir.actions.act_window',
-            }
-
-    @api.multi
-    def _prepare_payment_vals(self, invoices):
-        res = super(AccountRegisterPayments, self)._prepare_payment_vals(invoices)
-        print(res, 'res')
-
-        return res
 
 class AccountPayment(models.Model):
     _inherit = "account.payment"
@@ -142,9 +112,6 @@ class AccountPayment(models.Model):
         """
         for rec in self:
 
-            # if rec.state not in ['draft','pdc']:
-            #     raise UserError(_("Only  draft or pdc payment can be posted."))
-
             if any(inv.state != 'open' for inv in rec.invoice_ids):
                 raise ValidationError(_("The payment cannot be processed because the invoice is not open!"))
 
@@ -181,7 +148,7 @@ class AccountPayment(models.Model):
                     lambda r: r.account_id == rec.company_id.transfer_account_id)
                 transfer_debit_aml = rec._create_transfer_entry(amount)
                 (transfer_credit_aml + transfer_debit_aml).reconcile()
-                # persist_move_name += self._get_move_name_transfer_separator() + transfer_debit_aml.move_id.name
+                persist_move_name += self._get_move_name_transfer_separator() + transfer_debit_aml.move_id.name
 
             rec.write({'state': 'posted', 'move_name': persist_move_name})
         return True

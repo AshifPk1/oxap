@@ -50,5 +50,4 @@
     <record model='ir.ui.menu' id='stock.menu_stock_root'>
         <field name="groups_id" eval="[(6,0,[ref('stock.group_stock_manager')])]"/>
     </record>
-
 </odoo>

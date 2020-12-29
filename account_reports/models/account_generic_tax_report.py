@@ -3,7 +3,6 @@
 
 from odoo import models, api
 from odoo.tools.translate import _
-from odoo.tools.misc import formatLang
 
 
 class generic_tax_report(models.AbstractModel):

@@ -150,6 +150,7 @@ class InvestigationInvoiceReport(models.Model):
 
     @api.model_cr
     def init(self):
+        # self._table = account_invoice_report
         tools.drop_view_if_exists(self.env.cr, self._table)
         self.env.cr.execute("""CREATE or REPLACE VIEW %s as (
             WITH currency_rate AS (%s)

@@ -7,7 +7,6 @@ class Surgery(models.Model):
     surgery_items_ids = fields.One2many('surgery.items', 'patient_visit_id', string='Surgery Items')
     assistance = fields.Char('Assistance In Surgery')
     types_of_anesthesia = fields.Selection([('la', 'LA'), ('ga', 'GA')], string='Types Of Anesthesia')
-
     surgery_selection = fields.Selection([
         ('primary', 'Primary')
     ])

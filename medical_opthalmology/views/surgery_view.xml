@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8" ?>
 <odoo>
     <record id="view_surgery_form" model="ir.ui.view">
         <field name="name">surgery.form</field>
@@ -15,81 +16,139 @@
                 </div>
                 <group col="10">
                     <div>
-                        <group style="width:5%">
-                            <field name="name" nolabel='1' readonly="1" style="width:30%"/>
-                        </group>
-                        <group style="width:15%">
-                            <div class="oe_title" name="title">
-                                <h3>
+                    <div style="box-shadow: 5px 5px #888888;">
+                        <table width="100%" height="100%" >
+                        <thead>
+                            <tr >
+<!--                                <th style="color:#B10707;text-align:center;padding: 0px;">Ref #</th>-->
+                                <th style="color:#B10707;text-align:center;padding: 0px;">Patient Name</th>
+                                <th style="color:#B10707;text-align:center;padding: 0px;">File Number</th>
+                                <th style="color:#B10707;text-align:center;padding: 0px;">Age</th>
+                                <th style="color:#B10707;text-align:center;padding: 0px;">Gender</th>
+                                <th style="color:#B10707;text-align:center;padding: 0px;">Doctor</th>
+                                <th style="color:#B10707;text-align:center;padding: 0px;">Admission Date</th>
+                                <th style="color:#B10707;text-align:center;padding: 0px;"> Reference From</th>
+<!--                                <th rowspan="2" style="text-align:center;padding: 0px;"><button name="action_view_old_glasses" string="Old Glasses" class="btn-primary  "-->
+<!--                                        type="object" /></th>-->
+                            </tr>
+                            <tr>
+                                <th style="text-align:center;padding: 0px;">
+                                    <h3>
                                     <field name="patient_id" placeholder="Patient Name"
                                            nolabel="1" attrs="{'readonly': [('state', 'not in', 'registration')]}"
                                            style="width:70%"/>
                                 </h3>
-                            </div>
-                        </group>
-                        <group style="width:7%">
-                            <field name="identification_code" nolabel="1"
+                                </th>
+                                <th style="text-align:center;padding: 0px;">
+                                    <field name="identification_code" nolabel="1"
                                    attrs="{'readonly': [('state', 'not in', 'registration')]}"/>
-                        </group>
-                        <group style="width:7%">
-                            <field name="age" nolabel="1" attrs="{'readonly': [('state', 'not in', 'registration')]}"/>
-                        </group>
-                        <group style="width:13%">
-                            <field name="doctor_id" nolabel="1"
+                                </th>
+                                <th style="text-align:center;padding: 0px;">
+                                     <field name="age" nolabel="1" attrs="{'readonly': [('state', 'not in', 'registration')]}"/>
+                                </th>
+                                <th style="text-align:center;padding: 0px;">
+                                    <field name="gender" nolabel="1"
                                    attrs="{'readonly': [('state', 'not in', 'registration')]}"/>
-                        </group>
-                        <group style="width:8%">
-                            <field name="date" nolabel="1" attrs="{'readonly': [('state', 'not in', 'registration')]}"/>
-                        </group>
-                        <group style="width:7%">
-                            <field name="gender" nolabel="1"
+                                </th>
+                                <th style="text-align:center;padding: 0px;">
+                                    <field name="doctor_id" nolabel="1"
                                    attrs="{'readonly': [('state', 'not in', 'registration')]}"/>
-                        </group>
-                        <group style="width:8%">
-                            <field name="referred_by_id" nolabel="1"
+                                </th>
+                                <th style="text-align:center;padding: 0px;">
+                                     <field name="date" nolabel="1" attrs="{'readonly': [('state', 'not in', 'registration')]}"/>
+                                </th>
+                                <th style="text-align:center;padding: 0px;">
+                                     <field name="referred_by_id" nolabel="1"
                                    attrs="{'readonly': [('state', 'not in', 'registration')]}"/>
-                        </group>
-                        <group style="width:5%">
-                            <div>
-                                <label for="referred_to_surgery" string="Surgery"/>
-                                <field name="referred_to_surgery" nolabel="1"
-                                       attrs="{'readonly': [('state', 'not in', 'consultation')]}"/>
-                            </div>
-                        </group>
-                        <group style="width:20%">
-                            <div>
-                                <label for="counselling_text" string="Counselling Text"
-                                       attrs="{'invisible':[('referred_to_surgery','=',False)]}"/>
-                                <field name="counselling_text" nolabel="1"
-                                       attrs="{'readonly': [('state', 'not in', 'consultation')],'invisible':[('referred_to_surgery','=',False)]}"/>
-                            </div>
-                        </group>
+                                </th>
+                            </tr>
+                        </thead>
+                        </table>
+                    </div>
+
+<!--                        <group style="width:5%">-->
+<!--                            <field name="name" nolabel='1' readonly="1" style="width:30%"/>-->
+<!--                        </group>-->
+<!--                        <group style="width:15%">-->
+<!--                            <div class="oe_title" name="title">-->
+<!--                                <h3>-->
+<!--                                    <field name="patient_id" placeholder="Patient Name"-->
+<!--                                           nolabel="1" attrs="{'readonly': [('state', 'not in', 'registration')]}"-->
+<!--                                           style="width:70%"/>-->
+<!--                                </h3>-->
+<!--                            </div>-->
+<!--                        </group>-->
+<!--                        <group style="width:7%">-->
+<!--                            <field name="identification_code" nolabel="1"-->
+<!--                                   attrs="{'readonly': [('state', 'not in', 'registration')]}"/>-->
+<!--                        </group>-->
+<!--                        <group style="width:7%">-->
+<!--                            <field name="age" nolabel="1" attrs="{'readonly': [('state', 'not in', 'registration')]}"/>-->
+<!--                        </group>-->
+<!--                        <group style="width:13%">-->
+<!--                            <field name="doctor_id" nolabel="1"-->
+<!--                                   attrs="{'readonly': [('state', 'not in', 'registration')]}"/>-->
+<!--                        </group>-->
+<!--                        <group style="width:8%">-->
+<!--                            <field name="date" nolabel="1" attrs="{'readonly': [('state', 'not in', 'registration')]}"/>-->
+<!--                        </group>-->
+<!--                        <group style="width:7%">-->
+
+<!--                            <field name="gender" nolabel="1"-->
+<!--                                   attrs="{'readonly': [('state', 'not in', 'registration')]}"/>-->
+<!--                        </group>-->
+<!--                        <group style="width:8%">-->
+<!--                            <field name="referred_by_id" nolabel="1"-->
+<!--                                   attrs="{'readonly': [('state', 'not in', 'registration')]}"/>-->
+<!--                        </group>-->
+<!--                        <group style="width:5%">-->
+<!--                            <div>-->
+<!--                                <label for="referred_to_surgery" string="Surgery"/>-->
+<!--                                <field name="referred_to_surgery" nolabel="1"-->
+<!--                                       attrs="{'readonly': [('state', 'not in', 'consultation')]}"/>-->
+<!--                            </div>-->
+<!--                        </group>-->
+<!--                        <group style="width:20%">-->
+<!--                            <div>-->
+<!--                                <label for="counselling_text" string="Counselling Text"-->
+<!--                                       attrs="{'invisible':[('referred_to_surgery','=',False)]}"/>-->
+<!--                                <field name="counselling_text" nolabel="1"-->
+<!--                                       attrs="{'readonly': [('state', 'not in', 'consultation')],'invisible':[('referred_to_surgery','=',False)]}"/>-->
+<!--                            </div>-->
+<!--                        </group>-->
                         <group>
                             <group>
                                 <field name="assistance"/>
                                 <field name="types_of_anesthesia"/>
                             </group>
-                            <group></group>
+                            <group>
+                                <field name="referred_to_surgery"
+                                       attrs="{'readonly': [('state', 'not in', 'consultation')]}"/>
+                                <field name="counselling_text"
+                                       attrs="{'readonly': [('state', 'not in', 'consultation')],'invisible':[('referred_to_surgery','=',False)]}"/>
+                            </group>
                         </group>
                     </div>
                 </group>
                 <notebook>
                     <page string="Cataract">
-                        <group col="3">
+                        <group col="2">
                             <group>
-                                <field name="surgery_selection" style="width:90%"/>
-                                <field name="surgeon_ids" widget="many2many_tags" style="width:90%"/>
+                                <field name="surgery_selection" />
+                                <field name="surgeon_ids" widget="many2many_tags" />
+                                <field name="eye_selection" />
                             </group>
                             <group>
-                                <field name="eye_selection" style="width:55%"/>
-                                <field name="anesthesia" style="width:55%"/>
+
+                                <field name="anesthesia" />
+                                <field name="surgery_done_date"/>
+                                    <field name="anesthetist"/>
                             </group>
-                            <group>
-                                <group>
-                                    <field name="surgery_done_date" style="width:60%"/>
-                                    <field name="anesthetist" style="width:60%"/>
-                                </group>
-                            </group>
+<!--                            <group>-->
+<!--                                <group>-->
+<!--                                    -->
+<!--                                </group>-->
+<!--                            </group>-->
                         </group>
                         <group col="2">
                             <group>
@@ -262,7 +321,6 @@
                                                     <label for="visual_acuitity_ids" string=" " style="width:30%"/>
                                                     <label for="visual_acuitity_ids" string="Ant Segment."
                                                            style="color:#B10707;text-align:center;font-size:13px;width:41%;font-weight: bold"/>
-
                                                     <div style="height:5px">
                                                     </div>
                                                     <label for="lids_le" string="Lids"
@@ -352,6 +410,7 @@
                                                                 <th width='16%'>UC</th>
                                                                 <th width='16%'>PH</th>
                                                                 <th width='16%'>PG</th>
+                                                                <th width='16%'>CL</th>
                                                                 <th width='2%'> </th>
                                                             </thead>
                                                             <tbody>
@@ -372,6 +431,10 @@
                                                                         <field name="ucdv_l_re"
                                                                                style="background-color:#F5F6F9;"/>
                                                                     </td>
+                                                                    <td>
+                                                                        <field name="ucdv_l_cl"
+                                                                               style="background-color:#F5F6F9;"/>
+                                                                    </td>
                                                                     <td width="2%">
                                                                         <field name="ucdv_l_va"
                                                                                style="background-color:#F5F6F9;"/>
@@ -389,6 +452,9 @@
                                                                     </td>
                                                                     <td>
                                                                         <field name="ucnv_l_re"/>
+                                                                    </td>
+                                                                    <td>
+                                                                        <field name="ucnv_l_cl"/>
                                                                     </td>
                                                                     <td width="2%">
                                                                         <field name="ucnv_l_va"/>
@@ -606,6 +672,8 @@
                                                                 <field name="qty" invisible="1" force_save="1"/>
                                                                 <field name="amount" invisible="1" force_save="1"/>
                                                                 <field name="eye"/>
+                                                                <field name="instruction_id" widget="many2many_tags"/>
+                                                                <field name="report"/>
                                                             </tree>
                                                         </field>
                                                     </div>
@@ -651,6 +719,7 @@
                                                                 <th width='16%'>UC</th>
                                                                 <th width='16%'>PH</th>
                                                                 <th width='16%'>PG</th>
+                                                                <th width='16%'>CL</th>
                                                             </thead>
                                                             <tbody>
                                                                 <tr style="font-size: 13px; padding: 0px; background-color:#F5F6F9; border-top: 1px solid black; border-bottom: 1px solid black; border-color:#DFDFDF;">
@@ -671,6 +740,10 @@
                                                                                style="background-color:#F5F6F9;"/>
                                                                     </td>
                                                                     <td>
+                                                                        <field name="ucdv_r_cl"
+                                                                               style="background-color:#F5F6F9;"/>
+                                                                    </td>
+                                                                    <td>
                                                                         <field name="ucdv_r_pinhole"
                                                                                style="background-color:#F5F6F9;"/>
                                                                     </td>
@@ -687,6 +760,9 @@
                                                                     </td>
                                                                     <td>
                                                                         <field name="ucnv_r_re"/>
+                                                                    </td>
+                                                                    <td>
+                                                                        <field name="ucnv_r_cl"/>
                                                                     </td>
                                                                     <td>
                                                                         <field name="ucnv_r_pinhole"/>
@@ -891,11 +967,10 @@
                                                     <div style="box-shadow:3px 3px 3px 3px #888888;width:97%">
                                                         <div style="height:2px">
                                                         </div>
-                                                        <label for="prescription" string="Treatments"
+                                                        <label for="prescription" string="Extra Info"
                                                                style="color:#B10707;text-align:left;font-size:13px;font-weight: bold"/>
                                                         <field name="prescription" nolabel="1" style="width:97%"/>
                                                         <field name="treatment_needed" invisible="1"/>
-
                                                     </div>
                                                 </div>
                                             </group>
@@ -981,7 +1056,7 @@
                                                     <field name="eye"/>
                                                     <field name="stock"/>
                                                     <field name="frequency" invisible="1"/>
-                                                    <field name="frequency_id"/>
+                                                    <field name="frequency_id" options='{"no_create_edit": True}'/>
                                                     <field name="days"/>
                                                 </tree>
                                                 <form>
@@ -989,7 +1064,7 @@
                                                         <group>
                                                             <field name="product_id"/>
                                                             <field name="frequency" invisible="1"/>
-                                                            <field name="frequency_id"/>
+                                                            <field name="frequency_id" options='{"no_create_edit": True}'/>
                                                         </group>
                                                         <group>
                                                             <field name="days"/>
@@ -1209,7 +1284,7 @@
                                                     <div style="height:2px">
                                                     </div>
                                                     <div style="box-shadow: 2px 2px #888888;width:90%">
-                                                        <label for="prescription" string="Treatments"
+                                                        <label for="prescription" string="Extra Info"
                                                                style="color:#B10707;text-align:center;font-size:12px;font-weight: bold"/>
                                                         <field name="prescription" nolabel="1" style="width:95%"/>
                                                     </div>
@@ -1227,6 +1302,8 @@
                                                                        domain="[('is_investigations', '=', True)]"/>
                                                                 <field name="eye"/>
                                                                 <field name="amount"/>
+                                                                <field name="instruction_id" widget="many2many_tags"/>
+                                                                <field name="report"/>
                                                             </tree>
                                                         </field>
                                                     </div>
@@ -1318,6 +1395,7 @@
                                                        options="{'horizontal': true}"/>
                                                 <field name="discount_surgery" widget='monetary'
                                                        attrs="{'invisible':[('discount_type_surgery','=',False)]}"/>
+
                                                 <label for="final_total_surgery"/>
                                                 <div class="o_row">
                                                     <field name="final_total_surgery" widget='monetary'
@@ -1349,6 +1427,7 @@
                                                     <field name="axl_le_ids" style="width: 90%">
                                                         <tree string="Axl LE" editable="bottom" nolabel='1'
                                                               delete="false" create="false">
+
                                                             <field name="contact"/>
                                                             <field name="immersion"/>
                                                             <field name="corrected"/>
@@ -1405,7 +1484,6 @@
                                                 </div>
                                             </group>
                                             <group style="width:2.5%">
-
                                             </group>
                                             <group style="width:35%">
                                                 <div>
@@ -1497,6 +1575,7 @@
                 <field name="identification_code" widget="monetary"/>
                 <field name="doctor_id"/>
                 <field name="counselling_text"/>
+
             </calendar>
         </field>
     </record>

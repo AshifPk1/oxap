@@ -2,6 +2,7 @@
 # Part of AppJetty. See LICENSE file for full copyright and licensing details.
 
 import operator
+from odoo.tools.translate import _
 from odoo import api, fields, models, tools
 
 MENU_ITEM_SEPARATOR = "/"
@@ -11,6 +12,8 @@ class IrUiMenu(models.Model):
     _inherit = 'ir.ui.menu'
 
     menu_icon_class = fields.Char("Icon Class")
+
+    # customize_show = fields.Boolean("Customize Show")
 
     @api.model
     @tools.ormcache_context('self._uid', 'debug', keys=('lang',))

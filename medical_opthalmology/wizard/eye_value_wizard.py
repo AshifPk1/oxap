@@ -218,7 +218,6 @@ class EyeValueWizardVa(models.TransientModel):
             if records:
                 flag = 1
                 if self.va:
-                    print('hiii')
                     line_rec.va = records.name
                     break
         if flag == 0:

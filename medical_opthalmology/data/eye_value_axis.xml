@@ -95,12 +95,15 @@
     <record id="automatic_eye_axis_value_re31" model="eye.value_re_axis_2">
         <field name="name">150</field>
     </record>
+
     <record id="automatic_eye_vaxis_value_re32" model="eye.value_re_axis_2">
         <field name="name">155</field>
     </record>
+
     <record id="automatic_eye_axis_value_re33" model="eye.value_re_axis_2">
         <field name="name">160</field>
     </record>
+
     <record id="automatic_eye_axis_value_re34" model="eye.value_re_axis_2">
         <field name="name">165</field>
     </record>
@@ -110,7 +113,9 @@
     <record id="automatic_eye_axis_value_re36" model="eye.value_re_axis_2">
         <field name="name">175</field>
     </record>
+
     <record id="automatic_eye_axis_value_re37" model="eye.value_re_axis_2">
         <field name="name">180</field>
     </record>
+
 </odoo>

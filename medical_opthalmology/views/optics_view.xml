@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8" ?>
 <odoo>
     <record id="view_optics_prescription_form" model="ir.ui.view">
         <field name="name">optics.prescription.form</field>
@@ -10,10 +11,16 @@
                             attrs="{'invisible':[('state','not in',('draft','open'))]}"/>
                     <button name="print_eye_details" string="Print Eye Details" type='object' class="btn-primary"
                             attrs="{'invisible':[('state','not in',('draft','open'))]}"/>
+                    <button name="print_eye_details_wo_header" string="Print Eye Details W/o Header" type='object' class="btn-primary"
+                            attrs="{'invisible':[('state','not in',('draft','open'))]}"/>
+
                     <button name="print_work_order" string="Print Work Order" type='object' class="btn-primary"
                             attrs="{'invisible':[('state','not in','work_order')]}"/>
-                    <button name="sent_to_done" type="object" string="Sent to Done" class="btn-primary"
-                            attrs="{'invisible':['|',('work_order_id','!=',False),('reject_reason','!=',False)]}"/>
+                    <button name="print_work_order_wo_header" string="Print Work Order W/o Header" type='object' class="btn-primary"
+                            attrs="{'invisible':[('state','not in','work_order')]}"/>
+
+<!--                    <button name="automatic_validate" string="Deliver" type='object' class="btn-primary"-->
+<!--                            attrs="{'invisible':['|',('state','not in','work_order'),('is_picking_validated','=',True)]}"/>-->
                 </header>
                 <h3>
                     <field name="sequence" readonly="1"/>
@@ -24,13 +31,12 @@
                             <field name="name" readonly="1" nolabel="1"/>
                             <field name="sales_person_id" placeholder="Sales Person" options="{'no_create_edit': True}"
                                    attrs="{'readonly':[('state','not in',('draft','open'))]}"/>
-                            <field name="work_order_id" string="Work Order" readonly="1"
-                                   attrs="{'invisible':[('work_order_id','=',False)]}"/>
                         </group>
                     </div>
                 </h3>
                 <group string="Patient Information" col="3">
                     <group style="width:35%">
+                        <field name="is_picking_validated" invisible="1"/>
                         <field name="new_patient_is" attrs="{'readonly':[('state','not in',('draft'))]}"/>
                         <h2>
                             <field name="patient_id" style="width:130%;" options="{'no_create_edit': True}"
@@ -43,11 +49,13 @@
                                placeholder="Address..."
                                class="o_address_street"
                                attrs="{'readonly':[('state','not in','draft')]}"
+
                         />
                         <field name="street2"
                                placeholder="Street 2..."
                                attrs="{'readonly':[('state','not in','draft')]}"
                                class="o_address_street" invisible="1"
+
                         />
                         <field name="city"
                                placeholder="Place"
@@ -61,6 +69,7 @@
                                options='{"no_open": True,"no_create_edit": True,"no_quick_create":True}'
                                context="{'country_id': country_id, 'zip': zip}" invisible="1"
                         />
+
                         <field name="zip"
                                placeholder="ZIP"
                                class="o_address_zip" invisible="1"
@@ -75,14 +84,11 @@
                         <field name="phone"
                                placeholder="Contact Number"
                                attrs="{'readonly':[('state','not in','draft')]}"/>
-                        <field name="reject_reason"
-                               placeholder="Cancel Reason"
-                               />
-
                     </group>
                     <group style="width:32.5%">
                         <div style="height:92px">
                         </div>
+
                         <field name="date"
                                placeholder="Admission Date"
                                attrs="{'readonly':[('state','not in','draft')]}"/>
@@ -154,8 +160,7 @@
                                    attrs="{'readonly':[('state','not in',('draft','open'))]}">
                                 <tree string="Optics details" editable="bottom">
                                     <field name="product_id" required="1"
-                                           context="{'default_is_lens':True, 'default_type':'product'}"
-                                           options="{'no_create': True, 'no_open': True}"/>
+                                           context="{'default_is_lens':True, 'default_type':'product'}"/>
                                     <field name="quantity" force_save="1"/>
                                     <field name="price_unit" force_save="1"/>
                                     <field name="tax_ids" widget='many2many_tags'/>
@@ -169,13 +174,12 @@
                 </group>
                 <group col="2">
                     <group style="width:50%">
-                        <field name="refraction_id" attrs="{'readonly': [('state', 'not in', 'refraction')]}"
-                               style="text-align:left;width:40%;"/>
                         <field name="glass_prescription" attrs="{'readonly':[('state','not in',('draft'))]}"/>
                     </group>
                     <group style="width:10%">
                     </group>
-                    <group style="width:30%" attrs="{'readonly':[('state','=','work_order')]}">
+                    <group class="oe_subtotal_footer oe_right" style="width:30%"
+                           attrs="{'readonly':[('state','=','work_order')]}">
                         <label for="total_amount"/>
                         <div class="o_row">
                             <field name="total_amount" style="width:50%" widget='monetary'/>
@@ -214,6 +218,34 @@
                             <field name="balance_amount" readonly="1"/>
                             <span>&#160;₹</span>
                         </div>
+                    </group>
+                    <group col="3">
+                        <group class="oe_subtotal_footer oe_left" style="width:40%">
+                            <group style="width:25%">
+                                <field name="kryptok_status" readonly="1"/>
+                                <field name="progressive_status" readonly="1"/>
+                                <field name="executive_status" readonly="1"/>
+                            </group>
+                            <group style="width:25%">
+                                <field name="univis_status" readonly="1"/>
+                                <field name="plastic_status" readonly="1"/>
+                                <field name="h_index_status" readonly="1"/>
+                            </group>
+                            <group style="width:25%">
+                                <field name="white_status" readonly="1"/>
+                                <field name="tint_status" readonly="1"/>
+                                <field name="photochromic_status" readonly="1"/>
+                            </group>
+                            <group style="width:25%">
+                                <field name="arc_status" readonly="1"/>
+                            </group>
+                            <div class="row">
+                                <group>
+                                    <field name="special_instructions" nolabel="1" placeholder="Special Instructions"
+                                           readonly="1"/>
+                                </group>
+                            </div>
+                        </group>
                     </group>
                 </group>
             </form>

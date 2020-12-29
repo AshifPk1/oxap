@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8" ?>
 <odoo>
     <record id="patient_revisit_view_form" model="ir.ui.view">
         <field name="name">patient.visit.form</field>
@@ -16,49 +17,103 @@
                     <field name="tag_ids" widget="many2many_tags" readonly="1"/>
                 </div>
                 <group col="8">
-                    <div>
-                        <group style="width:5%">
-                            <field name="name" nolabel='1' readonly="1" style="width:30%"/>
-                            <field name="consultation_finish" invisible="1"/>
-                        </group>
-                        <group style="width:20%">
-                            <div class="oe_title" name="title">
-                                <h3>
+                    <table width="100%" height="100%">
+                        <thead>
+                            <tr>
+<!--                                <th style="color:#B10707;text-align:center;">Ref #</th>-->
+                                <th style="color:#B10707;text-align:center;">Patient Name</th>
+                                <th style="color:#B10707;text-align:center;">File Number</th>
+                                <th style="color:#B10707;text-align:center;">Age</th>
+                                <th style="color:#B10707;text-align:center;">Gender</th>
+                                <th style="color:#B10707;text-align:center;">Doctor</th>
+                                <th style="color:#B10707;text-align:center;">Admission Date</th>
+                                <th style="color:#B10707;text-align:center;"> Reference From</th>
+                            </tr>
+                            <tr>
+<!--                                <th style="text-align:center;">-->
+<!--                                    <field name="name" nolabel='1' readonly="1" style="width:30%"/>-->
+<!--                                    -->
+
+<!--                                </th>-->
+                                <th style="text-align:center;">
+                                   <h3>
+                                       <field name="consultation_finish" invisible="1"/>
                                     <field name="patient_id" placeholder="Patient Name"
                                            nolabel="1" attrs="{'readonly': [('state', 'not in', 'registration')]}"
                                            style="width:70%"/>
                                 </h3>
-                            </div>
-                        </group>
-                        <group style="width:7%">
-                            <field name="identification_code" nolabel="1"
+                                </th>
+                                <th style="text-align:center;">
+                                     <field name="identification_code" nolabel="1"
                                    attrs="{'readonly': [('state', 'not in', 'registration')]}"/>
-                        </group>
-                        <group style="width:12%">
-                            <field name="age" nolabel="1" attrs="{'readonly': [('state', 'not in', 'registration')]}"/>
-                        </group>
-                        <group style="width:13%">
-                            <field name="doctor_id" nolabel="1"
+                                </th>
+                                <th style="text-align:center;">
+                                                                <field name="age" nolabel="1" attrs="{'readonly': [('state', 'not in', 'registration')]}"/>
+
+                                </th>
+                                <th style="text-align:center;">
+                                     <field name="gender" nolabel="1"
                                    attrs="{'readonly': [('state', 'not in', 'registration')]}"/>
-                        </group>
-                        <group style="width:10%">
-                            <field name="date" nolabel="1" attrs="{'readonly': [('state', 'not in', 'registration')]}"/>
-                        </group>
-                        <group style="width:7%">
-                            <field name="gender" nolabel="1"
+                                </th>
+                                <th style="text-align:center;">
+                                    <field name="doctor_id" nolabel="1"
                                    attrs="{'readonly': [('state', 'not in', 'registration')]}"/>
-                        </group>
-                        <group style="width:8%">
-                            <field name="referred_by_id" nolabel="1"
+                                </th>
+                                <th style="text-align:center;">
+                                                                <field name="date" nolabel="1" attrs="{'readonly': [('state', 'not in', 'registration')]}"/>
+
+                                </th>
+                                <th style="text-align:center;">
+                                     <field name="referred_by_id" nolabel="1"
                                    attrs="{'readonly': [('state', 'not in', 'registration')]}"/>
-                        </group>
-                    </div>
+                                </th>
+                            </tr>
+                        </thead>
+                    </table>
+<!--                    <div>-->
+<!--                        <group style="width:5%">-->
+<!--                            <field name="name" nolabel='1' readonly="1" style="width:30%"/>-->
+<!--                            <field name="consultation_finish" invisible="1"/>-->
+<!--                        </group>-->
+<!--                        <group style="width:20%">-->
+<!--                            <div class="oe_title" name="title">-->
+<!--                                <h3>-->
+<!--                                    <field name="patient_id" placeholder="Patient Name"-->
+<!--                                           nolabel="1" attrs="{'readonly': [('state', 'not in', 'registration')]}"-->
+<!--                                           style="width:70%"/>-->
+<!--                                </h3>-->
+<!--                            </div>-->
+<!--                        </group>-->
+<!--                        <group style="width:7%">-->
+<!--                            <field name="identification_code" nolabel="1"-->
+<!--                                   attrs="{'readonly': [('state', 'not in', 'registration')]}"/>-->
+<!--                        </group>-->
+<!--                        <group style="width:12%">-->
+<!--                            <field name="age" nolabel="1" attrs="{'readonly': [('state', 'not in', 'registration')]}"/>-->
+<!--                        </group>-->
+<!--                        <group style="width:7%">-->
+<!--                            <field name="gender" nolabel="1"-->
+<!--                                   attrs="{'readonly': [('state', 'not in', 'registration')]}"/>-->
+<!--                        </group>-->
+<!--                        <group style="width:13%">-->
+<!--                            <field name="doctor_id" nolabel="1"-->
+<!--                                   attrs="{'readonly': [('state', 'not in', 'registration')]}"/>-->
+<!--                        </group>-->
+<!--                        <group style="width:10%">-->
+<!--                            <field name="date" nolabel="1" attrs="{'readonly': [('state', 'not in', 'registration')]}"/>-->
+<!--                        </group>-->
+<!--                        <group style="width:8%">-->
+<!--                            <field name="referred_by_id" nolabel="1"-->
+<!--                                   attrs="{'readonly': [('state', 'not in', 'registration')]}"/>-->
+<!--                        </group>-->
+<!--                    </div>-->
                 </group>
                 <notebook>
                     <page string="Refraction-1">
                         <group col="5">
                             <group style="width:5%">
                                 <div class="pull-left">
+
                                     <div style="height:215px">
                                     </div>
                                 </div>
@@ -79,6 +134,7 @@
                                                 <th width='16%'>UC</th>
                                                 <th width='16%'>PH</th>
                                                 <th width='16%'>PG</th>
+                                                <th width='16%'>CL</th>
                                                 <th width='2%'> </th>
                                             </thead>
                                             <tbody>
@@ -96,6 +152,9 @@
                                                     <td>
                                                         <field name="ucdv_l_re" style="background-color:#F5F6F9;"/>
                                                     </td>
+                                                    <td>
+                                                        <field name="ucdv_l_cl" style="background-color:#F5F6F9;"/>
+                                                    </td>
                                                     <td width="2%">
                                                         <field name="ucdv_l_va" style="background-color:#F5F6F9;"/>
                                                     </td>
@@ -112,6 +171,9 @@
                                                     </td>
                                                     <td>
                                                         <field name="ucnv_l_re"/>
+                                                    </td>
+                                                    <td>
+                                                        <field name="ucnv_l_cl"/>
                                                     </td>
                                                     <td width="2%">
                                                         <field name="ucnv_l_va"/>
@@ -300,12 +362,23 @@
                                     <div style="height:10px">
                                     </div>
                                     <div class="col-xs-8 pull-left">
-
                                     </div>
                                     <div class="pull-right">
                                         <field name="colour_le" nolabel="1" style="width: 80%"/>
                                     </div>
                                     <div class="col-xs-12" style="height:15px">
+                                    </div>
+                                    <br/>
+                                    <div style="height:10px">
+                                    </div>
+                                    <div class="col-xs-8 pull-left">
+                                    </div>
+                                    <div class="pull-right">
+                                        <field name="field_of_vision_le" nolabel="1" style="width: 80%"/>
+                                    </div>
+                                    <div class="col-xs-12" style="height:15px">
+                                    </div>
+                                    <div style="height:70px;width: 90%">
                                     </div>
                                     <br/>
                                     <field name="prism_le_1" nolabel="1" force_save="1" style="width:45%"/>
@@ -348,6 +421,10 @@
                                            style="color:#B10707;text-align:center;font-size:12px;width: 40%;font-weight: bold;"/>
                                     <div style="height:15px">
                                     </div>
+                                    <label for="field_of_vision_le" string="Field of  Vision"
+                                           style="color:#B10707;text-align:center;font-size:12px;width: 40%;font-weight: bold;"/>
+                                    <div style="height:15px">
+                                    </div>
                                     <label for="prism_le_1" string="Prism"
                                            style="color:#B10707;text-align:center;font-size:12px;width: 40%;font-weight: bold;"/>
                                 </div>
@@ -368,6 +445,7 @@
                                                 <th width='16%'>UC</th>
                                                 <th width='16%'>PH</th>
                                                 <th width='16%'>PG</th>
+                                                <th width='16%'>CL</th>
                                             </thead>
                                             <tbody>
                                                 <tr style="font-size: 13px; padding: 0px; background-color:#F5F6F9; border-top: 1px solid black; border-bottom: 1px solid black; border-color:#DFDFDF;">
@@ -387,6 +465,9 @@
                                                     <td>
                                                         <field name="ucdv_r_re" style="background-color:#F5F6F9;"/>
                                                     </td>
+                                                    <td>
+                                                        <field name="ucdv_r_cl" style="background-color:#F5F6F9;"/>
+                                                    </td>
                                                 </tr>
                                                 <tr style="font-size: 13px padding: 0px; border-top: 1px solid black; border-bottom: 1px solid black; border-color:#DFDFDF;">
                                                     <td>
@@ -403,6 +484,9 @@
                                                     </td>
                                                     <td>
                                                         <field name="ucnv_r_re"/>
+                                                    </td>
+                                                    <td>
+                                                        <field name="ucnv_r_cl"/>
                                                     </td>
                                                 </tr>
                                             </tbody>
@@ -591,6 +675,14 @@
                                     </div>
                                     <div style="height:15px;width: 90%">
                                     </div>
+                                    <div style="height:10px;width: 90%">
+                                    </div>
+                                    <div>
+                                        <field name="field_of_vision_re" nolabel="1" style="width: 45%" force_save="1"/>
+                                    </div>
+                                    <div style="height:15px;width: 90%">
+                                    </div>
+                                    <br/>
                                     <field name="prism_re_1" nolabel="1" style="width:45%" force_save="1"/>
                                     <field name="prism_re_2" nolabel="1" style="width:45%" force_save="1"/>
                                     <div style="height:20px">
@@ -606,7 +698,6 @@
                                         <field name="iop_at_re" nolabel="1" style="width:30%" force_save="1"/>
                                         <field name="iop_st_re" nolabel="1" style="width:30%" force_save="1"/>
                                     </div>
-
                                 </div>
                             </group>
                             <group style="width:26%">
@@ -616,6 +707,13 @@
                                     <div style="height:7px">
                                     </div>
                                     <field name="presenting_complaints" style="text-align:left;"/>
+                                    <div style="height:15px">
+                                    </div>
+                                    <label for="additional_complaints" string="Additional Complaints"
+                                           style="color:#B10707;text-align:center;font-size:12px;width:90%;font-weight: bold;"/>
+                                    <div style="height:7px">
+                                    </div>
+                                    <field name="additional_complaints"/>
                                     <div style="height:15px">
                                     </div>
                                     <field name="glass_needed" nolabel="1" style="text-align:center;width:2%"/>
@@ -645,17 +743,13 @@
                                     <field name="ipd" style="text-align:left;width:40%;" nolabel="1"/>
                                     <div style="height:20px">
                                     </div>
-                                    <label for="refraction_id" string="Refractionist"
-                                           style="color:#B10707;text-align:center;font-size:12px;width:25%;font-weight: bold;"/>
-                                    <div style="height:5px">
-                                    </div>
-                                    <field name="refraction_id"
-                                           attrs="{'readonly': [('state', 'not in', 'refraction')], 'required':[('state','=','refraction')],}"
-                                           style="text-align:left;width:40%;" nolabel="1"/>
-                                    <div style="height:20px">
-                                    </div>
                                 </div>
                             </group>
+                            <label for="refractionist" string="Refractionist"
+                                   style="color:#B10707;text-align:center;font-size:12px;width:25%;font-weight: bold;"/>
+                            <field name="refractionist" style="text-align:left;width:40%;" nolabel="1"/>
+                            <div style="height:20px">
+                            </div>
                         </group>
                     </page>
                     <page string="Doctor Findings" attrs="{'invisible': [('consultation_finish', '=',False)]}">
@@ -822,6 +916,11 @@
                             <field nolabel='1' name="patient_diagnosis"/>
                         </group>
                     </page>
+                    <page string="Eye Image">
+                        <group>
+                            <field name="eye_image" widget="image"></field>
+                        </group>
+                    </page>
                 </notebook>
             </form>
         </field>
@@ -844,7 +943,8 @@
                 <field name="state"/>
                 <field name="dilation_start_time"
                        attrs="{'invisible': ['|',('dilation_status', '=', False),('dilation_status','=','dilation_done')]}"/>
-                <field name="dilation_status" invisible="1"/>
+                <field name="dilation_status" invisible="0"/>
+                <field name="dialataion_tplus_id"/>
                 <field name="send_to_pharmacy"/>
                 <field name="send_to_optics"/>
                 <field name="waiting_time"/>

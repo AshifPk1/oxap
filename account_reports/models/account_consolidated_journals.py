@@ -72,7 +72,7 @@ class report_account_consolidated_journal(models.AbstractModel):
             if date not in dates:
                 dates.append(date)
         if dates:
-            lines.append({'id': 'Detail_%s' % current_company,
+            lines.append({'id': 'Detail_%s' % (current_company),
                           'name': _('Details per month'),
                           'level': 1,
                           'columns': [{}, {}, {}]

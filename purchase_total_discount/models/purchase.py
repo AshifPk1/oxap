@@ -23,8 +23,7 @@ class PurchaseOrder(models.Model):
                                      states={'draft': [('readonly', False)], 'sent': [('readonly', False)]},
                                      default='amount')
     discount_rate = fields.Monetary('Discount Rate', digits=dp.get_precision('Account'),
-                                    readonly=True,
-                                    states={'draft': [('readonly', False)], 'sent': [('readonly', False)]})
+                                 readonly=True, states={'draft': [('readonly', False)], 'sent': [('readonly', False)]})
     amount_discount = fields.Monetary(string='Discount', store=True, readonly=True, compute='_amount_discount',
                                       digits=dp.get_precision('Account'), track_visibility='always')
 
@@ -62,8 +61,8 @@ class PurchaseOrder(models.Model):
             result['views'] = [(res and res.id or False, 'form')]
             result['res_id'] = self.invoice_ids.id
         if self.discount_type:
-            result['context']['default_discount_rate'] = self.discount_rate
-            result['context']['default_discount_type'] = self.discount_type
+            result['context']['default_discount_rate']=self.discount_rate
+            result['context']['default_discount_type']=self.discount_type
         return result
 
     @api.onchange('discount_type', 'discount_rate', 'order_line')
@@ -89,11 +88,18 @@ class PurchaseOrder(models.Model):
 class PurchaseOrderLine(models.Model):
     _inherit = "purchase.order.line"
 
-    discount_value = fields.Float('Discount Value', digits=(16, 3), default=0.0)
+    discount_value = fields.Float('Discount Value',digits=(16, 3), default=0.0)
     discount = fields.Float(string='Discount (%)', digits=(16, 20), default=0.0)
     price_subtotal = fields.Monetary(compute='_compute_amount1', string='Subtotal', store=True)
     price_total = fields.Monetary(compute='_compute_amount1', string='Total', store=True)
     price_tax = fields.Monetary(compute='_compute_amount1', string='Tax', store=True)
+
+    # @api.onchange('price_unit')
+    # def onchange_discount(self):
+    #     if self.price_unit:
+    #         print "hutuuu"
+    #         self.discount_value = self.price_unit * self.product_qty * (self.discount / 100)
+    #         self.discount = (self.discount_value / (self.price_unit * self.product_qty)) * 100
 
     @api.onchange('discount_value')
     def onchange_discount_value(self):
@@ -104,6 +110,7 @@ class PurchaseOrderLine(models.Model):
 
     @api.depends('product_qty', 'price_unit', 'taxes_id', 'discount')
     def _compute_amount1(self):
+        # super(PurchaseOrderLine, self)._compute_amount()
         for line in self:
             price = line.price_unit * (1 - (line.discount or 0.0) / 100.0)
             taxes = line.taxes_id.compute_all(price, line.order_id.currency_id, line.product_qty,
@@ -113,6 +120,7 @@ class PurchaseOrderLine(models.Model):
                 'price_total': taxes['total_included'],
                 'price_subtotal': taxes['total_excluded'],
             })
+
 
     _sql_constraints = [
         ('discount_limit', 'CHECK (discount <= 100.0)',

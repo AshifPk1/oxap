@@ -1,22 +1,26 @@
 # -*- coding: utf-8 -*-
 # Part of AppJetty. See LICENSE file for full copyright and licensing details.
 
+import re
 import base64
+import datetime
+import logging
 import functools
-import io
 
 import odoo
 from odoo import http
-from odoo import http as http1
 from odoo.http import request
+from odoo import http as http1
 from odoo.modules import get_resource_path
 
-
+import io
 # from cStringIO import StringIO
 
 
 class Backend(odoo.addons.web.controllers.main.Home):
-
+    #------------------------------------------------------
+    # View
+    #------------------------------------------------------
 
     @http.route('/backend/customize_template_get', type='json', auth='user', website=True)
     def backend_customize_template_get(self, key, full=False, bundles=False):
@@ -54,7 +58,6 @@ class Backend(odoo.addons.web.controllers.main.Home):
     def backend_theme_customize(self, enable, disable, get_bundle=False):
         """ enable or Disable lists of ``xml_id`` of the inherit templates
         """
-
         def set_active(ids, active):
             if ids:
                 real_ids = self.get_view_ids(ids)

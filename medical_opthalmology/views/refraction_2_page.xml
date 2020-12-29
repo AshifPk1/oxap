@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8" ?>
 <odoo>
     <record id="patient_revisit_view_form_refraction_2" model="ir.ui.view">
         <field name="name">patient.visit.form.refraction2</field>

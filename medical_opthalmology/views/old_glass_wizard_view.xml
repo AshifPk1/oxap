@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8" ?>
 <odoo>
     <record id="old_glass_wizard_view" model="ir.ui.view">
         <field name="name">old.glass.wizard.form</field>
@@ -53,27 +54,27 @@
                         <table name="table_re_1"
                                style="font-size: 13px; border-top: 1px solid black; border-bottom: 1px solid black;  border-left: 1px solid black; border-right: 1px solid black; border-color:#DFDFDF;width:90%;">
                             <thead>
-                                <td width='19%'> </td>
-                                <td width='19%'>Sph</td>
-                                <td width='19%'>Cyl</td>
-                                <td width='19%'>Axis</td>
-                                <td width='19%'>V/A</td>
+                                <th width='19%'> </th>
+                                <th width='19%'>Sph</th>
+                                <th width='19%'>Cyl</th>
+                                <th width='19%'>Axis</th>
+                                <th width='19%'>V/A</th>
                             </thead>
                             <tbody>
                                 <tr style="font-size: 13px; padding: 0px; background-color:#F5F6F9; border-top: 1px solid black; border-bottom: 1px solid black; border-color:#DFDFDF;">
                                     <td class="text-center">
                                         <span>DV</span>
                                     </td>
-                                    <td style="font-weight: bold">
+                                    <td>
                                         <field name="sphere_le_dv"/>
                                     </td>
-                                    <td style="font-weight: bold">
+                                    <td>
                                         <field name="cyl_le_dv"/>
                                     </td>
-                                    <td style="font-weight: bold">
+                                    <td>
                                         <field name="axis_le_dv"/>
                                     </td>
-                                    <td style="font-weight: bold">
+                                    <td>
                                         <field name="va_le_dv"/>
                                     </td>
                                 </tr>
@@ -81,49 +82,48 @@
                                     <td class="text-center">
                                         <span>NV</span>
                                     </td>
-                                    <td style="font-weight: bold">
+                                    <td>
                                         <field name="sphere_le_nv"/>
                                     </td>
-                                    <td style="font-weight: bold">
+                                    <td>
                                         <field name="cyl_le_nv"/>
                                     </td>
-                                    <td style="font-weight: bold">
+                                    <td>
                                         <field name="axis_le_nv"/>
                                     </td>
-                                    <td style="font-weight: bold">
+                                    <td>
                                         <field name="va_le_nv"/>
                                     </td>
                                 </tr>
                             </tbody>
                         </table>
-                        <br/>
                     </div>
                     <div class="col-xs-4">
                         <br/>
                         <table name="table_le1"
                                style="font-size: 13px; border-top: 1px solid black; border-bottom: 1px solid black;  border-left: 1px solid black; border-right: 1px solid black; border-color:#DFDFDF;width:90%;">
                             <thead>
-                                <td width='19%'> </td>
-                                <td width='19%'>Sph</td>
-                                <td width='19%'>Cyl</td>
-                                <td width='19%'>Axis</td>
-                                <td width='19%'>V/A</td>
+                                <th width='19%'> </th>
+                                <th width='19%'>Sph</th>
+                                <th width='19%'>Cyl</th>
+                                <th width='19%'>Axis</th>
+                                <th width='19%'>V/A</th>
                             </thead>
                             <tbody>
                                 <tr style="font-size: 13px padding: 0px; border-top: 1px solid black; border-bottom: 1px solid black; border-color:#DFDFDF;">
                                     <td class="text-center">
                                         <span>DV</span>
                                     </td>
-                                    <td style="font-weight: bold">
+                                    <td>
                                         <field name="sphere_re_dv"/>
                                     </td>
-                                    <td style="font-weight: bold">
+                                    <td>
                                         <field name="cyl_re_dv"/>
                                     </td>
-                                    <td style="font-weight: bold">
+                                    <td>
                                         <field name="axis_re_dv"/>
                                     </td>
-                                    <td style="font-weight: bold">
+                                    <td>
                                         <field name="va_re_dv"/>
                                     </td>
                                 </tr>
@@ -131,22 +131,21 @@
                                     <td class="text-center">
                                         <span>NV</span>
                                     </td>
-                                    <td style="font-weight: bold">
+                                    <td>
                                         <field name="sphere_re_nv"/>
                                     </td>
-                                    <td style="font-weight: bold">
+                                    <td>
                                         <field name="cyl_re_nv"/>
                                     </td>
-                                    <td style="font-weight: bold">
+                                    <td>
                                         <field name="axis_re_nv"/>
                                     </td>
-                                    <td style="font-weight: bold">
+                                    <td>
                                         <field name="va_re_nv"/>
                                     </td>
                                 </tr>
                             </tbody>
                         </table>
-                        <br/>
                     </div>
                 </div>
                 <br/>
@@ -207,7 +206,7 @@
                                 </tr>
                             </tbody>
                         </table>
-                        <br/>
+
                     </div>
                     <div class="col-xs-4">
                         <br/>
@@ -257,7 +256,6 @@
                                 </tr>
                             </tbody>
                         </table>
-                        <br/>
                     </div>
                     <div class="col-xs-3">
                         <label for="glass_status1" string="Glass Status" style="width:60%"/>
@@ -325,7 +323,6 @@
                                 </tr>
                             </tbody>
                         </table>
-                        <br/>
                     </div>
                     <div class="col-xs-4">
                         <br/>
@@ -374,7 +371,6 @@
                                 </tr>
                             </tbody>
                         </table>
-                        <br/>
                     </div>
                     <div class="col-xs-3">
                         <label for="glass_status2" string="Glass Status" style="width:60%"/>
@@ -442,7 +438,6 @@
                                 </tr>
                             </tbody>
                         </table>
-                        <br/>
                     </div>
                     <div class="col-xs-4">
                         <br/>
@@ -491,7 +486,6 @@
                                 </tr>
                             </tbody>
                         </table>
-                        <br/>
                     </div>
                     <div class="col-xs-3">
                         <label for="glass_status3" string="Glass Status" style="width:60%"/>

@@ -50,7 +50,6 @@ class OpticsInvoiceReport(models.Model):
                                                digits=0)
     currency_rate = fields.Float(string='Currency Rate', readonly=True, group_operator="avg",
                                  groups="base.group_multi_currency")
-    # nbr = fields.Integer(string='# of Lines', readonly=True)  # TDE FIXME master: rename into nbr_lines
     type = fields.Selection([
         ('out_invoice', 'Customer Invoice'),
         ('in_invoice', 'Vendor Bill'),
@@ -74,6 +73,7 @@ class OpticsInvoiceReport(models.Model):
     country_id = fields.Many2one('res.country', string='Country of the Partner Company')
     account_analytic_id = fields.Many2one('account.analytic.account', string='Analytic Account',
                                           groups="analytic.group_analytic_accounting")
+
     _order = 'date desc'
 
     _depends = {
@@ -169,7 +169,6 @@ class OpticsInvoiceReport(models.Model):
 
     @api.model_cr
     def init(self):
-
         tools.drop_view_if_exists(self.env.cr, self._table)
         self.env.cr.execute("""CREATE or REPLACE VIEW %s as (
             WITH currency_rate AS (%s)

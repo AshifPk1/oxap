@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8" ?>
 <odoo>
     <record id="view_registration_invoice_report_search" model="ir.ui.view">
         <field name="name">registration.account.invoice.report.search</field>
@@ -68,6 +69,7 @@
             }
         </field>
     </record>
+    <!--registration invoice form view=action_invoice_form_view1-->
     <record id="action_invoice_form_view1" model="ir.actions.act_window.view">
         <field eval="2" name="sequence"/>
         <field name="view_mode">form</field>
@@ -228,7 +230,6 @@
         <field name="view_id" ref="account.invoice_tree"/>
         <field name="act_window_id" ref="pharmacy_invoices"/>
     </record>
-
     <record id="medical_invoice_tree" model="ir.ui.view">
         <field name="name">account.medical.invoice.tree</field>
         <field name="model">account.invoice</field>
@@ -238,6 +239,43 @@
                 <field name="journal_id"/>
             </field>
         </field>
+    </record>
+    <record id="procedure_invoices" model="ir.actions.act_window">
+        <field name="name">Procedure Invoices</field>
+        <field name="res_model">account.invoice</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form,calendar,graph,kanban,pivot</field>
+        <field name="view_id" ref="account.invoice_tree"/>
+        <field name="search_view_id" ref="view_registration_invoice_report_search"/>
+        <field name="domain">[
+            ('state', 'not in', ['draft', 'cancel']),
+            ('type', 'in', ['out_invoice','out_refund']),
+            ('procedure_bool','=',True)]
+        </field>
+        <field name="context">{
+            'default_team_id': False,
+            'default_type':'out_invoice',
+            'default_procedure_bool':1,
+            'default_procedure_payment_bool':1,
+            'type':'out_invoice',
+            'journal_type': 'sale',
+            'search_default_customer':1,
+            'search_default_today':1,
+            'search_default_year': 1,
+            }
+        </field>
+    </record>
+    <record id="action_procedure_invoice_form_view1" model="ir.actions.act_window.view">
+        <field eval="2" name="sequence"/>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="account.invoice_form"/>
+        <field name="act_window_id" ref="procedure_invoices"/>
+    </record>
+    <record id="action_procedure_invoice_tree_view1" model="ir.actions.act_window.view">
+        <field eval="1" name="sequence"/>
+        <field name="view_mode">tree</field>
+        <field name="view_id" ref="account.invoice_tree"/>
+        <field name="act_window_id" ref="procedure_invoices"/>
     </record>
     <menuitem id="invoices_main" name="Invoices" parent="patient_revisit_root" sequence="6"
               groups="group_reception_access,group_counsellor_access,group_opticals_access,group_pharmacy_access"/>
@@ -251,4 +289,6 @@
               groups="group_opticals_access"/>
     <menuitem id="invoices_pharmacy" parent="invoices_main" action="pharmacy_invoices" sequence="5"
               groups="group_pharmacy_access"/>
+    <menuitem id="invoices_procedure" parent="invoices_main" action="procedure_invoices" sequence="2"
+              groups="group_reception_access,group_counsellor_access"/>
 </odoo>

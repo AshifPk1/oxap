@@ -1,27 +1,72 @@
 <odoo>
     <data>
-        <record id="prescription_report_paperformat" model="report.paperformat">
-            <field name="name">prescription Report</field>
-            <field name="default" eval="True"/>
-            <field name="format">custom</field>
-            <field name="page_height">180</field>
-            <field name="page_width">130</field>
+        <!--        <record id="prescription_report_paperformat" model="report.paperformat">-->
+        <!--            <field name="name">prescription Report</field>-->
+        <!--            <field name="default" eval="True"/>-->
+        <!--            <field name="format">custom</field>-->
+        <!--            <field name="page_height">180</field>-->
+        <!--            <field name="page_width">130</field>-->
+        <!--            <field name="orientation">Portrait</field>-->
+        <!--            <field name="margin_top">5</field>-->
+        <!--            <field name="margin_bottom">5</field>-->
+        <!--            <field name="margin_left">3</field>-->
+        <!--            <field name="margin_right">1</field>-->
+        <!--            <field name="header_line" eval="False"/>-->
+        <!--            <field name="header_spacing">0</field>-->
+        <!--            <field name="dpi">90</field>-->
+        <!--        </record>-->
+<!--        <record id="prescription_report_paper_format" model="report.paperformat">-->
+<!--            <field name="name">prescription Report</field>-->
+<!--            <field name="default" eval="False" />-->
+<!--            <field name="format">A5</field>-->
+<!--            <field name="orientation">Portrait</field>-->
+<!--            <field name="margin_top">2</field>-->
+<!--            <field name="margin_bottom">0</field>-->
+<!--            <field name="margin_left">0</field>-->
+<!--            <field name="margin_right">0</field>-->
+<!--            <field name="header_line" eval="False"/>-->
+<!--            <field name="header_spacing">0</field>-->
+<!--        </record>-->
+<!--        <record id="pharmacy_cash_report_paper_format" model="report.paperformat">-->
+<!--            <field name="name">Pharmacy Cash Bill</field>-->
+<!--            <field name="default" eval="False" />-->
+<!--            <field name="format">A5</field>-->
+<!--            <field name="orientation">Portrait</field>-->
+<!--            <field name="margin_top">2</field>-->
+<!--            <field name="margin_bottom">0</field>-->
+<!--            <field name="margin_left">0</field>-->
+<!--            <field name="margin_right">0</field>-->
+<!--            <field name="header_line" eval="False"/>-->
+<!--            <field name="header_spacing">0</field>-->
+<!--        </record>-->
+        <record id="medical_report_paper_format" model="report.paperformat">
+            <field name="name">Medical Report</field>
+            <field name="default" eval="False" />
+            <field name="format">A5</field>
             <field name="orientation">Portrait</field>
-            <field name="margin_top">20</field>
-            <field name="margin_bottom">5</field>
-            <field name="margin_left">3</field>
-            <field name="margin_right">1</field>
+            <field name="margin_top">30</field>
+            <field name="margin_bottom">10</field>
+            <field name="margin_left">0</field>
+            <field name="margin_right">0</field>
             <field name="header_line" eval="False"/>
-            <field name="header_spacing">15</field>
-            <field name="dpi">90</field>
+            <field name="header_spacing">25</field>
         </record>
+        <report
+                id="report_pharmacy_print_wo_header"
+                model="medical.pharmacy"
+                string="Pharmacy Cash Bill W/o Header"
+                name="medical_pharmacy.pharmacy_print_template_call_wo_header"
+                file="medical_pharmacy.pharmacy_print_template_call_wo_header"
+                report_type="qweb-pdf"
+                paperformat="medical_report_paper_format"/>
         <report
                 id="report_pharmacy_print"
                 model="medical.pharmacy"
-                string="Pharmcy Cash Bill"
+                string="Pharmacy Cash Bill"
                 name="medical_pharmacy.pharmacy_print_template_call"
                 file="medical_pharmacy.pharmacy_print_template_call"
-                report_type="qweb-pdf"/>
+                report_type="qweb-pdf"
+                paperformat="medical_report_paper_format"/>
         <report
                 id="print_prescription_report"
                 model="medical.pharmacy"
@@ -30,6 +75,15 @@
                 file="medical_pharmacy.print_prescription_report_template"
                 report_type="qweb-pdf"
                 menu="False"
-                paperformat="prescription_report_paperformat"/>/>
+                paperformat="medical_report_paper_format"/>
+        <report
+                id="print_prescription_report_without_header"
+                model="medical.pharmacy"
+                string="Print Prescription"
+                name="medical_pharmacy.print_prescription_report_template_without_header"
+                file="medical_pharmacy.print_prescription_report_template_without_header"
+                report_type="qweb-pdf"
+                menu="False"
+                paperformat="medical_report_paper_format"/>
     </data>
 </odoo>

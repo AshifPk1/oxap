@@ -1,4 +1,6 @@
+<?xml version="1.0" encoding="utf-8" ?>
 <odoo>
+
     <record model="ir.ui.view" id="purchase_order_search">
         <field name="name">purchase.order.filter.customaize</field>
         <field name="model">purchase.order</field>
@@ -22,12 +24,29 @@
             </field>
         </field>
     </record>
-    <menuitem name="Purchases"
-              id="purchase.menu_purchase_root"
-              groups="purchase.group_purchase_manager,purchase.group_purchase_user,group_counsellor_access"
-              web_icon="purchase,static/description/icon.png"
-              sequence="25"/>
-    <menuitem name="Inventory" id="stock.menu_stock_root" sequence="30"
-              groups="stock.group_stock_manager,stock.group_stock_user,group_counsellor_access"
-              web_icon="stock,static/description/icon.png"/>
+<!--    <record model="ir.ui.view" id="purchase_order_line_inherit">-->
+<!--        <field name="name">purchase.order.line.inherit</field>-->
+<!--        <field name="model">purchase.order</field>-->
+<!--        <field name="inherit_id" ref="purchase.purchase_order_form"/>-->
+<!--        <field name="arch" type="xml">-->
+<!--            <xpath expr="//form/header/button[@name='action_view_picking']" position="replace"/>-->
+<!--            <xpath expr="//form/header" position="inside">-->
+<!--            <button name="button_confirm_all" string="Receive Items" class="oe_highlight" type="object"-->
+<!--                    attrs="{'invisible': ['|', '|' , ('is_shipped', '=', True), ('state','not in', ('purchase','done')), ('picking_count', '=', 0)]}"/>-->
+<!--            </xpath>-->
+<!--            <xpath expr="//form/sheet/notebook/page[1]/field[@name='order_line']/tree/field[@name='product_id']" position="after">-->
+<!--                <field name="is_lot_product" invisible="1"/>-->
+<!--                <field name="prod_lot_id"  attrs="{'readonly': [('is_lot_product', '=', False)]}"-->
+<!--                context="{'default_product_id':product_id}"/>-->
+<!--                <field name="expiry_date" attrs="{'readonly': [('is_lot_product', '=', False)]}"/>-->
+<!--                <field name="sale_price"/>-->
+<!--            </xpath>-->
+<!--            <xpath expr="//form/sheet/notebook/page[1]/field[@name='order_line']/tree/field[@name='price_unit']" position="replace">-->
+<!--                <field name="price_unit"  string="Cost"/>-->
+<!--            </xpath>-->
+
+<!--        </field>-->
+<!--    </record>-->
+
+
 </odoo>

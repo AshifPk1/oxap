@@ -8,7 +8,7 @@
     'category': 'Medical',
     'depends': ['base',
                 'medical', 'medical_practitioner', 'medical_opthalmology', 'sale_stock', 'account',
-                'sale_discount_total', 'stock_mts_mto_rule',
+                'sale_discount_total', 'stock_mts_mto_rule','stock',
                 'product_expiry',
                 ],
     'summary': 'Introduce medication pharmacy notion into the medical addons',
@@ -21,10 +21,12 @@
         'views/stock_move_views.xml',
         'views/sale_order_view.xml',
         'views/pharmacy_purchase.xml',
+        'views/company.xml',
         'report/report.xml',
         'report/pharmacy_print_template.xml',
         'report/layout.xml',
         'report/print_prescription_report_template.xml',
+        'report/print_prescription_report_template_without_header.xml',
 
 
     ],

@@ -1,10 +1,8 @@
 # -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
-from odoo import models, api, _
 from datetime import datetime
-
-from odoo.tools import pycompat
+from odoo import models, api, _
 
 
 class report_account_coa(models.AbstractModel):
@@ -72,13 +70,14 @@ class report_account_coa(models.AbstractModel):
                          {'name': self.format_value(amount_credit), 'no_format_name': amount_credit}]
                 p_indice = period * 2 if period > 1 else 3
                 p_indice = 1 if period == 0 else p_indice
-                sum_columns[p_indice + 1] += amount_debit  # if amount_debit > 0 else 0
+                sum_columns[(p_indice) + 1] += amount_debit  # if amount_debit > 0 else 0
                 sum_columns[(p_indice) + 2] += amount_credit  # if amount_credit < 0 else 0
 
             total_amount_debit = initial_balance_debit + total_period_debit
             total_amount_credit = initial_balance_credit + total_period_credit
             sum_columns[-2] += total_amount_debit  # if total_amount_debit > 0 else 0
             sum_columns[-1] += total_amount_credit  # if total_amount_credit < 0 else 0
+
             cols += [
                 {'name': self.format_value(total_amount_debit), 'no_format_name': total_amount_debit},
                 {'name': self.format_value(total_amount_credit), 'no_format_name': total_amount_credit},

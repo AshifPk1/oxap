@@ -518,7 +518,7 @@ class AccountReport(models.AbstractModel):
         if 'quarter' in options_filter:
             quarter = (dt_to.month - 1) // 3 + 1
             return ('%s %s') % (
-            get_quarter_names('abbreviated', locale=self._context.get('lang') or 'en_US')[quarter], dt_to.year)
+                get_quarter_names('abbreviated', locale=self._context.get('lang') or 'en_US')[quarter], dt_to.year)
         if 'year' in options_filter:
             if self.env.user.company_id.fiscalyear_last_day == 31 and self.env.user.company_id.fiscalyear_last_month == 12:
                 return dt_to.strftime('%Y')
@@ -784,6 +784,16 @@ class AccountReport(models.AbstractModel):
         sheet.write(0, 0, '', title_style)
 
         y_offset = 0
+        # if self.get_report_obj().get_name() == 'coa' and self.get_special_date_line_names():
+        #     sheet.write(y_offset, 0, '', title_style)
+        #     sheet.write(y_offset, 1, '', title_style)
+        #     x = 2
+        #     for column in self.with_context(is_xls=True).get_special_date_line_names():
+        #         sheet.write(y_offset, x, column, title_style)
+        #         sheet.write(y_offset, x+1, '', title_style)
+        #         x += 2
+        #     sheet.write(y_offset, x, '', title_style)
+        #     y_offset += 1
 
         x = 0
         for column in self.get_columns_name(options):
@@ -823,6 +833,10 @@ class AccountReport(models.AbstractModel):
                 style_left = level_3_style_left
                 style_right = level_3_style_right
                 style = level_3_style
+            # elif lines[y].get('type') != 'line':
+            #     style_left = domain_style_left
+            #     style_right = domain_style_right
+            #     style = domain_style
             else:
                 style = def_style
                 style_left = def_style
@@ -831,6 +845,8 @@ class AccountReport(models.AbstractModel):
             for x in range(1, max_width - len(lines[y]['columns']) + 1):
                 sheet.write(y + y_offset, x, None, style)
             for x in range(1, len(lines[y]['columns']) + 1):
+                # if isinstance(lines[y]['columns'][x - 1], tuple):
+                # lines[y]['columns'][x - 1] = lines[y]['columns'][x - 1][0]
                 if x < len(lines[y]['columns']):
                     sheet.write(y + y_offset, x + lines[y].get('colspan', 1) - 1,
                                 lines[y]['columns'][x - 1].get('name', ''), style)

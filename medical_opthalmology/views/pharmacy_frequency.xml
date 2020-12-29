@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="pharmacy_frequency_form_view" model="ir.ui.view">
+        <field name="name">Pharmacy.frequency.form</field>
+        <field name="model">pharmacy.frequency</field>
+        <field name="arch" type="xml">
+            <form>
+                <field name="name"/>
+            </form>
+        </field>
+    </record>
+    <record id="pharmacy_frequency_tree_view" model="ir.ui.view">
+        <field name="name">Pharmacy.frequency.tree</field>
+        <field name="model">pharmacy.frequency</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+            </tree>
+        </field>
+    </record>
+    <record id="pharmacy_frequency_action" model="ir.actions.act_window">
+        <field name="name">Pharmacy Frequency</field>
+        <field name="res_model">pharmacy.frequency</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_id" ref="pharmacy_frequency_tree_view"/>
+    </record>
+    <menuitem id="frequency" parent="medical_opthalmology.configuration" action="pharmacy_frequency_action"
+              sequence="4"/>
+</odoo>

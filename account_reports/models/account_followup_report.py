@@ -1,15 +1,13 @@
 # -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
-from odoo import models, fields, api, tools
-from datetime import datetime
-from odoo.tools.misc import formatLang, format_date, ustr
-from odoo.tools.translate import _
-import time
-from odoo.tools import append_content_to_html, DEFAULT_SERVER_DATE_FORMAT
-from odoo.exceptions import UserError
-import math
 import json
+from datetime import datetime
+from odoo import models, fields, api
+from odoo.exceptions import UserError
+from odoo.tools import append_content_to_html, DEFAULT_SERVER_DATE_FORMAT
+from odoo.tools.misc import formatLang, format_date
+from odoo.tools.translate import _
 
 
 class AccountReportFollowupManager(models.Model):
@@ -217,7 +215,7 @@ class report_account_followup_report(models.AbstractModel):
             msg += '<br>' + body_html.decode('utf-8')
             msg_id = partner.message_post(body=msg, subtype='account_reports.followup_logged_action')
             email = self.env['mail.mail'].with_context(default_mail_message_id=msg_id).create({
-                'subject': _('%s Payment Reminder') % self.env.user.company_id.name + ' - ' + partner.name,
+                'subject': _('%s Payment Reminder') % (self.env.user.company_id.name) + ' - ' + partner.name,
                 'body_html': append_content_to_html(body_html, self.env.user.signature, plaintext=False),
                 'email_from': self.env.user.email or '',
                 'email_to': email,

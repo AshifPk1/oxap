@@ -1,5 +1,6 @@
 from odoo import models, api
 
+
 class MedicalReport(models.AbstractModel):
     _name = 'report.medical_opthalmology.medical_report_template_call'
 
@@ -39,5 +40,4 @@ class MedicalReport(models.AbstractModel):
                 'pinhole_le': rec.ucdv_r_pinhole
 
             }
-
             return dict1

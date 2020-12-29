@@ -3,7 +3,7 @@
         <t t-set="data_report_dpi" t-value="300"/>
         <t t-call="medical_opthalmology.external_layout_custom">
             <t t-foreach="docs" t-as="o">
-                <t class="page">
+                <div class="page" >
                     <center>
                         <h4>
                             <strong>PRESCRIPTION DETAILS</strong>
@@ -73,7 +73,6 @@
                                 </t>
                                 <br/>
                             </td>
-
                             <td width="10%" style="text-align: left;font-size:13px;">
                                 <t t-if="o.patient_id.city">
                                     <strong>city :</strong>
@@ -108,18 +107,10 @@
                             </center>
                             <thead>
                                 <tr>
-                                    <th>
-                                        <center>Product</center>
-                                    </th>
-                                    <th>
-                                        <center>Eye</center>
-                                    </th>
-                                    <th>
-                                        <center>Frequency</center>
-                                    </th>
-                                    <th>
-                                        <center>Days</center>
-                                    </th>
+                                    <th>Product</th>
+                                    <th>Eye</th>
+                                    <th>Frequency</th>
+                                    <th>Days</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -159,7 +150,7 @@
                     <div class='pull-right'>
                         <p>SIGNATURE</p>
                     </div>
-                </t>
+                </div>
             </t>
         </t>
     </template>

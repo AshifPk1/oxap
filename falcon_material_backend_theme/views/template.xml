@@ -213,6 +213,7 @@
         </xpath>
     </template>
     <template id="secondary_menu" inherit_id="web.menu_secondary_submenu">
+        <!--<xpath expr="//ul//li[@t-as='menu']//t[@t-call='web.menu_link']" position="before"><t t-if="menu['menu_icon_class']"><i t-att-class="menu['menu_icon_class']"/></t></xpath>-->
         <xpath expr="//ul[hasclass('oe_secondary_submenu', 'nav', 'nav-pills', 'nav-stacked')]" position="attributes">
             <attribute name="class">oe_secondary_submenu nav nav-pills nav-stacked hide_secondary</attribute>
         </xpath>

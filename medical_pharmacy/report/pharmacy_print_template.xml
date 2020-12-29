@@ -4,7 +4,7 @@
         <t t-set="data_report_dpi" t-value="300"/>
         <t t-call="medical_pharmacy.external_layout_custom">
             <t t-foreach="docs" t-as="o">
-                <t class="page" style="font-family:SansSerif;font-size:25px;">
+                <div class="page" style="font-family:SansSerif;font-size:25px;padding-top:100px;">
                     <br/>
                     <br/>
                     <br/>
@@ -140,12 +140,24 @@
                                 <td class="text-center" style="font-family:SansSerif;font-size:25px;">
                                     <span t-esc="line.product_id.l10n_in_hsn_code"/>
                                 </td>
-                                <td class="text-center" style="font-family:SansSerif;font-size:25px;">
-                                    <span t-esc="line.lot_number_id.name"/>
-                                </td>
-                                <td class="text-center" style="font-family:SansSerif;font-size:25px;">
-                                    <span t-esc="datetime.datetime.strptime(line.lot_number_id.exp_date_test, '%Y-%m-%d %H:%M:%S').strftime('%m-%y')"/>
-                                </td>
+                                <t t-if="line.lot_number_id">
+                                    <td class="text-center" style="font-family:SansSerif;font-size:25px;">
+                                        <span t-esc="line.lot_number_id.name"/>
+                                    </td>
+
+                                    <td class="text-center" style="font-family:SansSerif;font-size:25px;">
+                                        <span t-esc="datetime.datetime.strptime(line.lot_number_id.exp_date_test, '%Y-%m-%d %H:%M:%S').strftime('%m-%y')"/>
+                                    </td>
+                                </t>
+                                <t t-else=" ">
+                                    <td class="text-center" style="font-family:SansSerif;font-size:25px;">
+                                        <span/>
+                                    </td>
+
+                                    <td class="text-center" style="font-family:SansSerif;font-size:25px;">
+                                        <span/>
+                                    </td>
+                                </t>
                                 <td class="text-center" style="font-family:SansSerif;font-size:25px;">
                                     <span t-esc="int(line.quantity)"/>
                                 </td>
@@ -158,7 +170,7 @@
                                     </t>
                                 </td>
                                 <td class="text-center" style="font-family:SansSerif;font-size:25px;">
-                                    <span t-esc="line.sub_total"/>
+                                    <span t-esc="line.price_total"/>
                                 </td>
                             </tr>
                         </tbody>
@@ -166,6 +178,7 @@
                     <div class="row" style="font-family:SansSerif;font-size:25px;">
                         <div class="col-xs-5"/>
                         <div class="col-xs-4" style="text-align:left;">
+
                             <t t-if="o.total_amount">
                                 <span>Total Amount :</span>
                                 <br/>
@@ -174,8 +187,12 @@
                                 <span>Discount :</span>
                                 <br/>
                             </t>
-                            <t t-if="o.tax_amount">
-                                <span>Tax :</span>
+                            <t t-if="o.sgst">
+                                <span>SGST :</span>
+                                <br/>
+                            </t>
+                            <t t-if="o.cgst">
+                                <span>CGST :</span>
                                 <br/>
                             </t>
                             <t t-if="o.final_total">
@@ -194,8 +211,13 @@
                                 <span>&#160;₹</span>
                                 <br/>
                             </t>
-                            <t t-if="o.tax_amount">
-                                <span t-field="o.tax_amount"/>
+                            <t t-if="o.sgst">
+                                <span t-field="o.sgst"/>
+                                <span>&#160;₹</span>
+                                <br/>
+                            </t>
+                            <t t-if="o.cgst">
+                                <span t-field="o.cgst"/>
                                 <span>&#160;₹</span>
                                 <br/>
                             </t>
@@ -225,7 +247,259 @@
                     <center>
                         <span style="font-family:SansSerif;font-size:25px;">WISH YOU A SPEEDY RECOVERY</span>
                     </center>
-                </t>
+                </div>
+            </t>
+        </t>
+    </template>
+<!--    wo header -->
+    <template id="pharmacy_print_template_call_wo_header">
+        <t t-set="data_report_dpi" t-value="300"/>
+        <t t-call="medical_pharmacy.external_layout_custom_without_header">
+            <t t-foreach="docs" t-as="o">
+                <div class="page" style="font-family:SansSerif;font-size:15px;padding-top:100px;">
+                    <br/>
+                    <br/>
+                    <br/>
+                    <span style="font-family:SansSerif;">
+                        <h3>
+                            <center>
+                                <strong>
+                                    <span>CASH BILL</span>
+                                </strong>
+                            </center>
+                        </h3>
+                    </span>
+                    <br/>
+                    <table width="100%" class="tb0" style="font-family:SansSerif;">
+                        <tr>
+                            <td width="15%" style="text-align:left;font-size:25px;">
+                                <t>
+                                    <span>Bill No.:</span>
+                                </t>
+                                <br/>
+                                <t>
+                                    <span>MR No.:</span>
+                                </t>
+                                <br/>
+                                <t>
+                                    <span>Name :</span>
+                                </t>
+                                <br/>
+                                <t>
+                                    <span>Doctor:</span>
+                                </t>
+                                <br/>
+                            </td>
+                            <td width="35%" style="text-align:left;font-size:25px;">
+                                <t t-if="o.work_order_id">
+                                    <span t-esc="o.work_order_id.order_id.invoice_ids[0].number"/>
+                                </t>
+                                <br/>
+                                <t t-if="o.identification_code">
+                                    <span t-esc="o.identification_code"/>
+                                </t>
+                                <br/>
+                                <t t-if="o.patient_id">
+                                    <span t-esc="o.patient_id.name"/>
+                                </t>
+                                <br/>
+                                <t t-if="o.doctor_id">
+                                    <span t-esc="o.doctor_id.name"/>
+                                </t>
+                                <br/>
+                            </td>
+                            <td width="15%" style="text-align: left;font-size:25px;">
+                                <t>
+                                    <span>Date:</span>
+                                </t>
+                                <br/>
+                                <t>
+                                    <span>Gender:</span>
+                                </t>
+                                <br/>
+                                <t>
+                                    <span>Age:</span>
+                                </t>
+                                <br/>
+                                <t>
+                                    <span>Address:</span>
+                                </t>
+                                <br/>
+                            </td>
+                            <td width="35%" style="text-align: left;font-size:25px;">
+                                <t t-if="o.date">
+                                    <span t-esc="o.date"/>
+                                </t>
+                                <br/>
+                                <t t-if="o.gender">
+                                    <span t-esc="o.gender"/>
+                                </t>
+                                <br/>
+                                <t t-if="o.age">
+                                    <span t-esc="o.age"/>
+                                </t>
+                                <br/>
+                                <t t-if="o.street">
+                                    <span t-esc="o.street"/>
+                                </t>
+                                <br/>
+                            </td>
+                        </tr>
+                    </table>
+                    <hr style="border:none; color:#333; background-color:#333"/>
+                    <table width="100%" class="table table-condensed" style="font-family:SansSerif;font-size:25px;">
+                        <thead>
+                            <tr>
+                                <td style="font-family:SansSerif;">
+                                    <center>SlNo.</center>
+                                </td>
+                                <td>
+                                    <center>Medicine</center>
+                                </td>
+                                <td>
+                                    <center>HSN Code</center>
+                                </td>
+                                <td>
+                                    <center>Batch</center>
+                                </td>
+                                <td>
+                                    <center>Expiry</center>
+                                </td>
+                                <td>
+                                    <center>Qty</center>
+                                </td>
+                                <td>
+                                    <center>Price</center>
+                                </td>
+                                <td>
+                                    <center>Tax</center>
+                                </td>
+                                <td>
+                                    <center>Subtotal</center>
+                                </td>
+                            </tr>
+                        </thead>
+                        <tbody style="font-family:SansSerif;font-size:25px;">
+                            <t t-set="sl_no" t-value="0"/>
+                            <tr t-foreach="o.pharmacy_details_ids" t-as="line">
+                                <t t-set="sl_no" t-value="sl_no +1"/>
+                                <td class="text-center" style="font-family:SansSerif;font-size:25px;">
+                                    <span t-esc="sl_no"/>&#160;.
+                                </td>
+                                <td class="text-center" style="font-family:SansSerif;font-size:25px;">
+                                    <span t-esc="line.product_id.name"/>
+                                </td>
+                                <td class="text-center" style="font-family:SansSerif;font-size:25px;">
+                                    <span t-esc="line.product_id.l10n_in_hsn_code"/>
+                                </td>
+                                <t t-if="line.lot_number_id">
+                                    <td class="text-center" style="font-family:SansSerif;font-size:25px;">
+                                        <span t-esc="line.lot_number_id.name"/>
+                                    </td>
+
+                                    <td class="text-center" style="font-family:SansSerif;font-size:25px;">
+                                        <span t-esc="datetime.datetime.strptime(line.lot_number_id.exp_date_test, '%Y-%m-%d %H:%M:%S').strftime('%m-%y')"/>
+                                    </td>
+                                </t>
+                                <t t-else=" ">
+                                    <td class="text-center" style="font-family:SansSerif;font-size:25px;">
+                                        <span/>
+                                    </td>
+
+                                    <td class="text-center" style="font-family:SansSerif;font-size:25px;">
+                                        <span/>
+                                    </td>
+                                </t>
+                                <td class="text-center" style="font-family:SansSerif;font-size:25px;">
+                                    <span t-esc="int(line.quantity)"/>
+                                </td>
+                                <td class="text-center" style="font-family:SansSerif;font-size:25px;">
+                                    <span t-esc="line.price_unit"/>
+                                </td>
+                                <td class="text-center" style="font-family:SansSerif;font-size:25px;">
+                                    <t t-foreach="line.tax_ids" t-as="tax">
+                                        <span t-esc="tax.name"/>,
+                                    </t>
+                                </td>
+                                <td class="text-center" style="font-family:SansSerif;font-size:25px;">
+                                    <span t-esc="line.price_total"/>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div class="row" style="font-family:SansSerif;font-size:25px;">
+                        <div class="col-xs-5"/>
+                        <div class="col-xs-4" style="text-align:left;">
+
+                            <t t-if="o.total_amount">
+                                <span>Total Amount :</span>
+                                <br/>
+                            </t>
+                            <t t-if="o.discount">
+                                <span>Discount :</span>
+                                <br/>
+                            </t>
+                            <t t-if="o.sgst">
+                                <span>SGST :</span>
+                                <br/>
+                            </t>
+                            <t t-if="o.cgst">
+                                <span>CGST :</span>
+                                <br/>
+                            </t>
+                            <t t-if="o.final_total">
+                                <span>Final Total :</span>
+                                <br/>
+                            </t>
+                        </div>
+                        <div class="col-xs-3" style="text-align:right;">
+                            <t t-if="o.total_amount">
+                                <span t-field="o.total_amount"/>
+                                <span>&#160;₹</span>
+                                <br/>
+                            </t>
+                            <t t-if="o.discount">
+                                <span t-field="o.discount"/>
+                                <span>&#160;₹</span>
+                                <br/>
+                            </t>
+                            <t t-if="o.sgst">
+                                <span t-field="o.sgst"/>
+                                <span>&#160;₹</span>
+                                <br/>
+                            </t>
+                            <t t-if="o.cgst">
+                                <span t-field="o.cgst"/>
+                                <span>&#160;₹</span>
+                                <br/>
+                            </t>
+                            <t t-if="o.final_total">
+                                <span t-field="o.final_total"/>
+                                <span>&#160;₹</span>
+                                <br/>
+                            </t>
+                        </div>
+                    </div>
+                    <br/>
+                    <t t-if="o.final_total"><span style="font-family:SansSerif;font-size:25px;"
+                                                  t-esc="o.currency_id.amount_to_text(o.final_total)"/>&#160;
+                    </t>
+                    <br/>
+                    <br/>
+                    <hr style='display:inline-block; width:100%;  border-top:2px solid #9d9d9d; margin: 0'/>
+                    <span style="font-family:SansSerif;font-size:25px;">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;
+                        &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;
+                        &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;
+                        &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;
+                        &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;
+                        &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;
+                        &#160;&#160;&#160;&#160;Pharmacist:
+                    </span>
+                    <br/>
+                    <center>
+                        <span style="font-family:SansSerif;font-size:25px;">WISH YOU A SPEEDY RECOVERY</span>
+                    </center>
+                </div>
             </t>
         </t>
     </template>

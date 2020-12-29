@@ -22,8 +22,10 @@
                             class="oe_highlight" groups="purchase.group_purchase_manager"/>
                     <button name="action_rfq_send" states="purchase" string="Send PO by Email" type="object"
                             context="{'send_rfq':False}"/>
-                    <button name="action_view_picking" string="Receive Products" class="oe_highlight" type="object"
-                            attrs="{'invisible': ['|', '|' , ('is_shipped', '=', True), ('state','not in', ('purchase','done')), ('picking_count', '=', 0)]}"/>
+                    <button name="button_confirm_all" string="Receive Items" class="oe_highlight" type="object"
+                    attrs="{'invisible': ['|', '|' , ('is_shipped', '=', True), ('state','not in', ('purchase','done')), ('picking_count', '=', 0)]}"/>
+<!--                    <button name="action_view_picking" string="Receive Products" class="oe_highlight" type="object"-->
+<!--                            attrs="{'invisible': ['|', '|' , ('is_shipped', '=', True), ('state','not in', ('purchase','done')), ('picking_count', '=', 0)]}"/>-->
                     <button name="button_draft" states="cancel" string="Set to Draft" type="object"/>
                     <button name="button_cancel" states="draft,to approve,sent,purchase" string="Cancel" type="object"/>
                     <button name="button_done" type="object" string="Lock" states="purchase"/>
@@ -95,8 +97,8 @@
                                     <field name="analytic_tag_ids" groups="purchase.group_analytic_accounting"
                                            widget="many2many_tags" options="{'color_field': 'color'}"/>
                                     <field name="product_qty"/>
-                                    <field name="qty_received" invisible="not context.get('show_purchase', True)"/>
-                                    <field name="qty_invoiced" invisible="not context.get('show_purchase', True)"/>
+                                    <field name="qty_received" invisible="1"/>
+                                    <field name="qty_invoiced" invisible="1"/>
                                     <field name="product_uom" groups="product.group_uom"
                                            attrs="{'readonly': [('state', 'in', ('purchase', 'done', 'cancel'))]}"
                                            force_save="1"/>

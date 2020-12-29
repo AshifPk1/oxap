@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <odoo>
+
     <record id="view_partner_contact_weight" model="ir.ui.view">
         <field name="name">Partner Contact Weight</field>
         <field name="model">res.partner</field>
@@ -17,4 +18,5 @@
             </xpath>
         </field>
     </record>
+
 </odoo>

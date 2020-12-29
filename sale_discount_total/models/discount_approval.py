@@ -81,10 +81,8 @@ class ResDiscountSettings(models.TransientModel):
                                        default=lambda self: self.env.user.company_id.so_double_validation == 'two_step')
 
     so_double_validation = fields.Selection(related='company_id.so_double_validation', )
-    # help='Provide a double validation mechanism for sale exceeding maximum discount limit.')
     so_double_validation_limit = fields.Float(string="Discount limit requires approval in %",
                                               related='company_id.so_double_validation_limit')
-
 
     def set_values(self):
         super(ResDiscountSettings, self).set_values()

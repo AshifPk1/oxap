@@ -1,9 +1,9 @@
 <odoo>
     <template id="eye_details_template_call">
         <t t-set="data_report_dpi" t-value="300"/>
-        <t t-call="medical_opthalmology.optics_external_layout_custom">
+        <t t-call="medical_opthalmology.external_layout_custom">
             <t t-foreach="docs" t-as="o">
-                <t class="page">
+                <div class="page" >
                     <center>
                         <h4>
                             <strong>PATIENT EYE DETAILS</strong>
@@ -23,6 +23,7 @@
                                 <br/>
                             </td>
                             <td width="15%" style="color:#0077b3;text-align:left;font-size:13px;">
+                                <!--<t t-if="o.sequence"><span t-esc="o.sequence"/><br/></t>-->
                                 <t t-if="o.identification_code">
                                     <span t-esc="o.patient_id.identification_code"/>
                                 </t>
@@ -80,7 +81,6 @@
                                     <span t-esc="o.doctor_id.name"/>
                                 </t>
                             </td>
-
                             <td width="10%" style="text-align: left;font-size:13px;">
                                 <t t-if="o.patient_id.city">
                                     <strong>city :</strong>
@@ -129,7 +129,6 @@
                                         <td class="text-center">
                                             <span t-esc="line.axis"/>
                                         </td>
-
                                         <td class="text-center">
                                             <span t-esc="line.va"/>
                                         </td>
@@ -153,10 +152,291 @@
                                         <th>Cyl</th>
                                         <th>Axis</th>
                                         <th>V/A</th>
+
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr t-foreach="o.dilated_refraction_le_ids" t-as="line">
+
+                                        <td class="text-center">
+                                            <span t-esc="line.head"/>
+                                        </td>
+                                        <td class="text-center">
+                                            <span t-esc="line.sphere"/>
+                                        </td>
+                                        <td class="text-center">
+                                            <span t-esc="line.cyl"/>
+                                        </td>
+                                        <td class="text-center">
+                                            <span t-esc="line.axis"/>
+                                        </td>
+
+                                        <td class="text-center">
+                                            <span t-esc="line.va"/>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="col-xs-1"/>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-2">
+                            <span>Kryptok</span>
+                        </div>
+                        <div class="col-xs-1">
+                            <t t-if="o.kryptok_status">
+                                <input type="checkbox" id="checkbox_kryptok_status" checked="checked"/>
+                            </t>
+                            <t t-else=" ">
+                                <input type="checkbox" id="checkbox_kryptok_status_uncheck"/>
+                            </t>
+                        </div>
+                        <div class="col-xs-2">
+                            <span>Univis D</span>
+                        </div>
+                        <div class="col-xs-1">
+                            <t t-if="o.univis_status">
+                                <input type="checkbox" id="checkboxunivis_status_univis_status" checked="checked"/>
+                            </t>
+                            <t t-else=" ">
+                                <input type="checkbox" id="checkbox_univis_status_uncheck"/>
+                            </t>
+                        </div>
+                        <div class="col-xs-2">
+                            <span>H Index</span>
+                        </div>
+                        <div class="col-xs-1">
+                            <t t-if="o.h_index_status">
+                                <input type="checkbox" id="checkbox_h_index_status" checked="checked"/>
+                            </t>
+                            <t t-else=" ">
+                                <input type="checkbox" id="checkbox_h_index_status_uncheck"/>
+                            </t>
+                        </div>
+                        <div class="col-xs-2">
+                            <span>Photochromic</span>
+                        </div>
+                        <div class="col-xs-1">
+                            <t t-if="o.photochromic_status">
+                                <input type="checkbox" id="checkbox_photochromic_status" checked="checked"/>
+                            </t>
+                            <t t-else=" ">
+                                <input type="checkbox" id="checkbox_photochromic_status_uncheck"/>
+                            </t>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-2">
+                            <span>Progressive</span>
+                        </div>
+                        <div class="col-xs-1">
+                            <t t-if="o.progressive_status">
+                                <input type="checkbox" id="checkbox_progressive_status" checked="checked"/>
+                            </t>
+                            <t t-else=" ">
+                                <input type="checkbox" id="checkbox_progressive_status_uncheck"/>
+                            </t>
+                        </div>
+                        <div class="col-xs-2">
+                            <span>Tint</span>
+                        </div>
+                        <div class="col-xs-1">
+                            <t t-if="o.tint_status">
+                                <input type="checkbox" id="checkbox_tint_status" checked="checked"/>
+                            </t>
+                            <t t-else=" ">
+                                <input type="checkbox" id="checkbox_tint_status_uncheck"/>
+                            </t>
+                        </div>
+                        <div class="col-xs-2">
+                            <span>White</span>
+                        </div>
+                        <div class="col-xs-1">
+                            <t t-if="o.white_status">
+                                <input type="checkbox" id="checkbox_white_status" checked="checked"/>
+                            </t>
+                            <t t-else=" ">
+                                <input type="checkbox" id="checkbox_white_status_uncheck"/>
+                            </t>
+                        </div>
+                        <div class="col-xs-2">
+                            <span>ARC</span>
+                        </div>
+                        <div class="col-xs-1">
+                            <t t-if="o.arc_status">
+                                <input type="checkbox" id="checkbox_arc_status" checked="checked"/>
+                            </t>
+                            <t t-else=" ">
+                                <input type="checkbox" id="checkbox_arc_status_uncheck"/>
+                            </t>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-2">
+                            <span>Executive</span>
+                        </div>
+                        <div class="col-xs-1">
+                            <t t-if="o.executive_status">
+                                <input type="checkbox" id="checkbox_executive_status" checked="checked"/>
+                            </t>
+                            <t t-else=" ">
+                                <input type="checkbox" id="checkbox_executive_status_uncheck"/>
+                            </t>
+                        </div>
+                        <div class="col-xs-2">
+                            <span>Plastic</span>
+                        </div>
+                        <div class="col-xs-1">
+                            <t t-if="o.plastic_status">
+                                <input type="checkbox" id="checkbox_plastic_status" checked="checked"/>
+                            </t>
+                            <t t-else=" ">
+                                <input type="checkbox" id="checkbox_plastic_status_uncheck"/>
+                            </t>
+                        </div>
+                        <div class="col-xs-2">
+                        </div>
+                        <div class="col-xs-1">
+                        </div>
+                        <div class="col-xs-2">
+                        </div>
+                        <div class="col-xs-1">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-8"/>
+                        <div class="pull-left">
+                            <h5>
+                                <br/>
+                                <br/>
+                                <span>Authorised Signature</span>
+                            </h5>
+                        </div>
+                    </div>
+                </div>
+            </t>
+        </t>
+    </template>
+<!--    wo Header  -->
+    <template id="eye_details_template_call_wo_header">
+        <t t-set="data_report_dpi" t-value="300"/>
+        <t t-call="medical_opthalmology.external_layout_custom_without_header">
+            <t t-foreach="docs" t-as="o">
+                <div class="page" >
+                    <center>
+                        <h4>
+                            <strong>PATIENT EYE DETAILS</strong>
+                        </h4>
+                    </center>
+                    <br/>
+                    <table width="100%" class="tb0">
+                        <tr>
+                            <td width="12%" style="text-align:left;font-size:13px;">
+                                <t>
+                                    <strong>File Number :</strong>
+                                </t>
+                                <br/>
+                                <t>
+                                    <strong>Name :</strong>
+                                </t>
+                                <br/>
+                            </td>
+                            <td width="15%" style="color:#0077b3;text-align:left;font-size:13px;">
+                                <!--<t t-if="o.sequence"><span t-esc="o.sequence"/><br/></t>-->
+                                <t t-if="o.identification_code">
+                                    <span t-esc="o.patient_id.identification_code"/>
+                                </t>
+                                <br/>
+                                <t t-if="o.patient_id">
+                                    <span t-esc="o.patient_id.partner_id.name"/>
+                                </t>
+                                <br/>
+                            </td>
+                            <td width="10%" style="text-align: left;font-size:13px;">
+                                <t>
+                                    <strong>Gender :</strong>
+                                </t>
+                                <br/>
+                                <t>
+                                    <strong>Phone :</strong>
+                                </t>
+                            </td>
+                            <td width="16%" style="color:#0077b3;text-align: left;font-size:15px;">
+                                <t t-if="o.patient_id.gender">
+                                    <span t-esc="o.patient_id.gender"/>
+                                </t>
+                                <br/>
+                                <t t-if="o.patient_id.phone">
+                                    <span t-esc="o.patient_id.phone"/>
+                                </t>
+                            </td>
+                            <td width="11%" style="text-align: right;font-size:13px;">
+                                <t>
+                                    <strong>Date : &#160;</strong>
+                                    <br/>
+                                </t>
+                                <t>
+                                    <strong>Age : &#160;</strong>
+                                </t>
+                            </td>
+                            <td width="20%" style="color:#0077b3;text-align: left;font-size:15px;">
+                                <t t-if="o.date">
+                                    <span t-esc="o.date"/>
+                                    <br/>
+                                </t>
+                                <t t-if="o.patient_id.age">
+                                    <span t-esc="o.age"/>
+                                </t>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td width="15%" style="text-align: left;font-size:13px;">
+                                <t>
+                                    <strong>Doctor :</strong>
+                                </t>
+                            </td>
+                            <td width="10%" style="color:#0077b3;text-align: left;font-size:13px;">
+                                <t t-if=" o.doctor_id">
+                                    <span t-esc="o.doctor_id.name"/>
+                                </t>
+                            </td>
+                            <td width="10%" style="text-align: left;font-size:13px;">
+                                <t t-if="o.patient_id.city">
+                                    <strong>city :</strong>
+                                </t>
+                            </td>
+                            <td width="12%" style="color:#0077b3;text-align: left;font-size:13px;">
+                                <t t-if=" o.patient_id.city">
+                                    <span t-esc="o.patient_id.city"/>
+                                </t>
+                            </td>
+                        </tr>
+                    </table>
+                    <hr style="height:0.2px; border:none; color:#333; background-color:#333"/>
+                    <div class="row">
+                        <div class="col-xs-1"/>
+                        <div class="col-xs-5 pull-left">
+                            <table name="tabl_re" width="100%" class="table table-condensed table-bordered mt32">
+                                <center>
+                                    <strong>
+                                        <u>
+                                            <span>RE</span>
+                                        </u>
+                                    </strong>
+                                </center>
+                                <thead>
+                                    <tr>
+                                        <th></th>
+                                        <th>Sphere</th>
+                                        <th>Cyl</th>
+                                        <th>Axis</th>
+                                        <th>V/A</th>
+
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr t-foreach="o.dilated_refraction_ids" t-as="line">
                                         <td class="text-center">
                                             <span t-esc="line.head"/>
                                         </td>
@@ -176,7 +456,173 @@
                                 </tbody>
                             </table>
                         </div>
+                        <div class="col-xs-5">
+                            <table name='tabl_le' width="100%" class="table table-condensed table-bordered mt32">
+                                <center>
+                                    <strong>
+                                        <u>
+                                            <span>LE</span>
+                                        </u>
+                                    </strong>
+                                </center>
+                                <thead>
+                                    <tr>
+                                        <th></th>
+                                        <th>Sphere</th>
+                                        <th>Cyl</th>
+                                        <th>Axis</th>
+                                        <th>V/A</th>
+
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr t-foreach="o.dilated_refraction_le_ids" t-as="line">
+
+                                        <td class="text-center">
+                                            <span t-esc="line.head"/>
+                                        </td>
+                                        <td class="text-center">
+                                            <span t-esc="line.sphere"/>
+                                        </td>
+                                        <td class="text-center">
+                                            <span t-esc="line.cyl"/>
+                                        </td>
+                                        <td class="text-center">
+                                            <span t-esc="line.axis"/>
+                                        </td>
+
+                                        <td class="text-center">
+                                            <span t-esc="line.va"/>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
                         <div class="col-xs-1"/>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-2">
+                            <span>Kryptok</span>
+                        </div>
+                        <div class="col-xs-1">
+                            <t t-if="o.kryptok_status">
+                                <input type="checkbox" id="checkbox_kryptok_status" checked="checked"/>
+                            </t>
+                            <t t-else=" ">
+                                <input type="checkbox" id="checkbox_kryptok_status_uncheck"/>
+                            </t>
+                        </div>
+                        <div class="col-xs-2">
+                            <span>Univis D</span>
+                        </div>
+                        <div class="col-xs-1">
+                            <t t-if="o.univis_status">
+                                <input type="checkbox" id="checkboxunivis_status_univis_status" checked="checked"/>
+                            </t>
+                            <t t-else=" ">
+                                <input type="checkbox" id="checkbox_univis_status_uncheck"/>
+                            </t>
+                        </div>
+                        <div class="col-xs-2">
+                            <span>H Index</span>
+                        </div>
+                        <div class="col-xs-1">
+                            <t t-if="o.h_index_status">
+                                <input type="checkbox" id="checkbox_h_index_status" checked="checked"/>
+                            </t>
+                            <t t-else=" ">
+                                <input type="checkbox" id="checkbox_h_index_status_uncheck"/>
+                            </t>
+                        </div>
+                        <div class="col-xs-2">
+                            <span>Photochromic</span>
+                        </div>
+                        <div class="col-xs-1">
+                            <t t-if="o.photochromic_status">
+                                <input type="checkbox" id="checkbox_photochromic_status" checked="checked"/>
+                            </t>
+                            <t t-else=" ">
+                                <input type="checkbox" id="checkbox_photochromic_status_uncheck"/>
+                            </t>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-2">
+                            <span>Progressive</span>
+                        </div>
+                        <div class="col-xs-1">
+                            <t t-if="o.progressive_status">
+                                <input type="checkbox" id="checkbox_progressive_status" checked="checked"/>
+                            </t>
+                            <t t-else=" ">
+                                <input type="checkbox" id="checkbox_progressive_status_uncheck"/>
+                            </t>
+                        </div>
+                        <div class="col-xs-2">
+                            <span>Tint</span>
+                        </div>
+                        <div class="col-xs-1">
+                            <t t-if="o.tint_status">
+                                <input type="checkbox" id="checkbox_tint_status" checked="checked"/>
+                            </t>
+                            <t t-else=" ">
+                                <input type="checkbox" id="checkbox_tint_status_uncheck"/>
+                            </t>
+                        </div>
+                        <div class="col-xs-2">
+                            <span>White</span>
+                        </div>
+                        <div class="col-xs-1">
+                            <t t-if="o.white_status">
+                                <input type="checkbox" id="checkbox_white_status" checked="checked"/>
+                            </t>
+                            <t t-else=" ">
+                                <input type="checkbox" id="checkbox_white_status_uncheck"/>
+                            </t>
+                        </div>
+                        <div class="col-xs-2">
+                            <span>ARC</span>
+                        </div>
+                        <div class="col-xs-1">
+                            <t t-if="o.arc_status">
+                                <input type="checkbox" id="checkbox_arc_status" checked="checked"/>
+                            </t>
+                            <t t-else=" ">
+                                <input type="checkbox" id="checkbox_arc_status_uncheck"/>
+                            </t>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-2">
+                            <span>Executive</span>
+                        </div>
+                        <div class="col-xs-1">
+                            <t t-if="o.executive_status">
+                                <input type="checkbox" id="checkbox_executive_status" checked="checked"/>
+                            </t>
+                            <t t-else=" ">
+                                <input type="checkbox" id="checkbox_executive_status_uncheck"/>
+                            </t>
+                        </div>
+                        <div class="col-xs-2">
+                            <span>Plastic</span>
+                        </div>
+                        <div class="col-xs-1">
+                            <t t-if="o.plastic_status">
+                                <input type="checkbox" id="checkbox_plastic_status" checked="checked"/>
+                            </t>
+                            <t t-else=" ">
+                                <input type="checkbox" id="checkbox_plastic_status_uncheck"/>
+                            </t>
+                        </div>
+                        <div class="col-xs-2">
+                        </div>
+                        <div class="col-xs-1">
+                        </div>
+                        <div class="col-xs-2">
+                        </div>
+                        <div class="col-xs-1">
+                        </div>
                     </div>
                     <div class="row">
                         <div class="col-xs-8"/>
@@ -188,7 +634,7 @@
                             </h5>
                         </div>
                     </div>
-                </t>
+                </div>
             </t>
         </t>
     </template>

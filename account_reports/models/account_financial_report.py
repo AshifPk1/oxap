@@ -50,7 +50,7 @@ class ReportAccountFinancialReport(models.Model):
                 columns += [{'name': period.get('string'), 'class': 'number'}]
             if options['comparison'].get('number_period') == 1:
                 columns += [{'name': '%', 'class': 'number'}]
-        # said
+
         return columns
 
     @api.model

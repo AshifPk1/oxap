@@ -12,11 +12,16 @@ from odoo.exceptions import ValidationError, UserError
 
 
 class MedicalPatient(models.Model):
+
     _name = 'medical.patient'
     _description = 'Medical Patient'
     _inherit = 'medical.abstract.entity'
-    patient_age = fields.Char('Age')
 
+    _sql_constraints = [
+        ('identification_code_uniq', 'unique (identification_code)', "Identification Code should be Unique !"),
+    ]
+
+    patient_age = fields.Char('Age')
     age = fields.Char(
         compute='_compute_age',
     )
@@ -50,7 +55,9 @@ class MedicalPatient(models.Model):
     date_death = fields.Datetime(
         string='Deceased Date',
     )
-    no_idcode = fields.Boolean('no File no', default=False)
+    no_idcode=fields.Boolean('no File no',default=False)
+
+    so_wo = fields.Char(string='s/o or w/o')
 
     @api.multi
     def _compute_age(self):
@@ -101,13 +108,18 @@ class MedicalPatient(models.Model):
         vals = super(MedicalPatient, self)._create_vals(vals)
         if not vals.get('identification_code') and vals.get('no_idcode'):
             Seq = self.env['ir.sequence']
-            vals['identification_code'] = Seq.sudo().next_by_code(
-                self._name,
-            )
+            vals['identification_code'] = self.genarate_file_number()
         vals.update({
             'customer': True,
         })
         return vals
+    def genarate_file_number(self):
+        Seq = self.env['ir.sequence']
+        var=Seq.sudo().next_by_code(
+            self._name,
+        )
+        print(var,"code from function")
+        return var
 
     @api.model_cr_context
     def _get_default_image_path(self, vals):

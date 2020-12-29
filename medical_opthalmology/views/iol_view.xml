@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8" ?>
 <odoo>
     <record id="view_iol_confirming_form" model="ir.ui.view">
         <field name="name">iol.form</field>
@@ -8,7 +9,10 @@
                     <field name="state" widget="statusbar" statusbar_visible="iol,counselling,done"/>
                     <button name="confirm_iol" string="Confirm IOL" type='object' class="btn-primary"
                             attrs="{'invisible':[('state','not in','iol')]}"/>
-                    <button name="print_iol_details" string="Print Iol Details" type='object' class="btn-primary"/>
+                    <button name="print_iol_details" string="Print Iol Details" type='object' class="btn-primary"
+                            attrs="{'invisible':[('state','not in','iol')]}"/>
+                    <button name="print_iol_details_wo_header" string="Print Iol Details w/o Header" type='object' class="btn-primary"
+                            attrs="{'invisible':[('state','not in','iol')]}"/>
                 </header>
                 <group col="10">
                     <div>
@@ -39,7 +43,6 @@
                             <field name="date" nolabel="1" attrs="{'readonly': [('state', 'not in', 'registration')]}"/>
                         </group>
                         <group style="width:7%">
-
                             <field name="gender" nolabel="1"
                                    attrs="{'readonly': [('state', 'not in', 'registration')]}"/>
                         </group>
@@ -121,7 +124,6 @@
                             <label for="visual_acuitity_ids" string=" " style="width: 42%"/>
                             <label style="color:#B10707;text-align:left;font-size:14px;width: 40%;font-weight: bold"
                                    for="keratometer_re_ids" string="LE"/>
-
                             <field name="keratometer_re_ids" mode='tree' style="width: 90%">
                                 <tree string="Dilated AR" editable="bottom" nolabel='1' delete="false" create="false">
                                     <field name="k1"/>
@@ -176,12 +178,12 @@
                                     <field name="ref_err_2"/>
                                     <field name="power"/>
                                     <field name="ref_err_1"/>
+
                                 </tree>
                             </field>
                         </div>
                     </group>
                     <group style="width:12%">
-
                     </group>
                 </group>
                 <group col="4">
@@ -275,6 +277,7 @@
         <field name="act_window_id" ref="action_iol_confirm"/>
     </record>
     <menuitem id="iol_stage" groups="medical_opthalmology.group_refraction_access" action="action_iol_confirm"
-              parent="medical_opthalmology.patient_visit_main" sequence="5"/>
+              parent="medical_opthalmology.patient_visit_main"
+              sequence="5"/>
 </odoo>
 

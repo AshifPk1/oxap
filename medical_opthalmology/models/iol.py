@@ -83,5 +83,9 @@ class IOLStage(models.Model):
         }
 
     def print_iol_details(self):
-
         return self.env.ref('medical_opthalmology.iol_detail_template').report_action(self)
+
+    def print_iol_details_wo_header(self):
+        return self.env.ref('medical_opthalmology.iol_detail_template_without_header').report_action(self)
+
+

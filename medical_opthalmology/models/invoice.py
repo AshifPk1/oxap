@@ -11,36 +11,14 @@ class AccountInvoice(models.Model):
     registration_bool = fields.Boolean('Registration', default=False)
     surgery_bool = fields.Boolean('surgery', default=False)
     investigation_bool = fields.Boolean('Investigation', default=False)
+    procedure_bool = fields.Boolean('Procedure', default=False)
     optics_bool = fields.Boolean('Optics', default=False)
     pharmacy_bool = fields.Boolean('Pharmacy', default=False)
-    doctor_id = fields.Many2one('medical.practitioner', string='Doctor', ondelete='cascade')
-    medical_invoice_type = fields.Selection([
-        ('registration', 'Registration Invoices'),
-        ('surgery', 'Surgery Invoices'),
-        ('investigation', 'Investigation Invoices'),
-        ('optics', 'Optics Invoices'),
-        ('pharmacy', 'Pharmacy Invoices'),
-    ], string='Medical Invoice Type',  compute='compute_medical_invoice_type', store=True)
-
-    @api.depends('registration_bool', 'surgery_bool','investigation_bool','optics_bool','pharmacy_bool')
-    def compute_medical_invoice_type(self):
-        for rec in self:
-            if rec.registration_bool:
-                rec.medical_invoice_type = 'registration'
-            if rec.surgery_bool:
-                rec.medical_invoice_type = 'surgery'
-            if rec.investigation_bool:
-                rec.medical_invoice_type = 'investigation'
-            if rec.optics_bool:
-                rec.medical_invoice_type = 'optics'
-            if rec.pharmacy_bool:
-                rec.medical_invoice_type = 'pharmacy'
-
 
     def _get_refund_common_fields(self):
         return super(AccountInvoice, self)._get_refund_common_fields() + ['pharmacy_bool', 'optics_bool',
                                                                           'investigation_bool', 'surgery_bool',
-                                                                          'registration_bool']
+                                                                          'registration_bool', 'procedure_bool']
 
     @api.onchange('identification_code')
     def _onchange_identification_code(self):
@@ -84,6 +62,8 @@ class AccountPayment(models.Model):
                 self.optics_payment_bool = True
             if record.pharmacy_bool:
                 self.pharmacy_payment_bool = True
+            if record.procedure_bool:
+                self.procedure_payment_bool = True
             if record.residual == 0:
                 record.sale_order_id.write({'state': 'paid'})
         return res
@@ -93,6 +73,7 @@ class AccountPayment(models.Model):
     investigation_payment_bool = fields.Boolean('Investigation', default=False)
     optics_payment_bool = fields.Boolean('Optics', default=False)
     pharmacy_payment_bool = fields.Boolean('Pharmacy', default=False)
+    procedure_payment_bool = fields.Boolean('Procedure', default=False)
 
 
 class AccountInvoiceRefund(models.TransientModel):
@@ -101,5 +82,4 @@ class AccountInvoiceRefund(models.TransientModel):
     @api.multi
     def invoice_refund(self):
         res = super(AccountInvoiceRefund, self).invoice_refund()
-
         return res

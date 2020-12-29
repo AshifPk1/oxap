@@ -2,7 +2,7 @@
     <template id="medical_report_template_call">
         <t t-set="data_report_dpi" t-value="300"/>
         <t t-call="medical_opthalmology.external_layout_custom">
-            <t class="page">
+            <div class="page">
                 <center>
                     <h3>
                         <strong>MEDICAL REPORT</strong>
@@ -186,6 +186,7 @@
                                 </tr>
                             </tbody>
                         </table>
+
                     </div>
                 </div>
                 <u>
@@ -370,7 +371,383 @@
                         <span t-esc="counselling_details"/>
                     </t>
                 </div>
-            </t>
+            </div>
+        </t>
+    </template>
+<!--    without Header-->
+    <template id="medical_report_template_call_wo_header">
+        <t t-set="data_report_dpi" t-value="300"/>
+        <t t-call="medical_opthalmology.external_layout_custom_without_header">
+            <div class="page" >
+                <center>
+                    <h3>
+                        <strong>MEDICAL REPORT</strong>
+                    </h3>
+                </center>
+                <br/>
+                <table width="100%" class="tb0">
+                    <tr>
+                        <td width="10%" style="text-align:left;font-size:15px;">
+                            <t t-if="patient_id">
+                                <strong>Name :</strong>
+                                <br/>
+                            </t>
+                            <t t-if="doctor">
+                                <strong>Doctor :</strong>
+                            </t>
+                            <br/>
+                        </td>
+                        <td width="30%" style="color:#0077b3;text-align:left;font-size:15px;">
+                            <t t-if="patient_id">
+                                <span t-esc="patient_id"/>
+                            </t>
+                            <br/>
+                            <t t-if="doctor">
+                                <span t-esc="doctor"/>
+                            </t>
+                            <br/>
+                        </td>
+                        <td width="10%" style="text-align: left;font-size:15px;">
+                            <t t-if="age">
+                                <strong>Age : &#160;</strong>
+                            </t>
+                            <br/>
+                            <t t-if="identification_code">
+                                <strong>MR No :</strong>
+                                <br/>
+                            </t>
+                        </td>
+                        <td width="15%" style="color:#0077b3;text-align: left;font-size:15px;">
+                            <t t-if="age">
+                                <span t-esc="age"/>
+                                <br/>
+                            </t>
+                            <t t-if="identification_code">
+                                <span t-esc="identification_code"/>
+                            </t>
+                        </td>
+                        <td width="11%" style="text-align: left;font-size:15px;">
+                            <t t-if="gender">
+                                <strong>Gender :</strong>
+                                <br/>
+                            </t>
+                            <t t-if="date">
+                                <strong>Date :</strong>
+                                <br/>
+                            </t>
+                        </td>
+                        <td width="20%" style="color:#0077b3;text-align: left;font-size:15px;">
+                            <t t-if="gender">
+                                <span t-esc="gender"/>
+                                <br/>
+                            </t>
+                            <t t-if="date">
+                                <span t-esc="date"/>
+                                <br/>
+                            </t>
+                        </td>
+                    </tr>
+                </table>
+                <hr style="height:0.2px; border:none; color:#333; background-color:#333"/>
+                <u>
+                    <h5>
+                        <strong>BRIEF HISTORY</strong>
+                    </h5>
+                </u>
+                <div class="row">
+                    <div class="col-xs-4">
+                        <table width="100%">
+                            <thead>
+                                <tr>
+                                    <th width="15%">
+                                        <center>Treatment History</center>
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="col-xs-4">
+                        <table width="100%">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        <center>Presenting Complaints</center>
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>&#160;&#160;</td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <t t-if="pre_complaints">
+                                            <center>
+                                                <span t-esc="pre_complaints"/>
+                                            </center>
+                                        </t>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="col-xs-4">
+                        <strong>
+                            <center>Presenting Vision</center>
+                        </strong>
+                        <table width="100%" class="table table-bordered mt32">
+                            <thead>
+                                <tr>
+                                    <td colspan="2">
+                                        <center>
+                                            <strong>RE</strong>
+                                        </center>
+                                    </td>
+                                    <td colspan="2">
+                                        <center>
+                                            <strong>LE</strong>
+                                        </center>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <center>UC</center>
+                                    </td>
+                                    <td>
+                                        <center>PH</center>
+                                    </td>
+                                    <td>
+                                        <center>UC</center>
+                                    </td>
+                                    <td>
+                                        <center>PH</center>
+                                    </td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        <t t-if="le_re">
+                                            <center>
+                                                <span t-esc="le_re"/>
+                                            </center>
+                                        </t>
+                                    </td>
+                                    <td>
+                                        <t t-if="pinhole_re">
+                                            <center>
+                                                <span t-esc="pinhole_re"/>
+                                            </center>
+                                        </t>
+                                    </td>
+                                    <td>
+                                        <t t-if="le_le">
+                                            <center>
+                                                <span t-esc="le_le"/>
+                                            </center>
+                                        </t>
+                                    </td>
+                                    <td>
+                                        <t t-if="pinhole_le">
+                                            <center>
+                                                <span t-esc="pinhole_le"/>
+                                            </center>
+                                        </t>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                    </div>
+                </div>
+                <u>
+                    <h5>
+                        <strong>DOCTOR FINDINGS</strong>
+                    </h5>
+                </u>
+                <table width="100%" class="table table-bordered mt32">
+                    <thead>
+                        <tr>
+                            <th width="26%">
+                                <center>ANTERIOR SEGMENT</center>
+                            </th>
+                            <th width="37%">
+                                <center>
+                                    <strong>RE</strong>
+                                </center>
+                            </th>
+                            <th width="37%">
+                                <center>
+                                    <strong>LE</strong>
+                                </center>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td t-if="cornea_le">
+                                <t>Cornea</t>
+                            </td>
+                            <td t-if="cornea_le">
+                                <t>
+                                    <span t-esc="cornea_le"/>
+                                </t>
+                            </td>
+                            <td t-if="cornea_re">
+                                <t>
+                                    <span t-esc="cornea_re"/>
+                                </t>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td t-if="conjunctiva">
+                                <t>Conjunctiva</t>
+                            </td>
+                            <td t-if="conjunctiva">
+                                <t>
+                                    <span t-esc="conjunctiva"/>
+                                </t>
+                            </td>
+                            <td t-if="conjunctiva_re">
+                                <t>
+                                    <span t-esc="conjunctiva_re"/>
+                                </t>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td t-if="ac">
+                                <t>AC</t>
+                            </td>
+                            <td t-if="ac">
+                                <t>
+                                    <span t-esc="ac"/>
+                                </t>
+                            </td>
+                            <td t-if="ac_re">
+                                <t>
+                                    <span t-esc="ac_re"/>
+                                </t>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td t-if="pupil">
+                                <t>Pupil</t>
+                            </td>
+                            <td t-if="pupil">
+                                <t>
+                                    <span t-esc="pupil"/>
+                                </t>
+                            </td>
+                            <td t-if="pupil_re">
+                                <t>
+                                    <span t-esc="pupil_re"/>
+                                </t>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td t-if="lens_le">
+                                <t>Lens</t>
+                            </td>
+                            <td t-if="lens_le">
+                                <t>
+                                    <span t-esc="lens_le"/>
+                                </t>
+                            </td>
+                            <td t-if="lens_re">
+                                <t>
+                                    <span t-esc="lens_re"/>
+                                </t>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td t-if="other">
+                                <t>Other</t>
+                            </td>
+                            <td t-if="other">
+                                <t>
+                                    <span t-esc="other"/>
+                                </t>
+                            </td>
+                            <td t-if="other_re">
+                                <t>
+                                    <span t-esc="other_re"/>
+                                </t>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <table width="100%" class="table table-bordered mt32">
+                    <thead>
+                        <tr>
+                            <th width="26%">
+                                <t>
+                                    <strong>
+                                        <center>POSTERIOR SEGMENT</center>
+                                    </strong>
+                                </t>
+                            </th>
+                            <th width="37%">
+                                <t>
+                                    <strong>
+                                        <center>RE</center>
+                                    </strong>
+                                </t>
+                            </th>
+                            <th width="37%">
+                                <t>
+                                    <strong>
+                                        <center>LE</center>
+                                    </strong>
+                                </t>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td t-if="fundus_macula_le">
+                                <t>Fundus</t>
+                            </td>
+                            <td t-if="fundus_macula_le">
+                                <t>
+                                    <span t-esc="fundus_macula_le"/>
+                                </t>
+                            </td>
+                            <td t-if="fundus_macula_re">
+                                <t>
+                                    <span t-esc="fundus_macula_re"/>
+                                </t>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <br/>
+                <u>
+                    <h5>
+                        <strong>COUNSELLING ADVICE</strong>
+                    </h5>
+                </u>
+                <div style="border: 1px solid black;">
+                    <t t-if="prescription">
+                        <span t-esc="prescription"/>
+                    </t>
+                </div>
+                <br/>
+                <u>
+                    <h5>
+                        <strong>COUNSELLING NOTES</strong>
+                    </h5>
+                </u>
+                <div style="border: 1px solid black;">
+                    <t t-if="counselling_details">
+                        <span t-esc="counselling_details"/>
+                    </t>
+                </div>
+            </div>
         </t>
     </template>
 </odoo>

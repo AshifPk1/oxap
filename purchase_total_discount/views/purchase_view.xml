@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <odoo>
+
     <record id="purchase_order_form" model="ir.ui.view">
         <field name="name">purchase.order.form</field>
         <field name="model">purchase.order</field>
@@ -30,8 +31,10 @@
                     </group>
                 </group>
             </xpath>
+
         </field>
     </record>
+
     <record model="ir.ui.view" id="purchase_order_line_form2">
         <field name="name">purchase_discount.order.line.form2</field>
         <field name="model">purchase.order.line</field>
@@ -42,6 +45,7 @@
             </field>
         </field>
     </record>
+
     <record model="ir.ui.view" id="purchase_order_line_tree">
         <field name="name">purchase_discount.order.line.tree</field>
         <field name="model">purchase.order.line</field>
@@ -52,4 +56,5 @@
             </field>
         </field>
     </record>
+
 </odoo>

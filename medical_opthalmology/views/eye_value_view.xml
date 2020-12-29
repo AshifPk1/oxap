@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="eye_value_tree" model="ir.ui.view">
+        <field name="name">Eye Value Tree</field>
+        <field name="model">eye.value</field>
+        <field name="arch" type="xml">
+            <tree string="Eye Value">
+                <field name="name"/>
+            </tree>
+        </field>
+    </record>
+    <record id="eye_value_act_window" model="ir.actions.act_window">
+        <field name="name">Eye Value</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">eye.value</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_type">tree</field>
+        <field name="view_id" ref="medical_opthalmology.eye_value_tree"/>
+    </record>
+    <menuitem id="menu_eye_value"
+              name="Eye Values"
+              parent="medical_opthalmology.configuration"
+              sequence="3"
+              action="medical_opthalmology.eye_value_act_window"/>
+</odoo>

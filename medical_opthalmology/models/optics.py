@@ -1,5 +1,4 @@
 from odoo import api, models, fields, _
-from datetime import datetime, date
 from odoo.exceptions import UserError
 
 
@@ -21,8 +20,6 @@ class MedicalOptics(models.Model):
     def default_journal_id(self):
         journal = self.env['account.journal'].search([('default_journal', '=', True)], limit=1)
         return journal.id
-
-    refraction_id = fields.Many2one('res.users', string="Refractionist")
 
     name = fields.Char(string='Patient Reference', copy=False, readonly=True, index=True)
 
@@ -90,26 +87,18 @@ class MedicalOptics(models.Model):
 
     glass_prescription = fields.Text('Glass Prescription')
 
-    reject_reason=fields.Many2one('work.order.reject.reason',string="Cancel Reason", track_visibility='onchange',readonly=1)
-
-
-    def sent_to_done(self):
-        view = self.env.ref('medical_opthalmology.work_order_reject_wizard_view')
-        return {
-            'name': "Cancel Reason",
-            'type': 'ir.actions.act_window',
-            'view_type': 'form',
-            'view_mode': 'form',
-            'res_model': 'work.order.reject.wizard',
-            'views': [(view.id, 'form')],
-            'view_id': view.id,
-            'target': 'new',
-            'context': {
-                'default_optics_id': self.id,'default_sales_person_id': self.sales_person_id.id if self.sales_person_id else False,
-            },
-
-        }
-
+    kryptok_status = fields.Boolean('Kryptok')
+    progressive_status = fields.Boolean('Progressive')
+    executive_status = fields.Boolean('Executive')
+    univis_status = fields.Boolean('Univis D')
+    plastic_status = fields.Boolean('Plastic')
+    h_index_status = fields.Boolean('H Index')
+    white_status = fields.Boolean('White')
+    tint_status = fields.Boolean('Tint')
+    photochromic_status = fields.Boolean('Photochromic')
+    arc_status = fields.Boolean('ARC')
+    special_instructions = fields.Text('Special Instructions')
+    is_picking_validated = fields.Boolean("Is Picking",default=False)
 
     @api.model
     def default_dilated_refraction_le_ids(self):
@@ -235,7 +224,7 @@ class MedicalOptics(models.Model):
                         record.final_total = (record.total_amount - record.discount) + record.tax_amount
                     else:
                         record.final_total = (record.total_amount - (
-                                record.total_amount * ((record.discount) / 100))) + record.tax_amount
+                                (record.total_amount) * ((record.discount) / 100))) + record.tax_amount
                 else:
                     record.final_total = record.total_amount + record.tax_amount
 
@@ -304,23 +293,17 @@ class MedicalOptics(models.Model):
                 'discount_type': self.discount_type,
                 'discount_rate': self.discount,
                 'advance_amount': self.advance_amount,
-                'refraction_id': self.refraction_id.id,
-                # 'balance_amount': self.balance_amount,
                 'delivery_date': self.delivery_date,
                 'payment_id': payment and payment.id,
                 'medical_optics_id': self.id,
-                'sales_person_id': self.sales_person_id.id,
             })
         self.work_order_id = record.id,
         record.order_id.supply_rate()
-        record.order_id.doctor_id = self.doctor_id.id
         record.order_id.action_confirm()
         record.order_id.action_invoice_create()
         record.order_id.invoice_ids.action_invoice_open()
         for invoice in record.order_id.invoice_ids:
             invoice.optics_bool = True
-            invoice.doctor_id = self.doctor_id.id
-            invoice.identification_code = self.identification_code
             invoice.sale_order_id = record.order_id.id
         if self.final_total and self.advance_amount:
             payment = self.env['account.payment'].create({
@@ -335,7 +318,6 @@ class MedicalOptics(models.Model):
                 'communication': self.patient_id.name + self.sequence,
                 'journal_id': self.journal_id.id,
                 'optics_payment_bool': True,
-
             })
             payment.post()
         self.state = 'work_order'
@@ -343,25 +325,30 @@ class MedicalOptics(models.Model):
             'state': 'done'
         })
 
-    def print_eye_details(self):
+    def automatic_validate(self):
+        self.is_picking_validated = True
+        picking = self.env['stock.picking'].search([('id', '=', self.work_order_id.picking_ids.id)])
+        for line in self.work_order_id.order_line:
+            if line:
+                for move_line in line.move_ids:
+                    move_line.reserved_availability = line.product_uom_qty
+                    move_line.quantity_done = line.product_uom_qty
+        picking.button_validate()
 
+    def print_eye_details(self):
         return self.env.ref('medical_opthalmology.print_eye_detail_template').report_action(self)
+
+    def print_eye_details_wo_header(self):
+        return self.env.ref('medical_opthalmology.print_eye_detail_template_wo_header').report_action(self)
 
     def print_work_order(self):
         return self.env.ref('medical_opthalmology.print_work_order_template').report_action(self)
 
+    def print_work_order_wo_header(self):
+        return self.env.ref('medical_opthalmology.print_work_order_template_wo_header').report_action(self)
+
     @api.multi
     def unlink(self):
         res = super(MedicalOptics, self).unlink()
-        raise UserError('You can not delete a Visit')
+        raise UserError('You cannot delete a Visit')
         return res
-
-
-class ResConfigSettings(models.TransientModel):
-    _inherit = 'res.config.settings'
-
-    default_registraion_product_id = fields.Many2one(
-        'product.product',
-        'Registration Fee',
-        domain="[('type', '=', 'service')]",
-        help='Default product used for Registration payments')

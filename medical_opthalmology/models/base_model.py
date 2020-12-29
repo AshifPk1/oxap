@@ -8,20 +8,18 @@ class PatientRevisit(models.Model):
     _name = 'medical.opthalmology'
     _description = 'Medical Ophthalmology'
     _order = 'sequence desc'
-    _inherit = ['mail.thread', 'mail.activity.mixin']
-
 
     name = fields.Char(string='Patient Reference', required=True, copy=False, readonly=True, index=True,
                        ondelete='cascade', default=lambda self: _('New'), )
 
     patient_id = fields.Many2one('medical.patient', string='Patient Name', required=True, ondelete='cascade',
                                  states={'registration': [('readonly', False)]}, )
-
+    appointment_id = fields.Many2one('medical.appointment')
     new_patient_is = fields.Boolean('New Patient')
 
     patient_new = fields.Char(string='New Patient')
 
-    pricelist_id = fields.Many2one('product.pricelist', string='Pricelist', required=True,
+    pricelist_id = fields.Many2one('product.pricelist', string='Pricelist', required=False,
                                    help="Pricelist for current sales order.", default=1)
 
     currency_id = fields.Many2one("res.currency", related='pricelist_id.currency_id', string="Currency", readonly=True,
@@ -38,14 +36,14 @@ class PatientRevisit(models.Model):
 
     phone = fields.Char('Contact Number', required=True, ondelete='cascade', related='patient_id.phone')
 
-    identification_code = fields.Char('File Number', readonly=True, ondelete='cascade', store=True, required=True)
+    identification_code = fields.Char('File Number', readonly=True, ondelete='cascade', store=True)
 
     referred_by_id = fields.Many2one('reference.from', 'Reference From')
 
     reference_type_id = fields.Many2one('reference.type', 'Reference Type')
 
     age = fields.Char(
-        string='Age', related='patient_id.patient_age', size=4
+        string='Age', related='patient_id.patient_age'
     )
     gender = fields.Selection([
         ('male', 'Male'),
@@ -86,6 +84,8 @@ class PatientRevisit(models.Model):
     invoiced_surgery = fields.Boolean('Investigation Surgery', default=False)
 
     patient_diagnosis = fields.Text(string='Patient Diagnosis')
+
+    so_wo = fields.Char(string='C/O', related='patient_id.so_wo')
     # visual_acuitity_l_ids fields
 
     ucdv_l_re = fields.Char('PG', store=True, default=' ')
@@ -97,6 +97,7 @@ class PatientRevisit(models.Model):
         ('e_chart', 'E-Chart')
     ], string=' ')
     ucdv_l_pinhole = fields.Char('PH', store=True)
+    ucdv_l_cl = fields.Char('CL', store=True, default=' ')
 
     ucnv_l_re = fields.Char('PG', store=True, default=' ')
     ucnv_l_le = fields.Char('UC', store=True, default=' ')
@@ -107,6 +108,7 @@ class PatientRevisit(models.Model):
         ('e_chart', 'E-Chart')
     ], string=' ')
     ucnv_l_pinhole = fields.Char('PH', store=True, default=' ')
+    ucnv_l_cl = fields.Char('CL', store=True, default=' ')
 
     # visual_acuitity_r_ids_re fields
 
@@ -119,6 +121,7 @@ class PatientRevisit(models.Model):
         ('e_chart', 'E-Chart')
     ], string=' ')
     ucdv_r_pinhole = fields.Char('PH', store=True)
+    ucdv_r_cl = fields.Char('CL', store=True)
 
     ucnv_r_re = fields.Char('PG', store=True, default=' ')
     ucnv_r_le = fields.Char('UC', store=True, default=' ')
@@ -129,6 +132,8 @@ class PatientRevisit(models.Model):
         ('e_chart', 'E-Chart')
     ], string=' ')
     ucnv_r_pinhole = fields.Char('PH', store=True, default=' ')
+    ucnv_r_cl = fields.Char('CL', store=True, default=' ')
+
     # dilated_ar_ids fields
     #     AR
     dilated_ar_le_ar = fields.Char(' ', default='AR')
@@ -183,7 +188,22 @@ class PatientRevisit(models.Model):
     cyl_re_rs = fields.Char(string='Cyl', store=True)
     axis_re_rs = fields.Char(string='Axis', store=True)
 
-    # check Admission date greater than current date
+    kryptok_status = fields.Boolean('Kryptok')
+    progressive_status = fields.Boolean('Progressive')
+    executive_status = fields.Boolean('Executive')
+    univis_status = fields.Boolean('Univis D')
+    plastic_status = fields.Boolean('Plastic')
+    h_index_status = fields.Boolean('H Index')
+    white_status = fields.Boolean('White')
+    tint_status = fields.Boolean('Tint')
+    photochromic_status = fields.Boolean('Photochromic')
+    arc_status = fields.Boolean('ARC')
+    special_instructions = fields.Text('Special Instructions')
+
+    procedure_type = fields.Selection([
+        ('investigation', 'Investigation Procedure'),
+        ('treatment', 'Treatment Procedure')], string='Procedure Type')
+
     @api.onchange('date')
     def onchange_admission_date(self):
         if self.date:
@@ -191,13 +211,6 @@ class PatientRevisit(models.Model):
             date_today = date.today()
             if date_admission < date_today:
                 raise UserError('Admission date must be greater than current')
-
-    # create new patient
-    @api.onchange('patient_new')
-    def on_change_patient_new(self):
-        if self.patient_new:
-            patient = self.env['medical.patient'].create({'name': self.patient_new, 'no_idcode': True})
-            self.patient_id = patient.id
 
     @api.onchange('referred_by_id')
     def get_reference_by_id(self):
@@ -240,5 +253,6 @@ class PatientRevisit(models.Model):
     @api.multi
     def unlink(self):
         res = super(PatientRevisit, self).unlink()
-        raise UserError('You can not delete a Visit')
+        if not self.env.user.has_group('base.group_system'):
+            raise UserError('You have no access to delete a Visit')
         return res

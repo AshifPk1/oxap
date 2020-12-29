@@ -9,24 +9,23 @@
                 <xpath expr="//sheet/div" position="before">
                     <field name="picking_ids" invisible="1"/>
                     <div class="oe_right">
-                    <button type="object"
-                        name="action_view_delivery"
-                        class="oe_stat_button"
-                        icon="fa-truck"
-                        attrs="{'invisible': [('type','!=','in_refund')]}" groups="base.group_user">
-                        <field name="delivery_count" widget="statinfo" string="Delivery"/>
-                    </button>
+                        <button type="object"
+                                name="action_view_delivery"
+                                class="oe_stat_button"
+                                icon="fa-truck"
+                                attrs="{'invisible': [('type','!=','in_refund')]}" groups="base.group_user">
+                            <field name="delivery_count" widget="statinfo" string="Delivery"/>
+                        </button>
                     </div>
                 </xpath>
                 <xpath expr="//field[@name='payment_term_id']" position="after">
-                    <field name="picking_type_id" />
+                    <field name="picking_type_id"/>
                     <field name="auto_validate_delivey" attrs="{'invisible': [('type','!=','in_refund')]}"/>
 
                 </xpath>
                 <xpath expr="//field[@name='invoice_line_ids']/tree/field[@name='product_id']" position="before">
-                        <!--<field name ="barcode"/>-->
                     <field name="lot_id"/>
-               </xpath>
+                </xpath>
             </data>
         </field>
     </record>
@@ -41,27 +40,23 @@
                 <xpath expr="//sheet/div" position="before">
                     <field name="picking_ids" invisible="1"/>
                     <div class="oe_right">
-                    <button type="object"
-                        name="action_view_delivery"
-                        class="oe_stat_button"
-                        icon="fa-truck"
-                        attrs="{'invisible': [('type','!=','out_refund')]}" groups="base.group_user">
-                        <field name="delivery_count" widget="statinfo" string="Receipts"/>
-                    </button>
+                        <button type="object"
+                                name="action_view_delivery"
+                                class="oe_stat_button"
+                                icon="fa-truck"
+                                attrs="{'invisible': [('type','!=','out_refund')]}" groups="base.group_user">
+                            <field name="delivery_count" widget="statinfo" string="Receipts"/>
+                        </button>
                     </div>
                 </xpath>
                 <xpath expr="//field[@name='cash_rounding_id']" position="after">
-                    <field name="picking_type_id" />
+                    <field name="picking_type_id"/>
                     <field name="auto_validate_delivey" attrs="{'invisible': [('type','!=','out_refund')]}"/>
                 </xpath>
                 <xpath expr="//field[@name='invoice_line_ids']/tree/field[@name='product_id']" position="before">
-                        <!--<field name ="barcode"/>-->
                     <field name="lot_id"/>
-               </xpath>
+                </xpath>
             </data>
         </field>
     </record>
-
-
-
 </odoo>

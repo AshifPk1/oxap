@@ -18,17 +18,20 @@
                             id="draft_confirm"/>
                     <button name="button_confirm" type="object" states="sent" string="Confirm Order"
                             class="oe_highlight" id="bid_confirm"/>
+                    <button name="button_confirm_all" string="Receive Items" class="oe_highlight" type="object"
+                            attrs="{'invisible': ['|', '|' , ('is_shipped', '=', True), ('state','not in', ('purchase','done')), ('picking_count', '=', 0)]}"/>
                     <button name="button_approve" type="object" states='to approve' string="Approve Order"
                             class="oe_highlight" groups="purchase.group_purchase_manager"/>
                     <button name="action_rfq_send" states="purchase" string="Send PO by Email" type="object"
                             context="{'send_rfq':False}"/>
-                    <button name="action_view_picking" string="Receive Products" class="oe_highlight" type="object"
-                            attrs="{'invisible': ['|', '|' , ('is_shipped', '=', True), ('state','not in', ('purchase','done')), ('picking_count', '=', 0)]}"/>
+<!--                    <button name="action_view_picking" string="Receive Products" class="oe_highlight" type="object"-->
+<!--                            attrs="{'invisible': ['|', '|' , ('is_shipped', '=', True), ('state','not in', ('purchase','done')), ('picking_count', '=', 0)]}"/>-->
                     <button name="button_draft" states="cancel" string="Set to Draft" type="object"/>
                     <button name="button_cancel" states="draft,to approve,sent,purchase" string="Cancel" type="object"/>
                     <button name="button_done" type="object" string="Lock" states="purchase"/>
                     <button name="button_unlock" type="object" string="Unlock" states="done"
                             groups="purchase.group_purchase_manager"/>
+
                     <field name="state" widget="statusbar" statusbar_visible="draft,sent,purchase" readonly="1"/>
                 </header>
                 <sheet>
@@ -83,8 +86,13 @@
                                     <field name="sequence" widget="handle"/>
                                     <field name="product_id"
                                            attrs="{'readonly': [('state', 'in', ('purchase', 'to approve','done', 'cancel'))]}"
-                                           context="{'partner_id':parent.partner_id, 'quantity':product_qty,'uom':product_uom, 'company_id': parent.company_id,'default_is_pharmacy':True,'default_type':'product'}"
+                                           context="{'partner_id':parent.partner_id, 'quantity':product_qty,'uom':product_uom, 'company_id': parent.company_id,'default_is_pharmacy':True,'default_type':'product','default_tracking':'lot'}"
                                            domain="[('is_pharmacy','=',True)]" force_save="1"/>
+                                    <field name="is_lot_product" invisible="1"/>
+                                    <field name="prod_lot_id" attrs="{'readonly': [('is_lot_product', '=', False)]}"
+                                           context="{'default_product_id':product_id}"/>
+                                    <field name="expiry_date" attrs="{'readonly': [('is_lot_product', '=', False)]}"/>
+                                    <field name="sale_price"/>
                                     <field name="name"/>
                                     <field name="move_dest_ids" invisible="1"/>
                                     <field name="date_planned"/>
@@ -95,12 +103,12 @@
                                     <field name="analytic_tag_ids" groups="purchase.group_analytic_accounting"
                                            widget="many2many_tags" options="{'color_field': 'color'}"/>
                                     <field name="product_qty"/>
-                                    <field name="qty_received" invisible="not context.get('show_purchase', True)"/>
-                                    <field name="qty_invoiced" invisible="not context.get('show_purchase', True)"/>
+                                    <field name="qty_received" invisible="1"/>
+                                    <field name="qty_invoiced" invisible="1"/>
                                     <field name="product_uom" groups="product.group_uom"
                                            attrs="{'readonly': [('state', 'in', ('purchase', 'done', 'cancel'))]}"
                                            force_save="1"/>
-                                    <field name="price_unit"/>
+                                    <field name="price_unit" string="Cost"/>
                                     <field name="discount"/>
                                     <field name="discount_value"/>
                                     <field name="taxes_id" widget="many2many_tags"
@@ -270,7 +278,6 @@
         <field name="view_id" ref="medical_pharmacy.purchase_order_pharmacy_form"/>
         <field name="act_window_id" ref="action_purchase_rfq_pharmacy_pro"/>
     </record>
-
     <menuitem id="menu_pharmacy_purchase" action="medical_pharmacy.action_purchase_rfq_pharmacy_pro"
               name="Pharmacy Purchase" parent="medical_pharmacy.pharmacy_main" sequence="4"
               groups="medical_opthalmology.group_pharmacy_access"/>

@@ -3,7 +3,8 @@
     <template id="report_registration_slip_document">
         <t t-set="data_report_dpi" t-value="300"/>
         <t t-call="medical_opthalmology.external_layout_custom">
-            <t class="page">
+            <t t-foreach="docs" t-as="o">
+            <div class="page" >
                 <table width="100%" class="tb0">
                     <tr>
                         <td style="text-align:left;font-size:15px;">
@@ -67,15 +68,96 @@
                         </td>
                     </tr>
                 </table>
+            </div>
             </t>
         </t>
     </template>
-    <template id="report_registration_slip">
-        <t t-call="web.html_container">
-            <t t-foreach="docs" t-as="o">
-                <t t-call="medical_opthalmology.report_registration_slip_document"
-                   t-lang="o.patient_id.partner_id.lang"/>
-            </t>
+<!--    <template id="report_registration_slip">-->
+<!--        <t t-call="medical_opthalmology.external_layout_custom">-->
+<!--            <t t-foreach="docs" t-as="o">-->
+<!--                <t t-call="medical_opthalmology.report_registration_slip_document"-->
+<!--                   t-lang="o.patient_id.partner_id.lang"/>-->
+<!--            </t>-->
+<!--        </t>-->
+<!--    </template>-->
+<!--    <template id="report_registration_slip_wo_header">-->
+<!--        <t t-call="medical_opthalmology.external_layout_custom_without_header">-->
+<!--            <t t-foreach="docs" t-as="o">-->
+<!--                <t t-call="medical_opthalmology.report_registration_slip_document_wo"-->
+<!--                   t-lang="o.patient_id.partner_id.lang"/>-->
+<!--            </t>-->
+<!--        </t>-->
+<!--    </template>-->
+    <template id="report_registration_slip_document_wo">
+        <t t-set="data_report_dpi" t-value="300"/>
+        <t t-call="medical_opthalmology.external_layout_custom_without_header">
+           <t t-foreach="docs" t-as="o">
+            <div class="page">
+                <table width="100%" class="tb0">
+                    <tr>
+                        <td style="text-align:left;font-size:15px;">
+                            <t t-if="o.patient_id">
+                                <strong>Name</strong>
+                                <br/>
+                            </t>
+                            <t t-if="o.patient_id.identification_code">
+                                <strong>File Number</strong>
+                                <br/>
+                            </t>
+                            <t t-if="o.date">
+                                <strong>Date</strong>
+                                <br/>
+                            </t>
+                            <t t-if="o.patient_id.phone">
+                                <strong>Phone</strong>
+                            </t>
+                        </td>
+                        <td style="text-align:left;font-size:15px;width:2%">
+                            <t t-if="o.patient_id">
+                                <strong>:</strong>
+                                <br/>
+                            </t>
+                            <t t-if="o.patient_id.identification_code">
+                                <strong>:</strong>
+                                <br/>
+                            </t>
+                            <t t-if="o.date">
+                                <strong>:</strong>
+                                <br/>
+                            </t>
+                            <t t-if="o.patient_id.phone">
+                                <strong>:</strong>
+                            </t>
+                        </td>
+                        <td style="text-align:left;font-size:15px;">
+                            <t t-if="o.patient_id">
+                                <strong>
+                                    <span t-esc="o.patient_id.partner_id.name"/>
+                                </strong>
+                                <br/>
+                            </t>
+                            <t t-if="o.patient_id.identification_code">
+                                <strong>
+                                    <span t-esc="o.patient_id.identification_code"/>
+                                </strong>
+                                <br/>
+                            </t>
+                            <t t-if="o.date">
+                                <strong>
+                                    <span t-esc="datetime.date.today()"/>
+                                </strong>
+                                <br/>
+                            </t>
+                            <t t-if="o.patient_id.phone">
+                                <strong>
+                                    <span t-esc="o.patient_id.phone"/>
+                                </strong>
+                            </t>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+           </t>
         </t>
     </template>
 </odoo>

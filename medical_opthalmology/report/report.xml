@@ -1,80 +1,175 @@
 <odoo>
     <data>
-        <record id="registartion_report_paperformat" model="report.paperformat">
-            <field name="name">Registration Slip</field>
-            <field name="default" eval="True"/>
-            <field name="format">custom</field>
-            <field name="page_height">50</field>
-            <field name="page_width">80</field>
-            <field name="orientation">Portrait</field>
-            <field name="margin_top">15</field>
-            <field name="margin_bottom">10</field>
-            <field name="margin_left">3</field>
-            <field name="margin_right">1</field>
-            <field name="header_line" eval="False"/>
-            <field name="header_spacing">35</field>
-            <field name="dpi">90</field>
-        </record>
-        <record id="medical_report_paperformat" model="report.paperformat">
+<!--        <record id="registartion_report_paperformat" model="report.paperformat">-->
+<!--            <field name="name">Registration Slip</field>-->
+<!--            <field name="default" eval="True"/>-->
+<!--            <field name="format">custom</field>-->
+<!--            <field name="page_height">50</field>-->
+<!--            <field name="page_width">80</field>-->
+<!--            <field name="orientation">Portrait</field>-->
+<!--            <field name="margin_top">15</field>-->
+<!--            <field name="margin_bottom">10</field>-->
+<!--            <field name="margin_left">3</field>-->
+<!--            <field name="margin_right">1</field>-->
+<!--            <field name="header_line" eval="False"/>-->
+<!--            <field name="header_spacing">35</field>-->
+<!--            <field name="dpi">90</field>-->
+<!--        </record>-->
+<!--        <record id="medical_report_paperformat" model="report.paperformat">-->
+<!--            <field name="name">Medical Report</field>-->
+<!--            <field name="default" eval="True"/>-->
+<!--            <field name="format">custom</field>-->
+<!--            <field name="page_height">297</field>-->
+<!--            <field name="page_width">210</field>-->
+<!--            <field name="orientation">Portrait</field>-->
+<!--            <field name="margin_top">25</field>-->
+<!--            <field name="margin_bottom">5</field>-->
+<!--            <field name="margin_left">3</field>-->
+<!--            <field name="margin_right">1</field>-->
+<!--            <field name="header_line" eval="False"/>-->
+<!--            <field name="header_spacing">15</field>-->
+<!--            <field name="dpi">90</field>-->
+<!--        </record>-->
+        <record id="medical_report_paper_format" model="report.paperformat">
             <field name="name">Medical Report</field>
-            <field name="default" eval="True"/>
-            <field name="format">custom</field>
-            <field name="page_height">297</field>
-            <field name="page_width">210</field>
+            <field name="default" eval="False" />
+            <field name="format">A5</field>
             <field name="orientation">Portrait</field>
-            <field name="margin_top">20</field>
-            <field name="margin_bottom">5</field>
-            <field name="margin_left">3</field>
-            <field name="margin_right">1</field>
+            <field name="margin_top">30</field>
+            <field name="margin_bottom">10</field>
+            <field name="margin_left">0</field>
+            <field name="margin_right">0</field>
             <field name="header_line" eval="False"/>
-            <field name="header_spacing">15</field>
-            <field name="dpi">90</field>
+            <field name="header_spacing">25</field>
         </record>
-        <record id="prescription_report_paperformat" model="report.paperformat">
-            <field name="name">prescription Report</field>
-            <field name="default" eval="True"/>
-            <field name="format">custom</field>
-            <field name="page_height">180</field>
-            <field name="page_width">130</field>
-            <field name="orientation">Portrait</field>
-            <field name="margin_top">20</field>
-            <field name="margin_bottom">5</field>
-            <field name="margin_left">3</field>
-            <field name="margin_right">1</field>
-            <field name="header_line" eval="False"/>
-            <field name="header_spacing">15</field>
-            <field name="dpi">90</field>
-        </record>
+<!--        <record id="prescription_report_paperformat" model="report.paperformat">-->
+<!--            <field name="name">prescription Report</field>-->
+<!--            <field name="default" eval="False" />-->
+<!--            <field name="format">A5</field>-->
+<!--            <field name="orientation">Portrait</field>-->
+<!--            <field name="margin_top">2</field>-->
+<!--            <field name="margin_bottom">0</field>-->
+<!--            <field name="margin_left">0</field>-->
+<!--            <field name="margin_right">0</field>-->
+<!--            <field name="header_line" eval="False"/>-->
+<!--            <field name="header_spacing">0</field>-->
+<!--        </record>-->
+<!--        <record id="reg_slip_report_paper_format" model="report.paperformat">-->
+<!--            <field name="name">Registration Slip</field>-->
+<!--            <field name="default" eval="False" />-->
+<!--            <field name="format">A5</field>-->
+<!--            <field name="orientation">Portrait</field>-->
+<!--            <field name="margin_top">2</field>-->
+<!--            <field name="margin_bottom">0</field>-->
+<!--            <field name="margin_left">0</field>-->
+<!--            <field name="margin_right">0</field>-->
+<!--            <field name="header_line" eval="False"/>-->
+<!--            <field name="header_spacing">0</field>-->
+<!--        </record>-->
+<!--        <record id="reg_inv_report_paperformat" model="report.paperformat">-->
+<!--            <field name="name">Registration Invoice</field>-->
+<!--            <field name="default" eval="False" />-->
+<!--            <field name="format">A5</field>-->
+<!--            <field name="orientation">Portrait</field>-->
+<!--            <field name="margin_top">2</field>-->
+<!--            <field name="margin_bottom">0</field>-->
+<!--            <field name="margin_left">0</field>-->
+<!--            <field name="margin_right">0</field>-->
+<!--            <field name="header_line" eval="False"/>-->
+<!--            <field name="header_spacing">0</field>-->
+<!--        </record>-->
+<!--        <record id="eye_details_report_paperformat" model="report.paperformat">-->
+<!--            <field name="name">Eye Details</field>-->
+<!--            <field name="default" eval="False" />-->
+<!--            <field name="format">A5</field>-->
+<!--            <field name="orientation">Portrait</field>-->
+<!--            <field name="margin_top">2</field>-->
+<!--            <field name="margin_bottom">0</field>-->
+<!--            <field name="margin_left">0</field>-->
+<!--            <field name="margin_right">0</field>-->
+<!--            <field name="header_line" eval="False"/>-->
+<!--            <field name="header_spacing">0</field>-->
+<!--        </record>-->
+<!--        <record id="work_order_report_paperformat" model="report.paperformat">-->
+<!--            <field name="name">Work Order</field>-->
+<!--            <field name="default" eval="False" />-->
+<!--            <field name="format">A5</field>-->
+<!--            <field name="orientation">Portrait</field>-->
+<!--            <field name="margin_top">2</field>-->
+<!--            <field name="margin_bottom">0</field>-->
+<!--            <field name="margin_left">0</field>-->
+<!--            <field name="margin_right">0</field>-->
+<!--            <field name="header_line" eval="False"/>-->
+<!--            <field name="header_spacing">0</field>-->
+<!--        </record>-->
+        <report
+                id="action_report_registration_slip_wo_header"
+                string="Registration Slip"
+                model="medical.opthalmology"
+                report_type="qweb-pdf"
+                file="medical_opthalmology.report_registration_slip_document_wo"
+                name="medical_opthalmology.report_registration_slip_document_wo"
+                menu="False"
+                paperformat="medical_report_paper_format"/>
         <report
                 id="action_report_registration_slip"
                 string="Registration Slip"
                 model="medical.opthalmology"
                 report_type="qweb-pdf"
-                file="medical_opthalmology.report_registration_slip"
-                name="medical_opthalmology.report_registration_slip"
-                menu="False"/>
+                file="medical_opthalmology.report_registration_slip_document"
+                name="medical_opthalmology.report_registration_slip_document"
+                menu="False"
+                paperformat="medical_report_paper_format"/>
+        <report
+                id="action_report_registration_invoice_wo_header"
+                string="Registration Invoice"
+                model="medical.opthalmology"
+                report_type="qweb-pdf"
+                file="medical_opthalmology.report_registration_invoice_document_wo_header"
+                name="medical_opthalmology.report_registration_invoice_document_wo_header"
+                menu="False"
+                paperformat="medical_report_paper_format"/>
         <report
                 id="action_report_registration_invoice"
                 string="Registration Invoice"
                 model="medical.opthalmology"
                 report_type="qweb-pdf"
-                file="medical_opthalmology.report_registration_invoice"
-                name="medical_opthalmology.report_registration_invoice"
-                menu="False"/>
+                file="medical_opthalmology.report_registration_invoice_document"
+                name="medical_opthalmology.report_registration_invoice_document"
+                menu="False"
+                paperformat="medical_report_paper_format"/>
         <report
                 id="print_eye_detail_template"
                 model="medical.optics"
                 string="Eye Details"
                 name="medical_opthalmology.eye_details_template_call"
                 file="medical_opthalmology.eye_details_template_call"
-                report_type="qweb-pdf"/>
+                report_type="qweb-pdf"
+                paperformat="medical_report_paper_format"/>
+        <report
+                id="print_eye_detail_template_wo_header"
+                model="medical.optics"
+                string="Eye Details"
+                name="medical_opthalmology.eye_details_template_call_wo_header"
+                file="medical_opthalmology.eye_details_template_call_wo_header"
+                report_type="qweb-pdf"
+                paperformat="medical_report_paper_format"/>
         <report
                 id="print_work_order_template"
                 model="medical.optics"
                 string="Work Order"
                 name="medical_opthalmology.work_order_template_call"
                 file="medical_opthalmology.work_order_template_call"
-                report_type="qweb-pdf"/>
+                report_type="qweb-pdf"
+                paperformat="medical_report_paper_format"/>
+        <report
+                id="print_work_order_template_wo_header"
+                model="medical.optics"
+                string="Work Order"
+                name="medical_opthalmology.work_order_template_call_wo_header"
+                file="medical_opthalmology.work_order_template_call_wo_header"
+                report_type="qweb-pdf"
+                paperformat="medical_report_paper_format"/>
         <report
                 id="medical_detail_template"
                 model="medical.opthalmology"
@@ -83,7 +178,16 @@
                 file="medical_opthalmology.medical_report_template_call"
                 report_type="qweb-pdf"
                 menu="False"
-                paperformat="medical_report_paperformat"/>
+                paperformat="medical_report_paper_format"/>
+        <report
+                id="medical_detail_template_wo_header"
+                model="medical.opthalmology"
+                string="Medical Report"
+                name="medical_opthalmology.medical_report_template_call_wo_header"
+                file="medical_opthalmology.medical_report_template_call_wo_header"
+                report_type="qweb-pdf"
+                menu="False"
+                paperformat="medical_report_paper_format"/>
         <report
                 id="iol_detail_template"
                 model="medical.opthalmology"
@@ -92,7 +196,16 @@
                 file="medical_opthalmology.iol_report_template_call"
                 report_type="qweb-pdf"
                 menu="False"
-                paperformat="medical_report_paperformat"/>
+                paperformat="medical_report_paper_format"/>
+        <report
+                id="iol_detail_template_without_header"
+                model="medical.opthalmology"
+                string="Iol Report"
+                name="medical_opthalmology.iol_report_template_call_without_header"
+                file="medical_opthalmology.iol_report_template_call_without_header"
+                report_type="qweb-pdf"
+                menu="False"
+                paperformat="medical_report_paper_format"/>
         <report
                 id="print_prescription_report"
                 model="medical.opthalmology"
@@ -101,6 +214,15 @@
                 file="medical_opthalmology.print_prescription_report_template"
                 report_type="qweb-pdf"
                 menu="False"
-                paperformat="prescription_report_paperformat"/>
+                paperformat="medical_report_paper_format"/>
+        <report
+                id="print_prescription_report_without_header"
+                model="medical.opthalmology"
+                string="Print Prescription"
+                name="medical_opthalmology.print_prescription_report_template_without_header"
+                file="medical_opthalmology.print_prescription_report_template_without_header"
+                report_type="qweb-pdf"
+                menu="False"
+                paperformat="medical_report_paper_format"/>
     </data>
 </odoo>

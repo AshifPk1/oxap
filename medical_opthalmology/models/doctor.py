@@ -10,10 +10,11 @@ class DoctorCheckup(models.Model):
     _inherit = 'medical.opthalmology'
 
     referred_to_surgery = fields.Boolean('Referred To Surgery')
-    treatment_needed = fields.Boolean(default=False)
+    treatment_needed = fields.Boolean(default=False, compute='_compute_treatment_status')
     dilation_status = fields.Selection(
-        [('dilation', 'Dilation'), ('ref_dilation', 'Refractive Dilation'), ('dilation_done', 'Dilation Done')])
-    dilation_start_time = fields.Datetime('Dilation Start Time')
+        [('dilation', 'Dialatation'), ('ref_dilation', 'Refractive Dialatation'),
+         ('dilation_done', 'Dialatation Done')])
+    dilation_start_time = fields.Datetime('Dialatation Start Time')
     counselling_text = fields.Text('Counselling Text')
     prescription = fields.Text('Prescription')
     cornea_le_is = fields.Boolean('Cornea')
@@ -59,16 +60,37 @@ class DoctorCheckup(models.Model):
 
     doc_optical_id = fields.Many2one('medical.optics', string='optics')
 
+    eye_image = fields.Binary(string='Eye Image')
+
+    dialataion_tplus_id = fields.Many2one('dialataion.tplus', string='Dialatation Type', required=True)
+
+    # @api.depends('procedure_details_ids')
+    # def _compute_counselling(self):
+    #     for rec in self:
+    #         if rec.procedure_details_ids:
+    #             rec.referred_to_surgery = True
+    #         else:
+    #             rec.referred_to_surgery = False
+
+    @api.onchange('procedure_details_ids')
+    def _onchange_procedure_details_ids(self):
+        for rec in self:
+            if rec.procedure_details_ids:
+                rec.referred_to_surgery = True
+            else:
+                rec.referred_to_surgery = False
+
     @api.multi
     def update_consultation(self):
         self.write({'state': 'consultation'})
 
-    @api.onchange('prescription', 'medicine_ids')
-    def _onchange_prescription(self):
-        if self.prescription or self.medicine_ids:
-            self.treatment_needed = True
-        else:
-            self.treatment_needed = False
+    @api.depends('prescription', 'medicine_ids')
+    def _compute_treatment_status(self):
+        for rec in self:
+            if rec.prescription or rec.medicine_ids:
+                rec.treatment_needed = True
+            else:
+                rec.treatment_needed = False
 
     @api.model
     def default_investigation_details_id(self):
@@ -109,7 +131,9 @@ class DoctorCheckup(models.Model):
         view = self.env.ref('medical_opthalmology.doctor_cosultaion_warning_wizard_view')
         context = self.env.context.copy()
         self.consultation_finish = True
-
+        sent_to_procedure = False
+        # if self.edure_details_ids:
+        #     sent_to_procedure = True
         return {
             'name': _('Warning'),
             'type': 'ir.actions.act_window',
@@ -120,6 +144,16 @@ class DoctorCheckup(models.Model):
             'view_id': view.id,
             'target': 'new',
             'context': {
+                'default_dilated_ar_le_dv': self.dilated_ar_le_dv, 'default_va_le_dv': self.va_le_dv,
+                'default_sphere_le_dv': self.sphere_le_dv, 'default_cyl_le_dv': self.cyl_le_dv,
+                'default_axis_le_dv': self.axis_le_dv, 'default_dilated_ar_le_nv': self.dilated_ar_le_nv,
+                'default_va_le_nv': self.va_le_nv, 'default_sphere_le_nv': self.sphere_le_nv,
+                'default_cyl_le_nv': self.cyl_le_nv, 'default_axis_le_nv': self.axis_le_nv,
+                'default_dilated_ar_re_dv': self.dilated_ar_re_dv, 'default_va_re_dv': self.va_re_dv,
+                'default_sphere_re_dv': self.sphere_re_dv, 'default_cyl_re_dv': self.cyl_re_dv,
+                'default_axis_re_dv': self.axis_re_dv, 'default_dilated_ar_re_nv': self.dilated_ar_re_nv,
+                'default_va_re_nv': self.va_re_nv, 'default_sphere_re_nv': self.sphere_re_nv,
+                'default_cyl_re_nv': self.cyl_re_nv, 'default_axis_re_nv': self.axis_re_nv,
                 'default_glass_status': self.glass_needed,
                 'default_surgery_status': self.referred_to_surgery,
                 'default_glass_description': self.glass_prescription,
@@ -127,7 +161,19 @@ class DoctorCheckup(models.Model):
                 'default_treatment_status': self.treatment_needed,
                 'default_treatment_prescription': self.prescription,
                 'default_medicine_ids': [(6, 0, self.medicine_ids.ids)],
-
+                'defailt_kryptok_status': self.kryptok_status,
+                'default_progressive_status': self.progressive_status,
+                'default_executive_status': self.executive_status,
+                'default_univis_status': self.univis_status,
+                'default_plastic_status': self.plastic_status,
+                'default_h_index_status': self.h_index_status,
+                'default_white_status': self.white_status,
+                'default_tint_status': self.tint_status,
+                'default_photochromic_status': self.photochromic_status,
+                'default_investigation_details_ids': [(6, 0, self.investigation_details_ids.ids)],
+                'default_arc_status': self.arc_status,
+                'default_procedure_details_ids': [(6, 0, self.procedure_details_ids.ids)],
+                'default_sent_to_procedure': sent_to_procedure
             },
         }
 
@@ -182,20 +228,50 @@ class DoctorCheckup(models.Model):
 
     @api.multi
     def sent_to_dilation(self):
-        self.dilation_status = 'dilation'
-        self.dilation_start_time = datetime.now()
+        if self.state == 'counselling':
+            self.write({'state': 'consultation'})
+        else:
+            self.dilation_status = 'dilation'
+            self.dilation_start_time = datetime.now()
 
-        view = self.env.ref('medical_opthalmology.doctor_checkup_tree').ids
-        form_view_id = self.env.ref('medical_opthalmology.view_doctor_checking_form').ids
+            view = self.env.ref('medical_opthalmology.doctor_checkup_tree').ids
+            form_view_id = self.env.ref('medical_opthalmology.view_doctor_checking_form').ids
 
+            return {
+                'type': 'ir.actions.act_window',
+                'view_mode': 'tree,form',
+                'res_model': 'medical.opthalmology',
+                'views': [[view, 'tree'], [form_view_id, 'form']],
+                'target': 'current',
+                'context': {'form_view_initial_mode': 'edit', 'create': False, 'search_default_state': 'consultation',
+                            'search_default_date_today': 'date_today'},
+            }
+
+    def sent_to_dialataion_wizard(self):
+        view = self.env.ref('medical_opthalmology.dialataion_tplus_wizard_view')
         return {
+            'name': _('Warning'),
             'type': 'ir.actions.act_window',
-            'view_mode': 'tree,form',
-            'res_model': 'medical.opthalmology',
-            'views': [[view, 'tree'], [form_view_id, 'form']],
-            'target': 'current',
-            'context': {'form_view_initial_mode': 'edit', 'create': False, 'search_default_state': 'consultation',
-                        'search_default_date_today': 'date_today'},
+            'view_type': 'form',
+            'view_mode': 'form',
+            'res_model': 'dialataion.tplus.wizard',
+            'views': [(view.id, 'form')],
+            'view_id': view.id,
+            'target': 'new',
+        }
+
+    def sent_to_refracted_dialataion_wizard(self):
+        view = self.env.ref('medical_opthalmology.dialataion_tplus_wizard_view')
+        return {
+            'name': _('Warning'),
+            'type': 'ir.actions.act_window',
+            'view_type': 'form',
+            'view_mode': 'form',
+            'res_model': 'dialataion.tplus.wizard',
+            'views': [(view.id, 'form')],
+            'view_id': view.id,
+            'context': {'default_refracted_dialatation': True},
+            'target': 'new',
         }
 
     @api.multi
@@ -203,11 +279,16 @@ class DoctorCheckup(models.Model):
         ids_re = []
         ids_le = []
         i = 0
+        if self.investigation_details_ids:
+            self.write({'procedure_type': 'investigation'})
+            self.write({'state': 'procedure'})
         if self.dilation_status == 'dilation':
             self.write({'dilation_status': 'dilation_done'})
-
         if self.referred_to_surgery:
             self.write({'state': 'counselling'})
+        else:
+            if self.sent_to_procedure:
+                self.write({'state': 'procedure'})
 
         if self.glass_needed:
             self.send_to_optics = True
@@ -261,6 +342,7 @@ class DoctorCheckup(models.Model):
                             'patient_visit_id': self.id
                         }
                         ids_le.append((0, 0, data_le))
+
                 new = self.env['medical.optics'].create({
                     'name': self.name,
                     'patient_id': self.patient_id.id,
@@ -272,12 +354,22 @@ class DoctorCheckup(models.Model):
                     'tag_ids': [(6, 0, self.tag_ids.ids)],
                     'dilated_refraction_ids': ids_re,
                     'dilated_refraction_le_ids': ids_le,
-                    'refraction_id': self.refraction_id.id,
                     'state': 'open',
                     'reference_type_id': self.reference_type_id.id,
+                    'kryptok_status': self.kryptok_status,
+                    'progressive_status': self.progressive_status,
+                    'executive_status': self.executive_status,
+                    'univis_status': self.univis_status,
+                    'plastic_status': self.plastic_status,
+                    'h_index_status': self.h_index_status,
+                    'white_status': self.white_status,
+                    'tint_status': self.tint_status,
+                    'photochromic_status': self.photochromic_status,
+                    'arc_status': self.arc_status,
+
                 })
                 self.doc_optical_id = new.id
-        if not self.send_to_optics and not self.send_to_pharmacy and not self.referred_to_surgery:
+        if not self.send_to_optics and not self.send_to_pharmacy and not self.referred_to_surgery and not self.investigation_details_ids and not self.sent_to_procedure:
             self.write({'state': 'done'})
         view = self.env.ref('medical_opthalmology.doctor_checkup_tree').ids
         form_view_id = self.env.ref('medical_opthalmology.view_doctor_checking_form').ids
@@ -297,3 +389,43 @@ class DoctorCheckup(models.Model):
             return self.env.ref('medical_opthalmology.print_prescription_report').report_action(self)
         else:
             raise UserError("There is no medications data to print")
+
+    def print_prescription_without_header(self):
+        if self.medicine_ids or self.prescription:
+            return self.env.ref('medical_opthalmology.print_prescription_report_without_header').report_action(self)
+        else:
+            raise UserError("There is no medications data to print")
+
+    def send_to_refraction(self):
+        self.write({'state': 'refraction'})
+
+    def medicine_list(self):
+        view = self.env.ref('medical_opthalmology.medicine_list_wizard_view')
+        history = self.past_history_ids
+        ids = []
+        if history:
+            medicine = history[0].medicine_ids
+            for line in medicine:
+                data = {
+                    'product_id': line.product_id.id,
+                    'days': line.days,
+                    'eye': line.eye,
+                    'stock': line.stock,
+                    'frequency_id': line.frequency_id.id
+                }
+                ids.append(data)
+
+        return {
+            'name': _('Medications'),
+            'type': 'ir.actions.act_window',
+            'view_type': 'form',
+            'view_mode': 'form',
+            'res_model': 'medicine.list.wizard',
+            'views': [(view.id, 'form')],
+            'view_id': view.id,
+            'target': 'new',
+            'context': {
+                'default_medicine_line_ids': [(0, 0, id) for id in ids],
+                'default_parent_id': self.id
+            }
+        }

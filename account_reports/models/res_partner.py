@@ -16,8 +16,9 @@ class ResPartner(models.Model):
     unreconciled_aml_ids = fields.One2many('account.move.line', 'partner_id', domain=[('reconciled', '=', False),
                                                                                       ('account_id.deprecated', '=',
                                                                                        False), (
-                                                                                      'account_id.internal_type', '=',
-                                                                                      'receivable')])
+                                                                                          'account_id.internal_type',
+                                                                                          '=',
+                                                                                          'receivable')])
 
     partner_ledger_label = fields.Char(compute='_compute_partner_ledger_label',
                                        help='The label to display on partner ledger button, in form view')
@@ -59,7 +60,7 @@ class ResPartner(models.Model):
                           ('date_maturity', '=', False), ('date', '<=', date)]
         if not overdue_only:
             domain += ['|', '&', ('next_action_date', '=', False)] + overdue_domain + ['&', (
-            'next_action_date', '!=', False), ('next_action_date', '<=', date)]
+                'next_action_date', '!=', False), ('next_action_date', '<=', date)]
         return domain
 
     @api.multi

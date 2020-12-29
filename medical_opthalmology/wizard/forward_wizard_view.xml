@@ -8,7 +8,6 @@
                     attrs="{'invisible': [('forward_needed', '=', True)]}">The following will go to its Selected Doctor.
                     you can change the Notes here.
                 </h4>
-
                 <h4 style="color:#B10707;text-align:center;font-weight: bold;"
                     attrs="{'invisible': [('forward_needed', '=', False)]}">The following Forwarded from below Doctor.
                 </h4>

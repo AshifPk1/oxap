@@ -3,6 +3,7 @@
 
 from odoo import api, fields, models
 
+
 class StockMoveLine(models.Model):
     _inherit = "stock.move.line"
 
@@ -38,7 +39,7 @@ class StockMove(models.Model):
         for rec in self:
             for line in rec.move_line_ids:
                 if line.lot_id and line.sale_price:
-                    if not rec.lot_id:
+                    if rec.lot_id == False:
                         rec.lot_id = ''
                         rec.sale_price = ''
                         rec.lot_id += (str(line.lot_id.name) + '/')

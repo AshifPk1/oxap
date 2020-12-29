@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
+
     <record id="res_lang_form" model="ir.ui.view">
         <field name="name">Res Lang Form - Default UoMs</field>
         <field name="model">res.lang</field>
@@ -10,4 +11,5 @@
             </xpath>
         </field>
     </record>
+
 </odoo>

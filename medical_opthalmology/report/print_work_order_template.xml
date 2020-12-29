@@ -1,9 +1,9 @@
 <odoo>
     <template id="work_order_template_call">
         <t t-set="data_report_dpi" t-value="300"/>
-        <t t-call="medical_opthalmology.optics_external_layout_custom">
+        <t t-call="medical_opthalmology.external_layout_custom">
             <t t-foreach="docs" t-as="o">
-                <t class="page">
+                <div class="page" >
                     <center>
                         <h4>
                             <strong>WORK ORDER&#160;<span t-field="o.work_order_id.name"/>
@@ -85,7 +85,6 @@
                                 <t t-if="o.patient_id.age">
                                     <span t-esc="o.age"/>
                                 </t>
-
                             </td>
                         </tr>
                     </table>
@@ -153,6 +152,7 @@
                                     <td class="text-center">
                                         <span t-esc="line.price_unit"/>
                                     </td>
+
                                     <td class="text-center">
                                         <t t-foreach="line.tax_ids" t-as="tax">
                                             <span t-esc="tax.name"/>,
@@ -224,7 +224,237 @@
                             <br/>
                         </div>
                     </div>
-                </t>
+                </div>
+            </t>
+        </t>
+    </template>
+<!--    w/o Header-->
+    <template id="work_order_template_call_wo_header">
+        <t t-set="data_report_dpi" t-value="300"/>
+        <t t-call="medical_opthalmology.external_layout_custom_without_header">
+            <t t-foreach="docs" t-as="o">
+                <div class="page" >
+                    <center>
+                        <h4>
+                            <strong>WORK ORDER&#160;<span t-field="o.work_order_id.name"/>
+                            </strong>
+                        </h4>
+                    </center>
+                    <br/>
+                    <table width="100%" class="tb0">
+                        <tr>
+                            <td width="10%" style="text-align:left;font-size:13px;">
+                                <t>
+                                    <strong>Prescription:</strong>
+                                </t>
+                                <br/>
+                                <t>
+                                    <strong>File No :</strong>
+                                </t>
+                                <br/>
+                                <t>
+                                    <strong>Name :</strong>
+                                </t>
+                                <br/>
+                            </td>
+                            <td width="20%" style="color:#0077b3;text-align:left;font-size:13px;">
+                                <t t-if="o.sequence">
+                                    <span t-esc="o.sequence"/>
+                                </t>
+                                <br/>
+                                <t t-if="o.identification_code">
+                                    <span t-esc="o.patient_id.identification_code"/>
+                                </t>
+                                <br/>
+                                <t t-if="o.patient_id">
+                                    <span t-esc="o.patient_id.partner_id.name"/>
+                                </t>
+                                <br/>
+                            </td>
+                            <td width="11" style="text-align: left;font-size:13px;">
+                                <t>
+                                    <strong>Gender :</strong>
+                                </t>
+                                <br/>
+                                <t>
+                                    <strong>Phone :</strong>
+                                </t>
+                                <br/>
+                                <t>
+                                    <strong>Doctor :</strong>
+                                </t>
+                            </td>
+                            <td width="22%" style="color:#0077b3;text-align: left;font-size:13px;">
+                                <t t-if="o.patient_id.gender">
+                                    <span t-esc="o.patient_id.gender"/>
+                                </t>
+                                <br/>
+                                <t t-if="o.patient_id.phone">
+                                    <span t-esc="o.patient_id.phone"/>
+                                </t>
+                                <br/>
+                                <t t-if=" o.doctor_id">
+                                    <span t-esc="o.doctor_id.name"/>
+                                </t>
+                            </td>
+                            <td width="11%" style="text-align: right;font-size:13px;">
+                                <t>
+                                    <strong>Date : &#160;</strong>
+                                </t>
+                                <br/>
+                                <t>
+                                    <strong>Age : &#160;</strong>
+                                </t>
+                            </td>
+                            <td width="18%" style="color:#0077b3;text-align: left;font-size:13px;">
+                                <t t-if="o.date">
+                                    <span t-esc="datetime.datetime.strptime(o.date, '%Y-%m-%d %H:%M:%S').strftime('%Y-%m-%d')"/>
+                                </t>
+                                <br/>
+
+                                <t t-if="o.patient_id.age">
+                                    <span t-esc="o.age"/>
+                                </t>
+                            </td>
+                        </tr>
+                    </table>
+                    <hr style="height:0.01px; border:none; color:#333;background-color:#333"/>
+                    <div class="row">
+                        <div class="col-xs-6"/>
+                        <div class="col-xs-3" style="font-size:13px;">
+                            <t t-if="o.delivery_date">
+                                <strong>Delivery Date :</strong>
+                            </t>
+                            <t t-if="o.sales_person_id">
+                                <strong>Sales Person :</strong>
+                            </t>
+                        </div>
+                        <div class="col-xs-3" style="text-align:right;font-size:13px;">
+                            <t t-if="o.delivery_date">
+                                <span t-esc="o.delivery_date"/>
+                            </t>
+                            <p>
+                                <t t-if="o.sales_person_id">
+                                    <span t-esc="o.sales_person_id.name"/>
+                                </t>
+                            </p>
+                        </div>
+                    </div>
+                    <br/>
+                    <div class="row">
+                        <table width="100%" class="table table-condensed" style="font-size:13px;">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        <center>SlNo.</center>
+                                    </th>
+                                    <th>
+                                        <center>Description</center>
+                                    </th>
+                                    <th>
+                                        <center>Qty</center>
+                                    </th>
+                                    <th>
+                                        <center>Price Unit</center>
+                                    </th>
+                                    <th>
+                                        <center>Tax</center>
+                                    </th>
+                                    <th>
+                                        <center>Sub Total</center>
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <t t-set="sl_no" t-value="0"/>
+                                <tr t-foreach="o.optics_details_ids" t-as="line">
+                                    <t t-set="sl_no" t-value="sl_no +1"/>
+                                    <td class="text-center">
+                                        <span t-esc="sl_no"/>
+                                        <span>&#160;.</span>
+                                    </td>
+                                    <td class="text-center">
+                                        <span t-esc="line.product_id.name"/>
+                                    </td>
+                                    <td class="text-center">
+                                        <span t-esc="line.quantity"/>
+                                    </td>
+                                    <td class="text-center">
+                                        <span t-esc="line.price_unit"/>
+                                    </td>
+
+                                    <td class="text-center">
+                                        <t t-foreach="line.tax_ids" t-as="tax">
+                                            <span t-esc="tax.name"/>,
+                                        </t>
+                                    </td>
+                                    <td class="text-center">
+                                        <span t-esc="line.sub_total"/>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-5"/>
+                        <div class="col-xs-4" style="text-align:right;font-size:13px;">
+                            <t t-if="o.total_amount">
+                                <strong>Total Amount :</strong>
+                                <br/>
+                            </t>
+                            <t t-if="o.discount">
+                                <strong>Discount :</strong>
+                                <br/>
+                            </t>
+                            <t t-if="o.final_total">
+                                <strong>Final Total :</strong>
+                                <br/>
+                            </t>
+                            <t t-if="o.advance_amount">
+                                <strong>Advance :</strong>
+                                <br/>
+                            </t>
+                            <t t-if="o.journal_id">
+                                <strong>Payment Type :</strong>
+                                <br/>
+                            </t>
+                            <t t-if="o.balance_amount">
+                                <strong>Balance Amount :</strong>
+                            </t>
+                            <br/>
+                        </div>
+                        <div class="col-xs-3" style="text-align:right;font-size:13px;">
+                            <t t-if="o.total_amount">
+                                <span t-esc="o.total_amount"/>
+                                <span>&#160;₹</span>
+                            </t>
+                            <br/>
+                            <t t-if="o.discount">
+                                <span t-esc="o.discount"/>
+                                <span>&#160;₹</span>
+                            </t>
+                            <br/>
+                            <t t-if="o.final_total">
+                                <span t-esc="o.final_total"/>
+                                <span>&#160;₹</span>
+                            </t>
+                            <br/>
+                            <t t-if="o.advance_amount">
+                                <span t-esc="o.advance_amount"/>
+                                <span>&#160;₹</span>
+                            </t>
+                            <br/>
+                            <t t-if="o.journal_id"><span t-esc="o.journal_id.name"/>&#160;&#160;&#160;
+                            </t>
+                            <br/>
+                            <t t-if="o.balance_amount">
+                                <span t-esc="o.balance_amount"/>
+                                <span>&#160;₹</span>
+                            </t>
+                            <br/>
+                        </div>
+                    </div>
+                </div>
             </t>
         </t>
     </template>

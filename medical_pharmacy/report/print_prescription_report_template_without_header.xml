@@ -1,0 +1,157 @@
+<odoo>
+    <template id="print_prescription_report_template_without_header">
+        <t t-set="data_report_dpi" t-value="300"/>
+        <t t-call="medical_pharmacy.external_layout_custom_without_header">
+            <t t-foreach="docs" t-as="o">
+                <div class="page" >
+                    <center>
+                        <h4>
+                            <strong>PRESCRIPTION DETAILS</strong>
+                        </h4>
+                    </center>
+                    <br/>
+                    <table width="100%" class="tb0">
+                        <tr>
+                            <td width="12%" style="text-align:left;font-size:13px;">
+                                <t>
+                                    <strong>File Number :</strong>
+                                </t>
+                                <br/>
+                                <t>
+                                    <strong>Name :</strong>
+                                </t>
+                                <br/>
+                            </td>
+                            <td width="15%" style="color:#0077b3;text-align:left;font-size:13px;">
+                                <t t-if="o.identification_code">
+                                    <span t-esc="o.patient_id.identification_code"/>
+                                </t>
+                                <br/>
+                                <t t-if="o.patient_id">
+                                    <span t-esc="o.patient_id.partner_id.name"/>
+                                </t>
+                                <br/>
+                            </td>
+                            <td width="10%" style="text-align: left;font-size:13px;">
+                                <t>
+                                    <strong>Gender :</strong>
+                                </t>
+                                <br/>
+                                <t>
+                                    <strong>Phone :</strong>
+                                </t>
+                            </td>
+                            <td width="16%" style="color:#0077b3;text-align: left;font-size:15px;">
+                                <t t-if="o.patient_id.gender">
+                                    <span t-esc="o.patient_id.gender"/>
+                                </t>
+                                <br/>
+                                <t t-if="o.patient_id.phone">
+                                    <span t-esc="o.patient_id.phone"/>
+                                </t>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td width="15%" style="text-align: left;font-size:13px;">
+                                <t>
+                                    <strong>Doctor :</strong>
+                                </t>
+                                <br/>
+                                <t>
+                                    <strong>Date : &#160;</strong>
+                                </t>
+                                <br/>
+                            </td>
+                            <td width="10%" style="color:#0077b3;text-align: left;font-size:13px;">
+                                <t t-if=" o.doctor_id">
+                                    <span t-esc="o.doctor_id.name"/>
+                                </t>
+                                <br/>
+                                <t t-if="o.date">
+                                    <span t-esc="o.date"/>
+                                    <br/>
+                                </t>
+                                <br/>
+                            </td>
+                            <td width="10%" style="text-align: left;font-size:13px;">
+                                <t t-if="o.patient_id.city">
+                                    <strong>city :</strong>
+                                </t>
+                                <br/>
+                                <t>
+                                    <strong>Age : &#160;</strong>
+                                </t>
+                                <br/>
+                            </td>
+                            <td width="12%" style="color:#0077b3;text-align: left;font-size:13px;">
+                                <t t-if=" o.patient_id.city">
+                                    <span t-esc="o.patient_id.city"/>
+                                </t>
+                                <br/>
+                                <t t-if="o.patient_id.age">
+                                    <span t-esc="o.age"/>
+                                </t>
+                                <br/>
+                            </td>
+                        </tr>
+                    </table>
+                    <hr style="height:0.2px; border:none; color:#333; background-color:#333"/>
+                    <t t-if="o.medicine_ids">
+                        <table name="tabl_iol_le" width="100%" class="table table-condensed table-bordered mt32">
+                            <center>
+                                <strong>
+                                    <u>
+                                        <span>Medications</span>
+                                    </u>
+                                </strong>
+                            </center>
+                            <thead>
+                                <tr>
+                                    <th>Product</th>
+                                    <th>Eye</th>
+                                    <th>Frequency</th>
+                                    <th>Days</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr t-foreach="o.medicine_ids" t-as="line">
+                                    <td class="text-center">
+                                        <span t-if="line.product_id" t-esc="line.product_id.name"/>
+                                    </td>
+                                    <td class="text-center">
+                                        <t t-set="values"
+                                           t-value="dict([('left_eye', 'LE'),('right_eye', 'RE'), ('both','BE')])"/>
+                                        <t t-if="line.eye" t-esc="values[line.eye]"/>
+                                    </td>
+                                    <td class="text-center">
+                                        <span t-if="line.frequency_id" t-esc="line.frequency_id.name"/>
+                                    </td>
+                                    <td class="text-center">
+                                        <span t-if="line.days" t-esc="line.days"/>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </t>
+                    <br/>
+                    <t t-if="o.doctor_prescription">
+                        <center>
+                            <strong>
+                                <u>
+                                    <span>Prescription</span>
+                                </u>
+                            </strong>
+                        </center>
+                        <center>
+                            <span t-esc="o.doctor_prescription"/>
+                        </center>
+                        <br/>
+                    </t>
+                    <div class='pull-right'>
+                        <p>SIGNATURE</p>
+                    </div>
+                </div>
+            </t>
+        </t>
+    </template>
+</odoo>

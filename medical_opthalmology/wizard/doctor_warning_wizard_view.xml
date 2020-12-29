@@ -7,6 +7,145 @@
                 <h4 style="color:#B10707;text-align:center;font-weight: bold;">The following marked will go to its
                     respective states. you can change the values here.
                 </h4>
+                <div class="row">
+                    <div class="col-xs-3"></div>
+                    <div class="col-xs-1"></div>
+                </div>
+                <div class="row">
+                    <group style="width:100%">
+                        <div class="col-xs-12">
+                            <label style="color:#B10707;text-align:center;font-size:15px;width: 100%;font-weight: bold"
+                                   string="RE"/>
+                        </div>
+                        <div class="col-xs-12">
+                            <label style="color:#B10707;text-align:center;font-size:15x;width: 100%;font-weight: bold"
+                                   string="LE"/>
+                        </div>
+                        <div class="col-xs-12">
+                            <br/>
+                            <table name="table_re_1"
+                                   style="font-size: 13px; border-top: 1px solid black; border-bottom: 1px solid black;  border-left: 1px solid black; border-right: 1px solid black; border-color:#DFDFDF;width:90%;">
+                                <thead>
+                                    <th width="19%"> </th>
+                                    <th width="19%">Sph</th>
+                                    <th width="19%">Cyl</th>
+                                    <th width="19%">Axis</th>
+                                    <th width="19%">V/A</th>
+                                </thead>
+                                <tbody>
+                                    <tr style="font-size: 13px; padding: 0px; border-top: 1px solid black; border-bottom: 1px solid black; border-color:#DFDFDF;">
+                                        <td class="text-center">
+                                            <span>DV</span>
+                                        </td>
+                                        <td>
+                                            <field name="sphere_le_dv"/>
+                                        </td>
+                                        <td>
+                                            <field name="cyl_le_dv"/>
+                                        </td>
+                                        <td>
+                                            <field name="axis_le_dv"/>
+                                        </td>
+                                        <td>
+                                            <field name="va_le_dv"/>
+                                        </td>
+                                    </tr>
+                                    <tr style="font-size: 13px padding: 0px; background-color:#F5F6F9; border-top: 1px solid black; border-bottom: 1px solid black; border-color:#DFDFDF;">
+                                        <td class="text-center">
+                                            <span>ADD</span>
+                                        </td>
+                                        <td>
+                                            <field name="sphere_le_nv"/>
+                                        </td>
+                                        <td>
+                                            <field name="cyl_le_nv"/>
+                                        </td>
+                                        <td>
+                                            <field name="axis_le_nv"/>
+                                        </td>
+                                        <td>
+                                            <field name="va_le_nv"/>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="col-xs-12">
+                            <br/>
+                            <table name="table_le1"
+                                   style="font-size: 13px; border-top: 1px solid black; border-bottom: 1px solid black;  border-left: 1px solid black; border-right: 1px solid black; border-color:#DFDFDF;width:90%;">
+                                <thead>
+                                    <th width="19%"> </th>
+                                    <th width="19%">Sph</th>
+                                    <th width="19%">Cyl</th>
+                                    <th width="19%">Axis</th>
+                                    <th width="19%">V/A</th>
+                                </thead>
+                                <tbody>
+                                    <tr style="font-size: 13px padding: 0px; border-top: 1px solid black; border-bottom: 1px solid black; border-color:#DFDFDF;">
+                                        <td class="text-center">
+                                            <span>DV</span>
+                                        </td>
+                                        <td>
+                                            <field name="sphere_re_dv"/>
+                                        </td>
+                                        <td>
+                                            <field name="cyl_re_dv"/>
+                                        </td>
+                                        <td>
+                                            <field name="axis_re_dv"/>
+                                        </td>
+                                        <td>
+                                            <field name="va_re_dv"/>
+                                        </td>
+                                    </tr>
+                                    <tr style="font-size: 13px; padding: 0px; background-color:#F5F6F9; border-top: 1px solid black; border-bottom: 1px solid black; border-color:#DFDFDF;">
+                                        <td class="text-center">
+                                            <span>ADD</span>
+                                        </td>
+                                        <td>
+                                            <field name="sphere_re_nv"/>
+                                        </td>
+                                        <td>
+                                            <field name="cyl_re_nv"/>
+                                        </td>
+                                        <td>
+                                            <field name="axis_re_nv"/>
+                                        </td>
+                                        <td>
+                                            <field name="va_re_nv"/>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </group>
+                </div>
+                <div class="row">
+                    <group style="width:25%">
+                        <field name="kryptok_status"/>
+                        <field name="progressive_status"/>
+                        <field name="executive_status"/>
+                    </group>
+                    <group style="width:25%">
+                        <field name="univis_status"/>
+                        <field name="plastic_status"/>
+                        <field name="h_index_status"/>
+                    </group>
+                    <group style="width:25%">
+                        <field name="white_status"/>
+                        <field name="tint_status"/>
+                        <field name="photochromic_status"/>
+                    </group>
+                    <group style="width:25%">
+                        <field name="arc_status"/>
+                    </group>
+                </div>
+                <div class="row">
+                    <group>
+                        <field name="special_instructions" nolabel="1" placeholder="Special Instructions"/>
+                    </group>
+                </div>
                 <group col="4">
                     <group style="width:50%" string="Optics">
                         <field name="glass_status"/>
@@ -16,6 +155,7 @@
                         <field name="surgery_status" style="color:green;"/>
                         <field name="counselling_text"/>
                     </group>
+
                     <group style="width:50%" string="Treatment">
                         <field name="treatment_status" style="color:green;"/>
                         <field name="treatment_prescription"/>
@@ -24,11 +164,13 @@
                         <field name="one_week"/>
                         <field name="two_week"/>
                         <field name="one_month"/>
+                        <field name="review_date"/>
                         <field name="other"/>
                         <field name="review_text"
                                attrs="{'invisible':[('other','=',False)],'required':[('other','=',True)]}"/>
                         <field name="note"/>
                     </group>
+                    <field name="sent_to_procedure" invisible="1"/>
                 </group>
                 <notebook>
                     <page string="Medications">
@@ -38,8 +180,29 @@
                                 <field name="eye"/>
                                 <field name="stock"/>
                                 <field name="frequency" invisible="1"/>
-                                <field name="frequency_id"/>
+                                <field name="frequency_id" options='{"no_create_edit": True}'/>
                                 <field name="days"/>
+                            </tree>
+                        </field>
+                    </page>
+                    <page string="Investigation">
+                        <field name="investigation_details_ids" mode='tree' style="width:97%">
+                            <tree string="Investigation details" editable="bottom">
+                                <field name="investigation" widget="selection"
+                                       domain="[('is_investigations', '=', True)]"/>
+                                <field name="qty" invisible="1" force_save="0"/>
+                                <field name="amount" invisible="1" force_save="0"/>
+                                <field name="eye"/>
+                                <field name="instruction_id" widget="many2many_tags"/>
+                                <field name="report"/>
+                            </tree>
+                        </field>
+                    </page>
+                    <page string="Procedure">
+                        <field name="procedure_details_ids" mode='tree' style="width:97%">
+                            <tree string="Procedure details" editable="bottom">
+                                <field name="procedure" widget="selection"/>
+                                <field name="eye"/>
                             </tree>
                         </field>
                     </page>

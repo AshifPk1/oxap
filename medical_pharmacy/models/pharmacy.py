@@ -80,7 +80,7 @@ class MedicalPharmacy(models.Model):
 
     tag_ids = fields.Many2many('patient.visit.tag', string='Tags', )
 
-    tax_ids = fields.Many2many('account.tax', string='Tax')
+    tax_ids = fields.Many2many('account.tax', string='Tax', domain=[('type_tax_use', '=', 'sale')])
 
     total_amount = fields.Float('Total Amount', compute='compute_total_optics_amount')
 
@@ -108,21 +108,13 @@ class MedicalPharmacy(models.Model):
 
     treatment_status = fields.Boolean('Treatment Status', default=False)
 
+    sgst = fields.Float('SGST', compute='_amount_all', store=True)
+    cgst = fields.Float('CGST', compute='_amount_all', store=True)
+
     invoice_count = fields.Integer(string='# of Invoices', related='work_order_id.order_id.invoice_count',
                                    readonly=True)
 
     is_refunded = fields.Boolean('Refunded')
-
-    @api.multi
-    def unlink(self):
-        res = super(MedicalPharmacy, self).unlink()
-        raise UserError("You can't delete the Prescripton.")
-
-
-    @api.multi
-    def copy(self, default=None):
-        rec = super(MedicalPharmacy, self).copy(default)
-        raise UserError(_('You cannot duplicate a Prescripton.'))
 
     @api.multi
     def action_view_invoice(self):
@@ -203,7 +195,7 @@ class MedicalPharmacy(models.Model):
     def compute_total_optics_amount(self):
         for record in self:
             for item in record.pharmacy_details_ids:
-                record.total_amount += (item.price_unit) * (item.quantity)
+                record.total_amount += item.price_total
 
     @api.onchange('discount_type', 'discount', 'pharmacy_details_ids')
     def supply_rate(self):
@@ -243,10 +235,16 @@ class MedicalPharmacy(models.Model):
         """
         for order in self:
             amount_tax = 0.0
+            sgst = 0.0
+            cgst = 0.0
             for line in order.pharmacy_details_ids:
                 amount_tax += line.price_tax
+                sgst += line.sgst
+                cgst += line.cgst
             order.update({
                 'tax_amount': amount_tax,
+                'cgst': cgst,
+                'sgst': sgst,
             })
 
     @api.depends('paid_amount')
@@ -256,33 +254,45 @@ class MedicalPharmacy(models.Model):
                 record.balance_amount = record.paid_amount - record.final_total
 
     def create_work_order(self):
-        debit_vals = []
+        line_vals = []
         for record in self.pharmacy_details_ids:
-            if record.quantity:
-                if not record.qty_available:
-                    raise ValidationError("No sufficient stock Quantity to proceed")
-                if record.qty_available:
-                    if record.quantity > record.qty_available:
-                        raise ValidationError('Only %s quantity in stock' % record.qty_available)
-            if record.lot_number_id:
-                if not record.lot_number_id.qty_available:
-                    raise ValidationError("No sufficient stock Quantity to proceed")
-                if record.qty_available:
-                    if record.quantity > record.lot_number_id.qty_available:
-                        raise ValidationError('Only %s quantity in stock' % record.lot_number_id.qty_available)
-
-            vals = {
-                'name': record.product_id.name,
-                'product_uom_qty': record.quantity,
-                'qty_to_invoice': record.quantity,
-                'lot_number_id': record.lot_number_id.id,
-                'price_unit': record.price_unit,
-                'doctor_id': self.doctor_id.id,
-                'product_id': record.product_id.id,
-                'price_subtotal': record.sub_total,
-                'tax_id': [(6, 0, record.tax_ids.ids)]
-            }
-            debit_vals.append((0, 0, vals))
+            if record.product_id.tracking == 'lot':
+                if record.quantity:
+                    if not record.qty_available:
+                        raise ValidationError("No sufficient stock Quantity to proceed")
+                    if record.qty_available:
+                        if record.quantity > record.qty_available:
+                            raise ValidationError('Only %s quantity in stock' % record.qty_available)
+                vals = {
+                    'name': record.product_id.name,
+                    'product_uom_qty': record.quantity,
+                    'qty_to_invoice': record.quantity,
+                    'lot_number_id': record.lot_number_id.id,
+                    'price_unit': record.price_unit,
+                    'product_id': record.product_id.id,
+                    'price_subtotal': record.sub_total,
+                    'tax_id': [(6, 0, record.tax_ids.ids)]
+                }
+                line_vals.append((0, 0, vals))
+            else:
+                if record.quantity:
+                    if not record.qty_available:
+                        raise ValidationError("No sufficient stock Quantity to proceed")
+                    if record.qty_available > 0:
+                        if record.quantity > record.qty_available:
+                            raise ValidationError('Only %s quantity in stock' % record.qty_available)
+                    else:
+                        raise ValidationError("No sufficient stock Quantity to proceed")
+                vals = {
+                    'name': record.product_id.name,
+                    'product_uom_qty': record.quantity,
+                    'qty_to_invoice': record.quantity,
+                    'price_unit': record.price_unit,
+                    'product_id': record.product_id.id,
+                    'price_subtotal': record.sub_total,
+                    'tax_id': [(6, 0, record.tax_ids.ids)]
+                }
+                line_vals.append((0, 0, vals))
 
         record = self.env['pharmacy.work.order'].create(
             {
@@ -293,7 +303,7 @@ class MedicalPharmacy(models.Model):
                 'gender': self.gender,
                 'doctor_id': self.doctor_id.id,
                 'date': self.date,
-                'order_line': debit_vals,
+                'order_line': line_vals,
                 'patient_visit_id': self.id,
                 'discount_type': self.discount_type,
                 'discount_rate': self.discount,
@@ -301,15 +311,12 @@ class MedicalPharmacy(models.Model):
             })
         record.order_id.supply_rate()
         self.work_order_id = record.id
-        record.order_id.doctor_id = self.doctor_id.id
         record.order_id.action_confirm()
         for pickings in record.picking_ids:
             pickings.button_validate()
         invoices = record.order_id.action_invoice_create()
         for invoice in record.order_id.invoice_ids:
             invoice.pharmacy_bool = True
-            invoice.identification_code = self.identification_code
-            invoice.doctor_id = self.doctor_id.id
             invoice.sale_order_id = self.work_order_id.order_id.id
         self.state = 'invoiced'
         self.re_state = 'done'
@@ -319,13 +326,6 @@ class MedicalPharmacy(models.Model):
 
     def print_invoice(self):
         return self.env.ref('medical_pharmacy.report_pharmacy_print').report_action(self)
-        # record = self.env['pharmacy.work.order'].search([('id','=',self.work_order_id.id)])
-        # return record.print_invoice()
-
-    # @api.multi
-    # def register_payment(self):
-    #     record = self.env['pharmacy.work.order'].search([('id', '=', self.work_order_id.id)])
-    #     return record.registerpayment()
 
     @api.onchange('patient_new')
     def on_change_patient_new(self):
@@ -333,6 +333,25 @@ class MedicalPharmacy(models.Model):
             patient = self.env['medical.patient'].create({'name': self.patient_new})
             self.patient_id = patient.id
 
+    # @api.multi
+    # def credit_note_pharmacy(self):
+    #     view = self.env.ref('account.view_account_invoice_refund')
+    #     print(view.id, 'view')
+    #     return {
+    #         'name': _('Credit Notes'),
+    #         'type': 'ir.actions.act_window',
+    #         'view_type': 'form',
+    #         'view_mode': 'form',
+    #         'res_model': 'account.invoice.refund',
+    #         'views': [(view.id, 'form')],
+    #         'view_id': False,
+    #         'target': 'new',
+    #         'context': {'active_ids': self.work_order_id.order_id.invoice_ids.ids, 'default_journal_id': 1,
+    #                     'default_type': 'out_refund', 'type': 'out_refund',
+    #                     'default_partner_id': self.patient_id.partner_id.id, 'default_journal_type': 'sale'},
+    #         'domain': [('type', '=', 'out_refund')],
+    #
+    #     }
     @api.multi
     def credit_note_pharmacy(self):
         description = 'refund'
@@ -377,6 +396,8 @@ class MedicalPharmacy(models.Model):
                         invoice.pharmacy_bool = True
                         return self.registerpayment(invoice)
 
+    picking_count = fields.Integer(string='Picking Error', compute='_compute_picking_count')
+
     @api.multi
     def registerpayment(self, invoice):
         invoice.action_invoice_open()
@@ -395,8 +416,6 @@ class MedicalPharmacy(models.Model):
             'context': context,
             'pharmacy_bool': True,
         }
-
-    picking_count = fields.Integer(string='Picking Error', compute='_compute_picking_count')
 
     @api.depends('work_order_id.picking_ids')
     def _compute_picking_count(self):
@@ -431,6 +450,12 @@ class MedicalPharmacy(models.Model):
         else:
             raise UserError("There is no medications data to print")
 
+    def print_prescription_without_header(self):
+        if self.medicine_ids or self.doctor_prescription:
+            return self.env.ref('medical_pharmacy.print_prescription_report_without_header').report_action(self)
+        else:
+            raise UserError("There is no medications data to print")
+
 
 # lot id passing to invoice
 class SaleOrderLine(models.Model):
@@ -441,3 +466,5 @@ class SaleOrderLine(models.Model):
         res = super(SaleOrderLine, self)._prepare_invoice_line(qty)
         res.update({'lot_id': self.lot_number_id.id})
         return res
+
+

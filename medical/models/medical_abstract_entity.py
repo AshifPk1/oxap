@@ -30,6 +30,7 @@ class MedicalAbstractEntity(models.AbstractModel):
         related='partner_id.type',
     )
 
+
     @api.multi
     def action_save(self):
         self.ensure_one()

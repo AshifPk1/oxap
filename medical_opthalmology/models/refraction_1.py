@@ -6,8 +6,6 @@ from odoo import api, models, fields, _
 class Refraction_1(models.Model):
     _inherit = 'medical.opthalmology'
 
-    refraction_id = fields.Many2one('res.users', string="Refractionist")
-
     @api.model
     def default_acuity_values(self):
         acuity_list = ['_', '_']
@@ -108,6 +106,11 @@ class Refraction_1(models.Model):
         return ids
 
     presenting_complaints = fields.Text('Presenting Complaints', default=' ')
+    additional_complaints = fields.Text('additional Complaints')
+    hop_i = fields.Text('HOP.I')
+    medical_history = fields.Text('Medical History')
+    refractionist = fields.Many2one('medical.refractionist', string="Refractionist")
+    surgical_history = fields.Text('Surgical History')
     muscle_balance = fields.Text(string='Muscle Balance', default=' ')
     glass_needed = fields.Boolean()
     glass_prescription = fields.Text(string='Glass Prescription', default=' ')
@@ -121,7 +124,11 @@ class Refraction_1(models.Model):
         ('surgery', 'Surgery'),
         ('pharmacy', 'Pharmacy'),
         ('optics', 'Optics'),
-        ('done', 'Done')], string='Status', readonly=True, copy=False, index=True, track_visibility='onchange',
+        ('investigation', 'Investigation'),
+        ('done', 'Done'),
+        ('procedure', 'Procedure'),
+        ], string='Status', readonly=True, copy=False, index=True,
+        track_visibility='onchange',
         ondelete='cascade', default='registration',
     )
     move_state = fields.Selection([
@@ -197,6 +204,9 @@ class Refraction_1(models.Model):
     colour_le = fields.Char('Colour Vision', default=' ')
     colour_re = fields.Char('Colour Vision', default=' ')
 
+    field_of_vision_le = fields.Char('Field of  Vision', default=' ')
+    field_of_vision_re = fields.Char('Field of Vision', default=' ')
+
     keratometer_ids = fields.One2many('optical.keratometer', 'patient_visit_id', string='Extra Info1',
                                       default=default_keratometer_values)
     keratometer_re_ids = fields.One2many('optical.keratometer', 'patient_visit_re_id', string='Extra Info2',
@@ -244,7 +254,6 @@ class Refraction_1(models.Model):
         product = self.env['product.product'].search([('product_tmpl_id', '=', 1)], limit=1)
         self.registration_amount = product.list_price
         values = {
-
             'pricelist_id': self.patient_id.partner_id.property_product_pricelist and self.patient_id.partner_id.property_product_pricelist.id or False,
         }
         self.update(values)

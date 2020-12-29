@@ -41,6 +41,7 @@
             </xpath>
         </field>
     </record>
+
     <record id="account_check_printing.view_account_payment_invoice_form_inherited" model="ir.ui.view">
         <field name="name">account.payment.invoice.form.inherited</field>
         <field name="model">account.payment</field>
@@ -81,14 +82,6 @@
         <field name="model">account.register.payments</field>
         <field name="inherit_id" ref="account.view_account_payment_from_invoices"/>
         <field name="arch" type="xml">
-            <xpath expr="//button[@name='create_payments']" position="after">
-                <button name="process_pdc" class="oe_highlight"
-                        attrs="{'invisible': [('payment_method_code', 'not in', ['pdc'])]}" string="Process Pdc"
-                        type="object"/>
-            </xpath>
-            <xpath expr="//button[@name='create_payments']" position="attributes">
-                <attribute name="attrs">{'invisible': [('payment_method_code', '=', 'pdc')]}</attribute>
-            </xpath>
             <xpath expr="//field[@name='amount']" position="after">
                 <field name="check_amount_in_words"
                        attrs="{'invisible': [('payment_method_code', 'not in', ['check_printing','pdc'])]}"

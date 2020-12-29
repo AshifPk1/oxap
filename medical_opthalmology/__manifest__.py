@@ -1,6 +1,6 @@
 {
     'name': 'Medical-Opthalmology',
-    'version': '10.0.1.0.1',
+    'version': '10.0.1.0.0',
     'author': 'Odox SoftHub',
     'maintainer': 'ACSONE SA/NV, Odoo Community Association (OCA)',
     'website': 'http://www.odoxsofthub.com',
@@ -8,7 +8,7 @@
     'category': 'Medical',
     'depends': ['base',
         'medical','medical_practitioner','sale_stock','account','sale_discount_total','stock_mts_mto_rule','purchase',
-                'account_voucher','purchase_total_discount','send_sms','stock'
+                'account_voucher','purchase_total_discount','odx_web_ribbon_widget'
     ],
     'summary': 'Introduce medication notion into the medical addons',
     'data': [
@@ -21,7 +21,6 @@
         'data/eye_value_axis.xml',
         'data/eye_value_va.xml',
         'views/refraction_1_page.xml',
-        'views/work_order_reject_reason.xml',
         'views/refraction_2_page.xml',
         'views/old_glass_form_view.xml',
         'views/doctor_view.xml',
@@ -38,6 +37,7 @@
         'report/report.xml',
         'report/report_registration_slip.xml',
         'report/report_registration_invoice.xml',
+        'report/print_prescription_report.xml',
         'views/settings_view.xml',
         'views/medical_patient_view.xml',
         'views/product_view.xml',
@@ -45,7 +45,6 @@
         'views/account_journal_view.xml',
         'wizard/doctor_warning_wizard_view.xml',
         'wizard/eye_value_wizard_view.xml',
-        'wizard/work_order_reject_wizard.xml',
         'wizard/forward_wizard_view.xml',
         'wizard/registration_warning_wizard.xml',
         'wizard/counselling_appointment_view.xml',
@@ -64,16 +63,19 @@
         'report/payments_report_pivots.xml',
         'report/medical_report.xml',
         'report/layout.xml',
-        'report/optics_layout.xml',
         'views/purchase_order_view.xml',
         'views/purchase_optics_frame.xml',
         'views/purchase_optics_lense.xml',
         'views/purchase_iol_products.xml',
         'views/account_voucher.xml',
+        'views/medical_refractionist_view.xml',
         'report/iol_detail_template.xml',
-        'report/print_prescription_report.xml',
-        'views/generic_name_view.xml',
-        # 'views/invoice_search_view.xml'
+        'views/procedure.xml',
+        'wizard/dilation_wizard_view.xml',
+        'wizard/medicine_list_wizard_view.xml',
+        'data/reset_sequence.xml',
+        'views/pharmacy_frequency.xml',
+        # 'views/investigation_procedure_view.xml'
 
 
 

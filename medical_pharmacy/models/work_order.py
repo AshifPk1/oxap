@@ -79,7 +79,9 @@ class WorkOrder(models.Model):
 
     @api.multi
     def action_cancel_draft(self):
-
+        '''
+        @param self: object pointer
+        '''
         if not len(self._ids):
             return False
         query = "select id from sale_order_line \
@@ -99,7 +101,9 @@ class WorkOrder(models.Model):
 
     @api.multi
     def action_cancel(self):
-
+        '''
+        @param self: object pointer
+        '''
         if not self.order_id:
             raise ValidationError(_('Order id is not available'))
         for sale in self:
@@ -108,6 +112,8 @@ class WorkOrder(models.Model):
         return self.order_id.action_cancel()
 
 
+#
+#
 class WorkOrderLine(models.Model):
     _name = 'optics.work.order.line'
 
@@ -118,7 +124,9 @@ class WorkOrderLine(models.Model):
 
     @api.onchange('product_id')
     def product_id_change(self):
-
+        '''
+        @param self: object pointer
+        '''
         if self.product_id and self.work_order_id.partner_id:
             self.name = self.product_id.name
             self.price_unit = self.product_id.list_price
@@ -131,7 +139,9 @@ class WorkOrderLine(models.Model):
 
     @api.onchange('product_uom')
     def product_uom_change(self):
-
+        '''
+        @param self: object pointer
+        '''
         if not self.product_uom:
             self.price_unit = 0.0
             return

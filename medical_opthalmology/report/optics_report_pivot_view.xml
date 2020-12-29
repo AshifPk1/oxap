@@ -68,6 +68,7 @@
             search tool can also be used to personalise your Invoices reports and so, match this analysis to your needs.
         </field>
     </record>
+
     <menuitem id="menu_optics_pivot" action="action_optics_invoice_report_all" name="Optics Report"
               parent="menu_invoice_main" sequence="4" groups="group_opticals_access"/>
 </odoo>

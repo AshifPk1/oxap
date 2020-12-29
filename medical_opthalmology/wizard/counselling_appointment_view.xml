@@ -10,6 +10,7 @@
                         <field name="one_week"/>
                         <field name="two_week"/>
                         <field name="one_month"/>
+                        <field name="review_date"/>
                         <field name="other"/>
                         <field name="review_text"
                                attrs="{'invisible':[('other','=',False)],'required':[('other','=',True)]}"/>

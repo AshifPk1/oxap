@@ -1,15 +1,11 @@
 from odoo import api, models, fields, _
 from odoo.exceptions import ValidationError
-from odoo.exceptions import UserError, ValidationError
 
 
 class WorkOrder(models.Model):
     _name = 'optics.work.order'
-    _inherit = 'mail.thread'
     _rec_name = 'order_id'
     _order = 'name desc'
-
-    refraction_id = fields.Many2one('res.users', string="Refractionist")
 
     order_id = fields.Many2one('sale.order', 'Order', delegate=True,
                                required=True, ondelete='cascade')
@@ -38,7 +34,10 @@ class WorkOrder(models.Model):
 
     doctor_id = fields.Many2one('medical.practitioner', string='Doctor', ondelete='cascade')
 
+    # work_order_line=fields.One2many('optics.work.order.line','work_order_id')
+
     patient_visit_id = fields.Many2one('medical.ophthalmology')
+
     advance_amount = fields.Float(string='Advance')
 
     balance_amount = fields.Float(string='Balance Amount', compute='compute_balance_amount_optics')
@@ -47,18 +46,6 @@ class WorkOrder(models.Model):
     delivery_date = fields.Date('Delivery Date')
 
     invoice_date = fields.Date('Invoice Date', compute='compute_invoice_date')
-
-    sales_person_id = fields.Many2one('hr.employee', string='Sales Person')
-
-    @api.multi
-    def unlink(self):
-        res = super(WorkOrder, self).unlink()
-        raise UserError("You can't delete the Work Order.")
-
-    # @api.multi
-    # def copy(self, default=None):
-    #     rec = super(WorkOrder, self).copy(default)
-    #     raise UserError(_('You cannot duplicate a Work Order.'))
 
     @api.depends('state')
     def compute_balance_amount_optics(self):
@@ -88,13 +75,6 @@ class WorkOrder(models.Model):
                 return invoice.invoice_print()
 
     @api.multi
-    def action_draft_work_order(self):
-        for rec in self:
-            rec.order_id.write({
-                'state': 'draft',
-            })
-
-    @api.multi
     def registerpayment(self):
         self.order_id.invoice_ids.action_invoice_open()
         view = self.env.ref('account.view_account_payment_invoice_form')
@@ -115,9 +95,6 @@ class WorkOrder(models.Model):
 
     @api.multi
     def action_cancel_draft(self):
-        '''
-        @param self: object pointer
-        '''
         if not len(self._ids):
             return False
         query = "select id from sale_order_line \
@@ -137,17 +114,12 @@ class WorkOrder(models.Model):
 
     @api.multi
     def action_cancel(self):
-        '''
-        @param self: object pointer
-        '''
         if not self.order_id:
             raise ValidationError(_('Order id is not available'))
         for sale in self:
             for invoice in sale.order_id.invoice_ids:
                 invoice.state = 'cancel'
         return self.order_id.action_cancel()
-
-
 
     @api.multi
     def credit_note_optics(self):

@@ -3,7 +3,7 @@
         <t t-set="data_report_dpi" t-value="300"/>
         <t t-call="medical_opthalmology.external_layout_custom">
             <t t-foreach="docs" t-as="o">
-                <t class="page">
+                <div class="page"  >
                     <center>
                         <h4>
                             <strong>IOL DETAILS</strong>
@@ -80,7 +80,6 @@
                                     <span t-esc="o.doctor_id.name"/>
                                 </t>
                             </td>
-
                             <td width="10%" style="text-align: left;font-size:13px;">
                                 <t t-if="o.patient_id.city">
                                     <strong>city :</strong>
@@ -102,9 +101,7 @@
                                 </u>
                             </strong>
                         </center>
-
                         <div class="col-xs-5">
-
                             <table name="tabl_re" width="100%" class="table table-condensed table-bordered mt32">
                                 <center>
                                     <strong>
@@ -113,7 +110,6 @@
                                         </u>
                                     </strong>
                                 </center>
-
                                 <tbody>
                                     <tr>
                                         <td class="text-center">K1</td>
@@ -227,7 +223,6 @@
                         </center>
                         <div class="col-xs-5">
                             <table name="tabl_axl_le" width="100%" class="table table-condensed table-bordered mt32">
-                                <!--                                       <center><strong><u><span> AXL</span></u></strong></center>-->
                                 <thead>
                                     <tr>
                                         <th>Contact</th>
@@ -425,8 +420,435 @@
                     <center>
                         <span t-esc="o.iol_text"/>
                     </center>
-                </t>
+                </div>
             </t>
         </t>
     </template>
+<!--    Without Header-->
+    <template id="iol_report_template_call_without_header">
+        <t t-set="data_report_dpi" t-value="300"/>
+        <t t-call="medical_opthalmology.external_layout_custom_without_header">
+            <t t-foreach="docs" t-as="o">
+                <div class="page" >
+                    <center>
+                        <h4>
+                            <strong>IOL DETAILS</strong>
+                        </h4>
+                    </center>
+                    <br/>
+                    <table width="100%" class="tb0">
+                        <tr>
+                            <td width="12%" style="text-align:left;font-size:13px;">
+                                <t>
+                                    <strong>File Number :</strong>
+                                </t>
+                                <br/>
+                                <t>
+                                    <strong>Name :</strong>
+                                </t>
+                                <br/>
+                            </td>
+                            <td width="15%" style="color:#0077b3;text-align:left;font-size:13px;">
+                                <t t-if="o.identification_code">
+                                    <span t-esc="o.patient_id.identification_code"/>
+                                </t>
+                                <br/>
+                                <t t-if="o.patient_id">
+                                    <span t-esc="o.patient_id.partner_id.name"/>
+                                </t>
+                                <br/>
+                            </td>
+                            <td width="10%" style="text-align: left;font-size:13px;">
+                                <t>
+                                    <strong>Gender :</strong>
+                                </t>
+                                <br/>
+                                <t>
+                                    <strong>Phone :</strong>
+                                </t>
+                            </td>
+                            <td width="16%" style="color:#0077b3;text-align: left;font-size:15px;">
+                                <t t-if="o.patient_id.gender">
+                                    <span t-esc="o.patient_id.gender"/>
+                                </t>
+                                <br/>
+                                <t t-if="o.patient_id.phone">
+                                    <span t-esc="o.patient_id.phone"/>
+                                </t>
+                            </td>
+                            <td width="11%" style="text-align: right;font-size:13px;">
+                                <t>
+                                    <strong>Date : &#160;</strong>
+                                    <br/>
+                                </t>
+                                <t>
+                                    <strong>Age : &#160;</strong>
+                                </t>
+                            </td>
+                            <td width="20%" style="color:#0077b3;text-align: left;font-size:15px;">
+                                <t t-if="o.date">
+                                    <span t-esc="o.date"/>
+                                    <br/>
+                                </t>
+                                <t t-if="o.patient_id.age">
+                                    <span t-esc="o.age"/>
+                                </t>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td width="15%" style="text-align: left;font-size:13px;">
+                                <t>
+                                    <strong>Doctor :</strong>
+                                </t>
+                            </td>
+                            <td width="10%" style="color:#0077b3;text-align: left;font-size:13px;">
+                                <t t-if=" o.doctor_id">
+                                    <span t-esc="o.doctor_id.name"/>
+                                </t>
+                            </td>
+                            <td width="10%" style="text-align: left;font-size:13px;">
+                                <t t-if="o.patient_id.city">
+                                    <strong>city :</strong>
+                                </t>
+                            </td>
+                            <td width="12%" style="color:#0077b3;text-align: left;font-size:13px;">
+                                <t t-if=" o.patient_id.city">
+                                    <span t-esc="o.patient_id.city"/>
+                                </t>
+                            </td>
+                        </tr>
+                    </table>
+                    <hr style="height:0.2px; border:none; color:#333; background-color:#333"/>
+                    <div class="row">
+                        <center>
+                            <strong>
+                                <u>
+                                    <span>KM</span>
+                                </u>
+                            </strong>
+                        </center>
+                        <div class="col-xs-5">
+                            <table name="tabl_re" width="100%" class="table table-condensed table-bordered mt32">
+                                <center>
+                                    <strong>
+                                        <u>
+                                            <span>RE</span>
+                                        </u>
+                                    </strong>
+                                </center>
+                                <tbody>
+                                    <tr>
+                                        <td class="text-center">K1</td>
+                                        <td class="text-center">
+                                            <span t-esc="o.keratometer_ids[0].k1"/>
+                                        </td>
+                                        <td class="text-center">
+                                            <span t-esc="o.keratometer_ids[0].k2"/>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="text-center">K2</td>
+                                        <td class="text-center">
+                                            <span t-esc="o.keratometer_ids[1].k1"/>
+                                        </td>
+                                        <td class="text-center">
+                                            <span t-esc="o.keratometer_ids[1].k2"/>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="col-xs-1">
+                        </div>
+                        <div class="col-xs-1">
+                        </div>
+                        <div class="col-xs-5">
+                            <table name="tabl_re" width="100%" class="table table-condensed table-bordered mt32">
+                                <center>
+                                    <strong>
+                                        <u>
+                                            <span>LE</span>
+                                        </u>
+                                    </strong>
+                                </center>
+                                <tbody>
+                                    <tr>
+                                        <td class="text-center">
+                                            <span t-esc="o.keratometer_re_ids[0].k1"/>
+                                        </td>
+                                        <td class="text-center">
+                                            <span t-esc="o.keratometer_re_ids[0].k2"/>
+                                        </td>
+                                        <td class="text-center">K1</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="text-center">
+                                            <span t-esc="o.keratometer_re_ids[1].k1"/>
+                                        </td>
+                                        <td class="text-center">
+                                            <span t-esc="o.keratometer_re_ids[1].k2"/>
+                                        </td>
+                                        <td class="text-center">K2</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <center>
+                            <strong>
+                                <span>IOL</span>
+                            </strong>
+                        </center>
+                        <hr style="padding:0px;"></hr>
+                    </div>
+                    <div class="row">
+                        <center>
+                            <strong>
+                                <u>
+                                    <span>DUCT</span>
+                                </u>
+                            </strong>
+                        </center>
+                        <div class="col-xs-5">
+                            <table name="tabl_iol_re" width="100%" class="table table-condensed table-bordered mt32">
+                                <tr>
+                                    <td>
+                                        <center>
+                                            <strong>
+                                                <span t-esc="o.duct_le"/>
+                                            </strong>
+                                        </center>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div class="col-xs-2">
+                        </div>
+                        <div class="col-xs-5">
+                            <table name="tabl_iol_re" width="100%" class="table table-condensed table-bordered mt32">
+                                <tr>
+                                    <td>
+                                        <center>
+                                            <strong>
+                                                <span t-esc="o.duct_re"/>
+                                            </strong>
+                                        </center>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <center>
+                            <strong>
+                                <u>
+                                    <span>AXL</span>
+                                </u>
+                            </strong>
+                        </center>
+                        <div class="col-xs-5">
+                            <table name="tabl_axl_le" width="100%" class="table table-condensed table-bordered mt32">
+                                <thead>
+                                    <tr>
+                                        <th>Contact</th>
+                                        <th>Immersion</th>
+                                        <th>Corrected</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td class="text-center">
+                                            <span t-esc="o.axl_le_ids[0].contact"/>
+                                        </td>
+                                        <td class="text-center">
+                                            <span t-esc="o.axl_le_ids[0].immersion"/>
+                                        </td>
+                                        <td class="text-center">
+                                            <span t-esc="o.axl_le_ids[0].corrected"/>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="col-xs-2">
+                        </div>
+                        <div class="col-xs-5">
+                            <table name="tabl_axl_le" width="100%" class="table table-condensed table-bordered mt32">
+                                <thead>
+                                    <tr>
+                                        <th>Contact</th>
+                                        <th>Immersion</th>
+                                        <th>Corrected</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td class="text-center">
+                                            <span t-esc="o.axl_re_ids[0].contact"/>
+                                        </td>
+                                        <td class="text-center">
+                                            <span t-esc="o.axl_re_ids[0].immersion"/>
+                                        </td>
+                                        <td class="text-center">
+                                            <span t-esc="o.axl_re_ids[0].corrected"/>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-5">
+                            <table name="tabl_iol_le" width="100%" class="table table-condensed table-bordered mt32">
+                                <thead>
+                                    <tr>
+                                        <th>A Const</th>
+                                        <th>Power</th>
+                                        <th>Ref.Err</th>
+                                        <th>Power</th>
+                                        <th>Ref.Err</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr t-foreach="o.iol_le_ids" t-as="line">
+                                        <td class="text-center">
+                                            <span t-esc="line.constant"/>
+                                        </td>
+                                        <td class="text-center">
+                                            <span t-esc="line.power_2"/>
+                                        </td>
+                                        <td class="text-center">
+                                            <span t-esc="line.ref_err_2"/>
+                                        </td>
+                                        <td class="text-center">
+                                            <span t-esc="line.power"/>
+                                        </td>
+                                        <td class="text-center">
+                                            <span t-esc="line.ref_err_1"/>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="col-xs-2">
+                            <span></span>
+                        </div>
+                        <div class="col-xs-5">
+                            <table name="tabl_iol_re" width="100%" class="table table-condensed table-bordered mt32">
+                                <thead>
+                                    <tr>
+                                        <th>A Const</th>
+                                        <th>Power</th>
+                                        <th>Ref.Err</th>
+                                        <th>Power</th>
+                                        <th>Ref.Err</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr t-foreach="o.iol_re_ids" t-as="line">
+                                        <td class="text-center">
+                                            <span t-esc="line.constant"/>
+                                        </td>
+                                        <td class="text-center">
+                                            <span t-esc="line.power_2"/>
+                                        </td>
+                                        <td class="text-center">
+                                            <span t-esc="line.ref_err_2"/>
+                                        </td>
+                                        <td class="text-center">
+                                            <span t-esc="line.power"/>
+                                        </td>
+                                        <td class="text-center">
+                                            <span t-esc="line.ref_err_1"/>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <center>
+                            <strong>
+                                <u>
+                                    <span>Calculated Power</span>
+                                </u>
+                            </strong>
+                        </center>
+                        <div class="col-xs-5">
+                            <table name="tabl_iol_re" width="100%" class="table table-condensed table-bordered mt32">
+                                <tr>
+                                    <td>
+                                        <center>
+                                            <strong>
+                                                <span t-esc="o.calculated_power_le"/>
+                                            </strong>
+                                        </center>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div class="col-xs-2">
+                        </div>
+                        <div class="col-xs-5">
+                            <table name="tabl_iol_re" width="100%" class="table table-condensed table-bordered mt32">
+                                <tr>
+                                    <td>
+                                        <center>
+                                            <strong>
+                                                <span t-esc="o.calculated_power_re"/>
+                                            </strong>
+                                        </center>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <center>
+                            <strong>
+                                <u>
+                                    <span>ACD</span>
+                                </u>
+                            </strong>
+                        </center>
+                        <div class="col-xs-5">
+                            <table name="tabl_iol_re" width="100%" class="table table-condensed table-bordered mt32">
+                                <tr>
+                                    <td>
+                                        <center>
+                                            <strong>
+                                                <span t-esc="o.acd_le"/>
+                                                Um
+                                            </strong>
+                                        </center>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div class="col-xs-2">
+                        </div>
+                        <div class="col-xs-5">
+                            <table name="tabl_iol_re" width="100%" class="table table-condensed table-bordered mt32">
+                                <tr>
+                                    <td>
+                                        <center>
+                                            <strong>
+                                                <span t-esc="o.acd_re"/>
+                                                Um
+                                            </strong>
+                                        </center>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                    <center>
+                        <span t-esc="o.iol_text"/>
+                    </center>
+                </div>
+            </t>
+        </t>
+    </template>
+
 </odoo>

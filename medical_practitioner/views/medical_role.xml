@@ -8,6 +8,7 @@
 -->
 
 <odoo>
+
     <record id="medical_role_view_form" model="ir.ui.view">
         <field name="name">medical.role.view.form</field>
         <field name="model">medical.role</field>
@@ -22,6 +23,7 @@
             </form>
         </field>
     </record>
+
     <record id="medical_role_view_tree" model="ir.ui.view">
         <field name="name">medical.role.view.tree</field>
         <field name="model">medical.role</field>
@@ -34,6 +36,7 @@
             </tree>
         </field>
     </record>
+
     <record model="ir.actions.act_window" id="medical_role_action">
         <field name="name">Roles</field>
         <field name="type">ir.actions.act_window</field>
@@ -41,4 +44,5 @@
         <field name="view_type">form</field>
         <field name="view_mode">tree,form</field>
     </record>
+
 </odoo>

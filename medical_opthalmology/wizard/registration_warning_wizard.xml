@@ -18,7 +18,7 @@
                     </group>
                     <group style="width:50%" string="Payment">
                         <field name="registration_amount"/>
-                        <field name="journal_id"/>
+                        <field name="journal_id" attrs="{'required':[('registration_amount','>',0)]}"/>
                         <field name="last_payment_date" style="color:red;"
                                attrs="{'invisible': [('last_payment_date', '=', False)]}"/>
                     </group>

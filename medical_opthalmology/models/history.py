@@ -1,5 +1,4 @@
-from odoo import api, models, fields, _
-from odoo.exceptions import UserError, ValidationError
+from odoo import api, models, fields
 
 
 class History(models.Model):
@@ -13,6 +12,10 @@ class History(models.Model):
     patient_visit_id = fields.Many2one('medical.opthalmology')
 
     history = fields.Boolean('History', default=False)
+
+    review_date = fields.Date(string="Review Date")
+
+    review_notes = fields.Text(string='Review Note')
 
     @api.model
     def create(self, vals):

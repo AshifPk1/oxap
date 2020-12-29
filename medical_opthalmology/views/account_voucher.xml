@@ -71,7 +71,7 @@
                                 <div class="col-xs-6">
                                     <span class="pull-right text-right">
                                         <field name="state" widget="label_selection" options="{'classes': {'draft': 'default', 'cancel': 'default', 'none': 'danger', 'proforma': 'warning',
-                                            'posted': 'success'}}"/>
+                                        'posted': 'success'}}"/>
                                     </span>
                                 </div>
                             </div>
@@ -107,7 +107,6 @@
             </form>
         </field>
     </record>
-
     <record model="ir.ui.view" id="view_voucher_line_tree">
         <field name="name">account.voucher.line.tree</field>
         <field name="model">account.voucher.line</field>
@@ -127,7 +126,6 @@
             </tree>
         </field>
     </record>
-
     <record id="view_voucher_filter" model="ir.ui.view">
         <field name="name">account.voucher.select</field>
         <field name="model">account.voucher</field>
@@ -152,7 +150,6 @@
             </search>
         </field>
     </record>
-
     <record id="account_cash_statement_graph" model="ir.ui.view">
         <field name="name">account.voucher.graph</field>
         <field name="model">account.voucher</field>
@@ -163,14 +160,12 @@
             </graph>
         </field>
     </record>
-
     <act_window
             id="act_journal_voucher_open"
             name="Voucher Entries"
             context="{'search_default_journal_id': active_id, 'default_journal_id': active_id}"
             res_model="account.voucher"
             src_model="account.journal"/>
-
     <record model="ir.actions.act_window" id="action_review_voucher_list">
         <field name="name">Vouchers Entries</field>
         <field name="res_model">account.voucher</field>
@@ -181,7 +176,6 @@
         <field name="context">{'state':'posted', 'voucher_type': voucher_type}</field>
         <field name="search_view_id" ref="view_voucher_filter"/>
     </record>
-
     <record id="view_voucher_filter_vendor" model="ir.ui.view">
         <field name="name">account.voucher.purchase.select</field>
         <field name="model">account.voucher</field>
@@ -203,7 +197,6 @@
             </search>
         </field>
     </record>
-
     <record id="view_voucher_filter_sale" model="ir.ui.view">
         <field name="name">account.voucher.sale.select</field>
         <field name="model">account.voucher</field>
@@ -225,7 +218,6 @@
             </search>
         </field>
     </record>
-
     <record model="ir.ui.view" id="view_sale_receipt_form">
         <field name="name">account.voucher.sale.form</field>
         <field name="model">account.voucher</field>
@@ -311,7 +303,6 @@
             </form>
         </field>
     </record>
-
     <!-- Sales Voucher -->
     <record id="action_sale_receipt" model="ir.actions.act_window">
         <field name="name">Sales Receipts</field>
@@ -344,12 +335,10 @@
         <field name="view_id" ref="view_sale_receipt_form"/>
         <field name="act_window_id" ref="action_sale_receipt"/>
     </record>
-
     <menuitem id="menu_action_sale_receipt"
               action="action_sale_receipt"
               parent="account.menu_finance_receivables_documents"
               sequence="10"/>
-
     <!--  Purchase Vouchers -->
     <record model="ir.ui.view" id="view_purchase_receipt_form">
         <field name="name">account.voucher.purchase.form</field>

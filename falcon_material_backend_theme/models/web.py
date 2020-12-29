@@ -13,7 +13,6 @@ class ResConfiguration(models.TransientModel):
 
     @api.multi
     def get_values(self):
-        # def get_default_alias_domain(self, fields):
         fav_icon_backend = self.env["ir.config_parameter"].get_param(
             "fav_icon_backend", default=None)
         backend_logo = self.env["ir.config_parameter"].get_param("backend_logo", default=None)

@@ -1,0 +1,18 @@
+<odoo>
+    <record id="dialataion_tplus_wizard_view" model="ir.ui.view">
+        <field name="name">dialataion.tplus.wizard.form</field>
+        <field name="model">dialataion.tplus.wizard</field>
+        <field name="arch" type="xml">
+            <form>
+                <group style="width:70%">
+                    <field name="dialataion_tplus_id"/>
+                </group>
+                <footer>
+                    <button name="confirm_sent_to_dialataion" string="Confirm" type='object' class="btn-primary"/>
+                    OR
+                    <button string="Cancel" class="btn-default" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+</odoo>

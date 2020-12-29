@@ -1,8 +1,7 @@
 # -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
-from odoo import models, fields, api, _
-from odoo.tools.misc import formatLang
+from odoo import models, api, _
 
 
 class account_bank_reconciliation_report(models.AbstractModel):
@@ -146,8 +145,8 @@ class account_bank_reconciliation_report(models.AbstractModel):
         computed_stmt_balance = start_amount + outstanding_plus_tot + outstanding_less_tot + unrec_tot
         last_statement = self.env['account.bank.statement'].search([('journal_id', '=', journal_id),
                                                                     ('date', '<=', self.env.context['date_to']), (
-                                                                    'company_id', 'in',
-                                                                    self.env.context['company_ids'])],
+                                                                        'company_id', 'in',
+                                                                        self.env.context['company_ids'])],
                                                                    order="date desc, id desc", limit=1)
         real_last_stmt_balance = last_statement.balance_end
         if computed_stmt_balance != real_last_stmt_balance:

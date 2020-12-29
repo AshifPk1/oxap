@@ -18,6 +18,7 @@
             </form>
         </field>
     </record>
+
     <record id="medical_specialty_view_tree" model="ir.ui.view">
         <field name="name">medical.specialty.tree</field>
         <field name="model">medical.specialty</field>
@@ -28,6 +29,7 @@
             </tree>
         </field>
     </record>
+
     <record id="medical_specialty_view_search" model="ir.ui.view">
         <field name="name">medical.specialty.search</field>
         <field name="model">medical.specialty</field>
@@ -38,6 +40,7 @@
             </search>
         </field>
     </record>
+
     <record id="medical_specialty_action" model="ir.actions.act_window">
         <field name="name">Specialties</field>
         <field name="type">ir.actions.act_window</field>
@@ -45,6 +48,7 @@
         <field name="view_type">form</field>
         <field name="view_mode">tree,form</field>
     </record>
+
     <menuitem id="medical_specialty_menu"
               name="Specialties"
               parent="medical_conf_practitioner_menu"

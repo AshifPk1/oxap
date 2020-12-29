@@ -1,0 +1,86 @@
+<odoo>
+    <record id="view_investigation_procedure_form" model="ir.ui.view">
+        <field name="name">investigation.procedure.form</field>
+        <field name="model">medical.opthalmology</field>
+        <field name="arch" type="xml">
+            <form string="Investigation Procedure" class="o_sale_order">
+                <header>
+                    <field name="state" widget="statusbar" statusbar_visible="investigation,consultation"/>
+                    <button name="sent_investigation_to_doctor" string="Send to Doctor" type='object'
+                            class="btn-primary" attrs="{'invisible':[('state','=','consultation')]}"/>
+                    <field name="is_sent_from_doctor" invisible="1"/>
+                </header>
+                <group>
+                    <div>
+
+
+                        <div>
+                            <label for="image" string="Investigation image"
+                                   style="color:#B10707;text-align:left;font-size:12px;width:95%;font-weight: bold;"/>
+                            <field name="image" widget="image" nolabel="1"/>
+                        </div>
+                        <div style="height:25px">
+
+                        </div>
+
+                        <div>
+                            <label for="investigation_comments" string="Comments"
+                                   style="color:#B10707;text-align:left;font-size:12px;width:95%;font-weight: bold;"/>
+                            <field name="investigation_comments" style="width:95%" nolabel="1"/>
+                        </div>
+                    </div>
+
+                </group>
+            </form>
+        </field>
+    </record>
+    <record id="view_investigation_procedure_tree" model="ir.ui.view">
+        <field name="name">Investigation Procedure</field>
+        <field name="model">medical.opthalmology</field>
+        <field name="arch" type="xml">
+            <tree string="Investigation Details">
+                <field name="name"/>
+                <field name="new_patient_is"/>
+                <field name="patient_id"/>
+                <field name="age"/>
+                <field name="identification_code"/>
+                <field name="doctor_id"/>
+                <field name="date"/>
+                <field name="state"/>
+                <!--                        <field name=""/>-->
+
+            </tree>
+        </field>
+    </record>
+    <record id="action_investigation_procedure" model="ir.actions.act_window">
+        <field name="name">Treatment Procedure</field>
+        <field name="res_model">medical.opthalmology</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="filter" eval="True"/>
+        <field name="domain">[('state', '=', 'investigation')]</field>
+        <field name="context">{'form_view_initial_mode': 'edit','create':
+            False,'search_default_date_today':'date_today','search_default_state':'state'}
+        </field>
+    </record>
+
+    <record id="action_investigation_tree1_view1" model="ir.actions.act_window.view">
+        <field eval="1" name="sequence"/>
+        <field name="view_mode">tree</field>
+        <field name="view_id" ref="view_investigation_procedure_tree"/>
+        <field name="act_window_id" ref="action_investigation_procedure"/>
+    </record>
+
+    <record id="action_investigation_tree1_view2" model="ir.actions.act_window.view">
+        <field eval="2" name="sequence"/>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="view_investigation_procedure_form"/>
+        <field name="act_window_id" ref="action_investigation_procedure"/>
+    </record>
+
+    <menuitem id="investigation_procedure"
+              groups="medical_opthalmology.group_doctor_access"
+              action="action_investigation_procedure" parent="medical_opthalmology.patient_visit_main"
+              sequence="4"/>
+</odoo>
+

@@ -3,6 +3,7 @@
      License GPL-3.0 or later (http://www.gnu.org/licenses/gpl). -->
 
 <odoo>
+
     <record id="medical_abstract_entity_view_tree" model="ir.ui.view">
         <field name="name">medical.abstract.entity.tree</field>
         <field name="model">medical.abstract.entity</field>
@@ -13,6 +14,7 @@
             </tree>
         </field>
     </record>
+
     <record id="medical_abstract_entity_view_form" model="ir.ui.view">
         <field name="name">medical.abstract.entity.form</field>
         <field name="model">medical.abstract.entity</field>
@@ -219,6 +221,9 @@
                                                         Mobile:
                                                         <field name="mobile"/>
                                                     </div>
+                                                    <!--<div t-if="record.fax.raw_value">-->
+                                                    <!--Fax: <field name="fax" />-->
+                                                    <!--</div>-->
                                                 </div>
                                             </div>
                                         </t>
@@ -309,6 +314,7 @@
             </form>
         </field>
     </record>
+
     <record id="medical_abstract_entity_view_kanban" model="ir.ui.view">
         <field name="name">medical.abstract.entity.kanban</field>
         <field name="model">medical.abstract.entity</field>
@@ -364,16 +370,19 @@
                                 <div class="oe_kanban_partner_links"/>
                             </div>
                         </div>
+
                     </t>
                 </templates>
             </kanban>
         </field>
     </record>
+
     <record id="medical_abstract_entity_view_search" model="ir.ui.view">
         <field name="name">medical.abstract.entity.search</field>
         <field name="model">medical.abstract.entity</field>
         <field name="arch" type="xml">
             <search string="Medical Entities">
+                <field name="phone"/>
                 <field name="name"/>
                 <field name="category_id"/>
                 <field name="parent_id" invisible="1"/>
@@ -393,4 +402,5 @@
             </search>
         </field>
     </record>
+
 </odoo>

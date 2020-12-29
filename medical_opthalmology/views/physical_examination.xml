@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="patient_revisit_view_form_new" model="ir.ui.view">
+        <field name="name">patient.visit.form</field>
+        <field name="model">medical.opthalmology</field>
+        <field name="inherit_id" ref="medical_opthalmology.patient_revisit_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//notebook/page[1]" position="after">
+                <page string="Physical Examination">
+                    <div style="height:20px">
+                    </div>
+                    <div>
+                        <label for="presenting_complaints" string="Presenting Complaints" style="width:33%"/>
+                        <label for="past_history" string="Past History" style="width:33%"/>
+                        <label for="treatment_history" string="Treatment History"/>
+                        <field name="presenting_complaints" style="width:33%"/>
+                        <field name="past_history" style="width: 33%"/>
+                        <field name="treatment_history" style="width: 33%"/>
+                    </div>
+                    <group>
+                        <group>
+                            <div>
+                                <field name="r_eye_normal" nolabel='1'/>
+                                <label for="r_eye_normal" string="Normal" style="width:55%"/>
+                                <field name="l_eye_normal" nolabel='1'/>
+                                <label for="l_eye_normal" string="Normal"/>
+                                <field name="normal_readings_ids" mode='tree' style="width:80%">
+                                    <tree string="Normal eye Readings" editable="bottom" nolabel='1' delete="false"
+                                          create="false">
+                                        <field name="r_eye"/>
+                                        <field name="catg" readonly="True"/>
+                                        <field name="l_eye"/>
+                                    </tree>
+                                </field>
+                            </div>
+                        </group>
+                        <group>
+                            <div>
+                                <label for="drug_allergies_ids" string="Drug Allergies"/>
+                                <field name="drug_allergies_ids" mode='tree' style="width:90%">
+                                    <tree string="Drug Allergies" editable="bottom" nolabel='1' delete="true"
+                                          create="true">
+                                        <field name="drug_id"/>
+                                        <field name="allergies"/>
+                                    </tree>
+                                </field>
+                                <div style="height:15px">
+                                </div>
+                                <label for="investigation_ids" string="Investigation"/>
+                                <field name="investigation_ids" mode='tree' style="width:90%">
+                                    <tree string="Investigations" editable="bottom" nolabel='1' delete="false"
+                                          create="false">
+                                        <field name="yes"/>
+                                        <field name="investigation" readonly="True" widget="selection"/>
+                                        <field name="r"/>
+                                        <field name="l"/>
+                                        <field name="time"/>
+                                    </tree>
+                                </field>
+                                <div style="height:15px">
+                                </div>
+                                <label for="advice" string="Advice" style="width:90%"/>
+                                <field name="advice" style="width:80%"/>
+                            </div>
+                        </group>
+                    </group>
+                </page>
+            </xpath>
+        </field>
+    </record>
+</odoo>
+
